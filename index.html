@@ -1,39 +1,75 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>DinginFM | Sessizliğin Sesi</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DinginFM 🎧</title>
   <style>
-    body{
-      background:#f5f1e8;
-      font-family:"Segoe UI",sans-serif;
-      display:flex;flex-direction:column;justify-content:center;align-items:center;
-      height:100vh;margin:0;color:#333;text-align:center;
+    body {
+      background-color: #f7f6f2;
+      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+      color: #333;
+      text-align: center;
+      margin: 0;
+      padding: 0;
     }
-    h1{font-size:3em;font-weight:700;margin-bottom:10px}
-    .line{width:60px;height:2px;background:#bda75b;margin:20px 0}
-    p{font-size:1.2em;color:#666}
-    button{
-      background:#bda75b;color:#fff;border:none;border-radius:20px;
-      padding:10px 25px;font-size:1em;cursor:pointer;margin-top:25px;transition:.3s
+    header {
+      background-color: #bda75b;
+      color: white;
+      padding: 40px 10px;
+      font-size: 2em;
+      letter-spacing: 1px;
     }
-    button:hover{background:#a48f47}
-    footer{position:absolute;bottom:20px;font-size:.9em;color:#999}
+    main {
+      margin-top: 50px;
+    }
+    audio {
+      margin-top: 30px;
+      width: 80%;
+      max-width: 400px;
+      outline: none;
+    }
+    a.button {
+      display: inline-block;
+      background-color: #bda75b;
+      color: white;
+      padding: 15px 30px;
+      border-radius: 25px;
+      text-decoration: none;
+      font-size: 1.1em;
+      margin-top: 40px;
+      transition: background 0.3s ease;
+    }
+    a.button:hover {
+      background-color: #9b8a44;
+    }
+    footer {
+      margin-top: 80px;
+      font-size: 0.85em;
+      color: #888;
+      padding-bottom: 40px;
+    }
   </style>
 </head>
-<body>
-  <h1>🎧 DinginFM</h1>
-  <div class="line"></div>
-  <p>sessizliğin sesi burada başlar.</p>
-  <div style="margin-top:25px;">
-  <audio controls autoplay>
-    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
-    Tarayıcınız ses oynatmayı desteklemiyor.
-  </audio>
-  <p style="font-size:0.9em;color:#888;margin-top:6px;">(Test yayını — birazdan kendi canlı linkimizle değiştireceğiz)</p>
-</div>
 
-  <footer>© 2025 DinginFM | Tüm hakları saklıdır.</footer>
+<body>
+  <header>DinginFM 🎙️</header>
+  <main>
+    <p>sessizliğin sesi burada başlar...</p>
+
+    <!-- Test oynatıcı -->
+    <audio controls autoplay>
+      <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+      Tarayıcınız ses oynatmayı desteklemiyor.
+    </audio>
+
+    <br />
+
+    <a href="https://dinginfm.github.io" class="button">🎧 Canlı Yayına Katıl</a>
+  </main>
+
+  <footer>
+    <p>© 2025 DinginFM · Sonsatirdansonra yapımı ☕</p>
+  </footer>
 </body>
 </html>
