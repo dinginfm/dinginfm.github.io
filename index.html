@@ -6,60 +6,92 @@
   <title>Dingin FM | Sessizliğin Sesi Burada Başlar</title>
   <style>
     body {
-      background-color: #000;
-      font-family: "Poppins", Arial, sans-serif;
-      color: #c59b6c;
-      text-align: center;
       margin: 0;
       padding: 0;
+      background-color: #f7f5ef;
+      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+      color: #333;
+      text-align: center;
     }
 
     header {
-      margin-top: 60px;
+      background-color: #bda75b;
+      color: white;
+      padding: 40px 0 30px;
     }
 
-    img.logo {
-      width: 300px;
-      max-width: 80%;
-      border-radius: 10px;
+    .logo {
+      width: 150px;
+      margin-bottom: 10px;
     }
 
     h1 {
-      font-size: 2em;
-      margin-top: 30px;
-      letter-spacing: 2px;
+      font-size: 2.2em;
+      margin: 0;
+    }
+
+    p.tagline {
+      margin-top: 8px;
+      font-size: 1.1em;
+      color: #4b4b4b;
+      letter-spacing: 1px;
+    }
+
+    main {
+      margin-top: 60px;
     }
 
     audio {
-      margin-top: 40px;
+      margin-top: 20px;
       width: 80%;
       max-width: 400px;
       outline: none;
-      filter: invert(100%) sepia(60%) saturate(300%) hue-rotate(20deg);
+    }
+
+    .button {
+      display: inline-block;
+      margin-top: 30px;
+      padding: 12px 24px;
+      background-color: #bda75b;
+      color: white;
+      border-radius: 30px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+
+    .button:hover {
+      background-color: #a6944d;
     }
 
     footer {
       margin-top: 80px;
       font-size: 0.9em;
-      opacity: 0.7;
+      opacity: 0.8;
+      padding-bottom: 30px;
     }
   </style>
 </head>
+
 <body>
   <header>
-    <img src="ChatGPT Image 16 Eki 2025 11_44_36.png" alt="Dingin FM Logo" class="logo">
-    <h1>🎧 Sessizliğin Sesi Burada Başlar 🎶</h1>
+    <img src="logo.png" alt="Dingin FM Logo" class="logo">
+    <h1>Dingin FM</h1>
+    <p class="tagline">Sessizliğin sesi burada başlar…</p>
   </header>
 
   <main>
     <audio controls autoplay>
-      <source src="https://örnek-url.com/live.mp3" type="audio/mpeg">
+      <source src="https://ornek-url.com/live.mp3" type="audio/mpeg">
       Tarayıcınız ses oynatmayı desteklemiyor.
     </audio>
+
+    <br>
+    <a href="#" class="button">🎧 Canlı Yayına Katıl</a>
   </main>
 
   <footer>
-    <p>© 2025 Dingin FM — dinginfm.github.io</p>
+    © 2025 Dingin FM – Sonsatirdansonra yapımı
   </footer>
 </body>
 </html>
