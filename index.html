@@ -7,33 +7,38 @@
   <style>
     body {
       font-family: 'Poppins', sans-serif;
-      background: radial-gradient(circle at center, #000000 70%, #0d0d0d 100%);
-      color: #f2f2f2;
+      background-color: #0d0d0d;
+      color: #f5f5f5;
       text-align: center;
       margin: 0;
-      height: 100vh;
+      padding: 0;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
+      height: 100vh;
     }
 
-    img {
-      width: 140px;
-      opacity: 0.9;
-      margin-bottom: 25px;
+    header {
+      margin-bottom: 30px;
+    }
+
+    .logo {
+      width: 160px;
+      height: auto;
+      margin-bottom: 20px;
     }
 
     h1 {
       font-size: 2.4em;
-      margin: 10px 0 0 0;
+      margin-bottom: 10px;
+      letter-spacing: 1px;
     }
 
     p.slogan {
-      color: #999;
-      font-style: italic;
-      margin-bottom: 40px;
       font-size: 1.1em;
+      color: #bfbfbf;
+      font-style: italic;
     }
 
     button {
@@ -45,32 +50,12 @@
       color: white;
       cursor: pointer;
       transition: background-color 0.3s;
+      margin-top: 25px;
     }
 
     button:hover {
-      background-color: #17a44b;
+      background-color: #18a34b;
     }
 
-    footer {
-      position: absolute;
-      bottom: 20px;
-      font-size: 0.8em;
-      color: #666;
-    }
-  </style>
-</head>
-<body>
-  <img src="https://cdn-icons-png.flaticon.com/512/727/727245.png" alt="Kulaklık" />
-  <h1>Dingin FM</h1>
-  <p class="slogan">Sessizliğin sesi burada başlar...</p>
-
-  <button onclick="document.getElementById('player').play()">🎧 Canlı Dinle</button>
-
-  <audio id="player" controls style="display:none;">
-    <source src="http://localhost:8000/live.mp3" type="audio/mpeg">
-    Tarayıcınız bu ses öğesini desteklemiyor.
-  </audio>
-
-  <footer>© 2025 Dingin FM | dinginfm.github.io</footer>
-</body>
-</html>
+    audio {
+      margin-top:
