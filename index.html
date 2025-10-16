@@ -1,86 +1,65 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>DinginFM 🎧</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dingin FM | Sessizliğin Sesi Burada Başlar</title>
   <style>
     body {
-      background-color: #f7f6f2;
-      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-      color: #333;
+      background-color: #000;
+      font-family: "Poppins", Arial, sans-serif;
+      color: #c59b6c;
       text-align: center;
       margin: 0;
       padding: 0;
     }
+
     header {
-      background-color: #bda75b;
-      color: white;
-      padding: 40px 10px;
+      margin-top: 60px;
+    }
+
+    img.logo {
+      width: 300px;
+      max-width: 80%;
+      border-radius: 10px;
+    }
+
+    h1 {
       font-size: 2em;
-      letter-spacing: 1px;
-    }
-    main {
-      margin-top: 50px;
-    }
-    audio {
       margin-top: 30px;
+      letter-spacing: 2px;
+    }
+
+    audio {
+      margin-top: 40px;
       width: 80%;
       max-width: 400px;
       outline: none;
+      filter: invert(100%) sepia(60%) saturate(300%) hue-rotate(20deg);
     }
-    a.button {
-      display: inline-block;
-      background-color: #bda75b;
-      color: white;
-      padding: 15px 30px;
-      border-radius: 25px;
-      text-decoration: none;
-      font-size: 1.1em;
-      margin-top: 40px;
-      transition: background 0.3s ease;
-    }
-    a.button:hover {
-      background-color: #9b8a44;
-    }
+
     footer {
       margin-top: 80px;
-      font-size: 0.85em;
-      color: #888;
-      padding-bottom: 40px;
+      font-size: 0.9em;
+      opacity: 0.7;
     }
   </style>
 </head>
-
 <body>
-  <header>DinginFM 🎙️</header>
-  <main>
-    <p>sessizliğin sesi burada başlar...</p>
+  <header>
+    <img src="ChatGPT Image 16 Eki 2025 11_44_36.png" alt="Dingin FM Logo" class="logo">
+    <h1>🎧 Sessizliğin Sesi Burada Başlar 🎶</h1>
+  </header>
 
-    <!-- Test oynatıcı -->
+  <main>
     <audio controls autoplay>
-      <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+      <source src="https://örnek-url.com/live.mp3" type="audio/mpeg">
       Tarayıcınız ses oynatmayı desteklemiyor.
     </audio>
-
-    <br />
-
-    <a href="https://dinginfm.github.io" class="button">🎧 Canlı Yayına Katıl</a>
   </main>
-<footer>
-  © 2025 DinginFM - Sonsatirdansonra yapımı
-</footer>
 
-<!-- DinginFM Canlı Yayın -->
-<audio controls autoplay>
-  <source src="http://88.227.75.86:8080/live.mp3" type="audio/mpeg">
-  Tarayıcınız ses oynatmayı desteklemiyor.
-</audio>
-
+  <footer>
+    <p>© 2025 Dingin FM — dinginfm.github.io</p>
+  </footer>
 </body>
 </html>
-
-
- 
-  
-
