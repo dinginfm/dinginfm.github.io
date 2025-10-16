@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dingin FM | Sessizliğin Sesi</title>
+  <style>
+    body {
+      background-color: #0d0d0d;
+      color: #ffffff;
+      font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+      text-align: center;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      margin-top: 20vh;
+    }
+
+    h1 {
+      font-size: 3em;
+      margin-bottom: 0.2em;
+    }
+
+    p {
+      font-size: 1.3em;
+      color: #bbbbbb;
+      margin-bottom: 2em;
+    }
+
+    audio {
+      width: 320px;
+    }
+
+    footer {
+      position: fixed;
+      bottom: 15px;
+      width: 100%;
+      color: #666;
+      font-size: 0.8em;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🎧 Dingin FM</h1>
+    <p>Sessizliğin sesi burada başlar.</p>
+
+    <audio controls autoplay>
+      <source src="http://localhost:8000/live.mp3" type="audio/mpeg">
+      Tarayıcınız ses oynatmayı desteklemiyor.
+    </audio>
+  </div>
+
+  <footer>© 2025 Dingin FM</footer>
+</body>
+</html>
