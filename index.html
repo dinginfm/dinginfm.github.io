@@ -7,119 +7,95 @@
   <style>
     body {
       margin: 0;
-      background-color: #000;
+      background: linear-gradient(180deg, #0a0a10, #000);
       color: #fff;
-      font-family: "Segoe UI", Arial, sans-serif;
+      font-family: 'Montserrat', Arial, sans-serif;
+      overflow-x: hidden;
       text-align: center;
     }
 
     header {
-      margin-top: 80px;
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      padding: 15px 0;
+      z-index: 100;
     }
 
-    header img {
-      width: 80px;
-      opacity: 0.9;
-    }
-
-    h1 {
-      font-size: 2em;
-      margin: 10px 0;
-    }
-
-    .status {
-      margin-top: 5px;
-      font-size: 0.9em;
+    nav a {
       color: #ccc;
+      text-decoration: none;
+      margin: 0 15px;
+      font-weight: 500;
+      transition: 0.3s;
     }
 
-    .status span {
-      color: red;
-      font-weight: bold;
+    nav a:hover {
+      color: #fff;
+    }
+
+    .hero {
+      margin-top: 120px;
+    }
+
+    .hero img {
+      width: 55%;
+      max-width: 600px;
+      opacity: 0.95;
+      transition: all 0.6s ease;
+    }
+
+    .hero img:hover {
+      transform: scale(1.03);
+    }
+
+    h2 {
+      font-weight: 300;
+      font-size: 1.5em;
+      margin-top: 15px;
+      color: #ddd;
     }
 
     audio {
-      margin-top: 30px;
-      width: 300px;
-      border-radius: 50px;
-      background: #111;
-    }
-
-    .now-playing {
-      margin-top: 15px;
-      font-size: 0.95em;
-    }
-
-    .buttons {
-      margin-top: 35px;
-    }
-
-    .buttons a {
-      text-decoration: none;
-      color: white;
-      padding: 10px 25px;
-      border-radius: 30px;
-      margin: 0 10px;
-      font-weight: bold;
-      display: inline-block;
-      transition: all 0.3s ease;
-    }
-
-    .live { background: #ff2a68; }
-    .chat { background: #1e90ff; }
-    .whatsapp { background: #25D366; }
-
-    .buttons a:hover {
-      opacity: 0.8;
-      transform: scale(1.05);
+      margin-top: 40px;
+      width: 70%;
+      max-width: 400px;
+      border-radius: 25px;
     }
 
     footer {
-      margin-top: 60px;
-      font-size: 0.8em;
-      color: #666;
-    }
-
-    footer a {
-      color: #aaa;
-      text-decoration: none;
-    }
-
-    footer a:hover {
-      text-decoration: underline;
+      margin-top: 80px;
+      font-size: 0.85em;
+      color: #777;
+      padding-bottom: 30px;
     }
   </style>
 </head>
-
 <body>
+
   <header>
-    <img src="https://raw.githubusercontent.com/dinginfm/dinginfm.github.io/main/logo.png" alt="Dingin FM Logo" />
-    <h1>Dingin FM</h1>
-    <div class="status">
-      Yayın Durumu: <span>● Kapalı</span> — Dinleyici: 0
-    </div>
-    <p>Sessizliğin Sesi Burada Başlar</p>
+    <nav>
+      <a href="index.html">Ana Sayfa</a>
+      <a href="dj.html">DJ</a>
+      <a href="tarihce.html">Tarihçe</a>
+      <a href="podcast.html">Podcast</a>
+      <a href="iletisim.html">İletişim</a>
+    </nav>
   </header>
 
-  <main>
-    <audio controls>
-      <source src="http://localhost:8000/live.mp3" type="audio/mpeg" />
+  <section class="hero">
+    <img src="logo.png" alt="Dingin FM Logo" />
+    <h2>Sessizliğin Sesi Burada Başlar</h2>
+
+    <audio controls autoplay>
+      <source src="http://localhost:8000/live.mp3" type="audio/mpeg">
       Tarayıcınız ses oynatmayı desteklemiyor.
     </audio>
-
-    <div class="now-playing">
-      🎵 Şu an çalan: –
-    </div>
-
-    <div class="buttons">
-      <a href="#" class="live">🔴 Canlı Yayın</a>
-      <a href="#" class="chat">💬 Sohbet</a>
-      <a href="#" class="whatsapp">📞 WhatsApp</a>
-    </div>
-  </main>
+  </section>
 
   <footer>
-    <p>© <strong>Dingin FM</strong> — SonSatırdanSonra Prodüksiyon 2025</p>
+    <p>© Dingin FM — SonSatırdanSonra Prodüksiyon 2025</p>
   </footer>
 </body>
 </html>
