@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Podcast – Dingin FM</title>
+  <style>
+    body {
+      margin: 0;
+      background: linear-gradient(180deg, #0a0a10, #000);
+      color: #fff;
+      font-family: 'Montserrat', Arial, sans-serif;
+      text-align: center;
+    }
+
+    header {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      padding: 15px 0;
+      z-index: 100;
+    }
+
+    nav a {
+      color: #ccc;
+      text-decoration: none;
+      margin: 0 15px;
+      transition: 0.3s;
+    }
+
+    nav a:hover {
+      color: #fff;
+    }
+
+    .content {
+      margin-top: 120px;
+      padding: 30px;
+    }
+
+    h1 {
+      font-weight: 400;
+      font-size: 2em;
+      margin-bottom: 20px;
+    }
+
+    .episode {
+      background: rgba(255, 255, 255, 0.05);
+      margin: 25px auto;
+      padding: 25px;
+      border-radius: 12px;
+      max-width: 700px;
+      box-shadow: 0 0 10px rgba(255,255,255,0.05);
+    }
+
+    .episode h2 {
+      font-size: 1.3em;
+      font-weight: 400;
+      color: #fff;
+      margin-bottom: 10px;
+    }
+
+    .episode p {
+      font-weight: 300;
+      color: #ccc;
+      font-size: 0.95em;
+      line-height: 1.5em;
+      margin-bottom: 15px;
+    }
+
+    audio {
+      width: 90%;
+      max-width: 500px;
+      border-radius: 30px;
+    }
+
+    footer {
+      margin-top: 60px;
+      font-size: 0.85em;
+      color: #777;
+      padding-bottom: 30px;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <nav>
+      <a href="index.html">Ana Sayfa</a>
+      <a href="dj.html">DJ</a>
+      <a href="tarihce.html">Tarihçe</a>
+      <a href="podcast.html">Podcast</a>
+      <a href="iletisim.html">İletişim</a>
+    </nav>
+  </header>
+
+  <div class="content">
+    <h1>Dingin FM Podcast Serisi</h1>
+
+    <div class="episode">
+      <h2>🎧 Bölüm 1: Sessizliğin Hikayesi</h2>
+      <p>Dingin FM’in ilk podcast bölümü… Sessizlikten doğan bir sesin hikayesi.  
+      Bu bölümde “neden sessizlik?” sorusuna yanıt arıyoruz.</p>
+      <audio controls>
+        <source src="podcast1.mp3" type="audio/mpeg">
+        Tarayıcınız bu sesi çalamıyor.
+      </audio>
+    </div>
+
+    <div class="episode">
+      <h2>🎧 Bölüm 2: Kahve Molası</h2>
+      <p>Bir fincan kahve, bir mikrofondan geçen anılar…  
+      Bu bölümde müzik arası bir sohbetle sizdeyiz.</p>
+      <audio controls>
+        <source src="podcast2.mp3" type="audio/mpeg">
+      </audio>
+    </div>
+
+    <div class="episode">
+      <h2>🎧 Bölüm 3: Şehla ile Sohbet</h2>
+      <p>Şehla stüdyoda!  
+      Gecenin bir yarısı, sessiz bir frekansta geçen samimi bir konuşma.</p>
+      <audio controls>
+        <source src="podcast3.mp3" type="audio/mpeg">
+      </audio>
+    </div>
+
+  </div>
+
+  <footer>
+    <p>© Dingin FM — SonSatırdanSonra Prodüksiyon 2025</p>
+  </footer>
+</body>
+</html>
