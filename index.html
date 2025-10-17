@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dingin FM – Sessizliğin Sesi Burada Başlar</title>
+  <style>
+    body {
+      margin: 0;
+      background-color: #000;
+      color: #fff;
+      font-family: "Segoe UI", Arial, sans-serif;
+      text-align: center;
+    }
+
+    header {
+      margin-top: 80px;
+    }
+
+    header img {
+      width: 80px;
+      opacity: 0.9;
+    }
+
+    h1 {
+      font-size: 2em;
+      margin: 10px 0;
+    }
+
+    .status {
+      margin-top: 5px;
+      font-size: 0.9em;
+      color: #ccc;
+    }
+
+    .status span {
+      color: red;
+      font-weight: bold;
+    }
+
+    audio {
+      margin-top: 30px;
+      width: 300px;
+      border-radius: 50px;
+      background: #111;
+    }
+
+    .now-playing {
+      margin-top: 15px;
+      font-size: 0.95em;
+    }
+
+    .buttons {
+      margin-top: 35px;
+    }
+
+    .buttons a {
+      text-decoration: none;
+      color: white;
+      padding: 10px 25px;
+      border-radius: 30px;
+      margin: 0 10px;
+      font-weight: bold;
+      display: inline-block;
+      transition: all 0.3s ease;
+    }
+
+    .live { background: #ff2a68; }
+    .chat { background: #1e90ff; }
+    .whatsapp { background: #25D366; }
+
+    .buttons a:hover {
+      opacity: 0.8;
+      transform: scale(1.05);
+    }
+
+    footer {
+      margin-top: 60px;
+      font-size: 0.8em;
+      color: #666;
+    }
+
+    footer a {
+      color: #aaa;
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <img src="https://raw.githubusercontent.com/dinginfm/dinginfm.github.io/main/logo.png" alt="Dingin FM Logo" />
+    <h1>Dingin FM</h1>
+    <div class="status">
+      Yayın Durumu: <span>● Kapalı</span> — Dinleyici: 0
+    </div>
+    <p>Sessizliğin Sesi Burada Başlar</p>
+  </header>
+
+  <main>
+    <audio controls>
+      <source src="http://localhost:8000/live.mp3" type="audio/mpeg" />
+      Tarayıcınız ses oynatmayı desteklemiyor.
+    </audio>
+
+    <div class="now-playing">
+      🎵 Şu an çalan: –
+    </div>
+
+    <div class="buttons">
+      <a href="#" class="live">🔴 Canlı Yayın</a>
+      <a href="#" class="chat">💬 Sohbet</a>
+      <a href="#" class="whatsapp">📞 WhatsApp</a>
+    </div>
+  </main>
+
+  <footer>
+    <p>© <strong>Dingin FM</strong> — SonSatırdanSonra Prodüksiyon 2025</p>
+  </footer>
+</body>
+</html>
