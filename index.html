@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Dingin FM</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0d1119;          /* gece mavisi-siyah */
+    --text:#ffffff;
+    --muted:#a3aab5;
+    --accent:#cda67f;      /* logonun sıcak kahve tonu */
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    background:var(--bg);color:var(--text);
+    font-family:Inter,system-ui,sans-serif;
+    min-height:100vh;display:flex;flex-direction:column;
+    overflow:hidden;
+  }
+
+  /* === LOGO INTRO === */
+  #intro{
+    position:fixed;top:0;left:0;width:100%;height:100%;
+    background:var(--bg);
+    display:flex;align-items:center;justify-content:center;
+    z-index:9999;
+    animation:fadeOut 2.5s ease forwards 3s;
+  }
+  #intro img{
+    width:60vw;max-width:800px;
+    animation:pulse 3s ease-in-out infinite alternate;
+  }
+  @keyframes pulse{
+    from{opacity:.8;transform:scale(.95);}
+    to{opacity:1;transform:scale(1.05);}
+  }
+  @keyframes fadeOut{to{opacity:0;visibility:hidden;}}
+
+  /* === HEADER === */
+  header{
+    background:#fff;color:#000;border-bottom:1px solid #eee;
+    position:sticky;top:0;z-index:10;
+  }
+  nav{
+    max-width:1100px;margin:auto;
+    display:flex;align-items:center;gap:32px;
+    padding:14px 20px;font-weight:600;
+  }
+  nav img{height:28px;margin-right:16px}
+  nav a{text-decoration:none;color:#000;transition:.2s}
+  nav a:hover{opacity:.6}
+
+  /* === MAIN === */
+  main{
+    flex:1;display:flex;flex-direction:column;
+    align-items:center;text-align:center;
+    padding:60px 20px;
+  }
+  h1{font-size:28px;margin:10px 0 8px;color:var(--accent)}
+  p.tag{color:var(--muted);margin-bottom:24px;font-size:16px}
+  audio{
+    width:100%;max-width:680px;border-radius:8px;
+    background:rgba(255,255,255,.05)
+  }
+
+  /* === FOOTER === */
+  footer{
+    text-align:center;color:var(--muted);
+    font-size:14px;padding:28px 12px;
+    border-top:1px solid rgba(255,255,255,.08)
+  }
+</style>
+</head>
+
+<body>
+  <!-- LOGO INTRO -->
+  <div id="intro">
+    <img src="assets/logo.svg" alt="Dingin FM Logo">
+  </div>
+
+  <!-- NORMAL SAYFA -->
+  <header>
+    <nav>
+      <img src="assets/logo.svg" alt="Dingin FM Logo">
+      <a href="index.html">Ana Sayfa</a>
+      <a href="dj.html">DJ</a>
+      <a href="tarihce.html">Tarihçe</a>
+      <a href="podcast.html">Podcast</a>
+      <a href="iletisim.html">İletişim</a>
+    </nav>
+  </header>
+
+  <main>
+    <h1>Sessizliğin Sesi Burada Başlar</h1>
+    <p class="tag">Bir fincan kahve, bir şarkı ve biraz dinginlik.</p>
+    <audio controls preload="none" src="http://localhost:8000/live.mp3"></audio>
+  </main>
+
+  <footer>
+    © 2025 Dingin FM — Tüm hakları saklıdır.
+  </footer>
+
+<script>
+  // Intro bitince kaydırma aktif edilir
+  setTimeout(()=>{document.body.style.overflow="auto";},3000);
+</script>
+</body>
+</html>
