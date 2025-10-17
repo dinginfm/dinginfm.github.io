@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dingin FM | Sessizliğin Sesi</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Montserrat', sans-serif;
+      background: linear-gradient(180deg, #000 0%, #1a0000 100%);
+      color: #f5f5f5;
+      scroll-behavior: smooth;
+    }
+    header {
+      background: rgba(0,0,0,0.9);
+      border-bottom: 1px solid #400000;
+      text-align: center;
+      padding: 10px 0 5px 0;
+    }
+    header img {
+      height: 50px;
+      width: auto;
+      vertical-align: middle;
+    }
+    header span {
+      color: #ff3b3b;
+      font-size: 1.4em;
+      font-weight: 600;
+      letter-spacing: 1px;
+      margin-left: 10px;
+    }
+    nav {
+      margin-top: 8px;
+    }
+    nav a {
+      color: #ccc;
+      text-decoration: none;
+      margin: 0 10px;
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+    nav a:hover {
+      color: #ff3b3b;
+    }
+    section {
+      text-align: center;
+      padding: 100px 20px;
+      border-bottom: 1px solid #2a0000;
+    }
+    h2 {
+      color: #ff3b3b;
+      font-size: 2.2em;
+      margin-bottom: 15px;
+    }
+    p {
+      color: #ddd;
+      max-width: 700px;
+      margin: 0 auto 20px auto;
+      line-height: 1.6;
+      font-size: 1.05em;
+    }
+    .button {
+      display: inline-block;
+      background-color: #c62828;
+      color: #fff;
+      padding: 12px 30px;
+      border-radius: 25px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: background 0.3s, transform 0.2s;
+    }
+    .button:hover {
+      background-color: #ff4444;
+      transform: translateY(-3px);
+    }
+    footer {
+      text-align: center;
+      padding: 25px 0;
+      font-size: 0.9em;
+      color: #777;
+      border-top: 1px solid #300000;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- LOGO VE MENÜ -->
+  <header>
+    <a href="index.html" style="text-decoration:none; display:inline-flex; align-items:center; gap:10px;">
+      <img src="logo.png" alt="Dingin FM Logo">
+      <span>Dingin FM</span>
+    </a>
+    <nav>
+      <a href="#home">Ana Sayfa</a> |
+      <a href="#dj">DJ</a> |
+      <a href="#tarihce">Tarihçe</a> |
+      <a href="#podcast">Podcast</a> |
+      <a href="#iletisim">İletişim</a> |
+      <a href="#blog">Blog</a>
+    </nav>
+  </header>
+
+  <!-- ANA SAYFA -->
+  <section id="home">
+    <h2>Dingin FM’e Hoş Geldiniz</h2>
+    <p>Sessizliğin sesi burada yankılanır.  
+       Ankara’nın geceleri kadar sakin, sabah kahvesi kadar sıcak yayınlarla Dingin FM yayında.</p>
+    <audio controls style="margin-top:20px;">
+      <source src="live.mp3" type="audio/mpeg">
+      Tarayıcınız ses oynatmayı desteklemiyor.
+    </audio>
+  </section>
+
+  <!-- DJ -->
+  <section id="dj">
+    <h2>DJ Kadromuz</h2>
+    <p>Her gece ruhun frekansına dokunan yayıncılarımızla Dingin FM canlı yayında.  
+       Mikrofonun diğer ucunda bazen Madam Aylak, bazen sessizliğin kendisi…</p>
+  </section>
+
+  <!-- TARİHÇE -->
+  <section id="tarihce">
+    <h2>Yayın Tarihçesi</h2>
+    <p>Dingin FM, 2025 yılında “sessizliğin sesi” sloganıyla doğdu.  
+       O günden beri sadece müzik değil, duygular, anılar ve şehir hikâyeleri yayımlıyor.</p>
+  </section>
+
+  <!-- PODCAST -->
+  <section id="podcast">
+    <h2>Podcast</h2>
+    <p>Dingin FM podcast serileriyle günün her saatinde kulağında.  
+       Sohbet, müzik, anı ve mizah… Her bölüm bir fincan kahve tadında.</p>
+    <a href="#" class="button">Spotify’da Dinle</a>
+  </section>
+
+  <!-- İLETİŞİM -->
+  <section id="iletisim">
+    <h2>İletişim</h2>
+    <p>Yayın önerileri, iş birlikleri veya sadece bir “merhaba” için bizimle iletişime geçin.</p>
+    <p>
+      📧 <a href="mailto:dinginfm@gmail.com" style="color:#00bcd4;">dinginfm@gmail.com</a><br>
+      📱 <a href="https://www.instagram.com/dinginfm/" target="_blank" style="color:#00bcd4;">@dinginfm</a>
+    </p>
+    <a href="https://www.instagram.com/dinginfm/" target="_blank" class="button">💬 Sohbet Başlat</a>
+  </section>
+
+  <!-- BLOG -->
+  <section id="blog">
+    <h2>Madam’ın Günlüğü</h2>
+    <p>Sessizliğin sesiyle yazılmış satırlar…  
+       Kimi zaman kahve kokar, kimi zaman Ankara’nın sabah soğuğu gibi içe işler.  
+       Bazen mizah, bazen sitem — ama hep içten, hep “son satırdan sonra”.</p>
+    <a href="https://madamaylak0.wordpress.com/" target="_blank" class="button">Bloga Git →</a>
+  </section>
+
+  <footer>
+    © 2025 Dingin FM | SonSatırdanSonra Prodüksiyon
+  </footer>
+
+</body>
+</html>
