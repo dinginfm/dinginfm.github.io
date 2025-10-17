@@ -1,103 +1,153 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Dingin FM – Sessizliğin Sesi Burada Başlar</title>
-<style>
-  body{
-    margin:0;font-family:"Montserrat",sans-serif;
-    background:#000;color:#fff;text-align:center;padding:40px 20px;
-  }
-  .logo{width:160px;margin-top:30px;margin-bottom:10px;}
-  h1{font-size:2.4em;display:flex;justify-content:center;align-items:center;gap:10px;margin:5px 0 10px;}
-  h1 img{width:40px;height:40px;vertical-align:middle;}
-  .status{font-size:1em;margin-bottom:5px;}
-  .online{color:#4caf50;font-weight:bold;}
-  .offline{color:#f44336;font-weight:bold;}
-  .slogan{color:#aaa;font-size:1.2em;margin:10px 0 25px;}
-  audio{width:85%;max-width:420px;border-radius:10px;margin-bottom:15px;outline:none;}
-  .info{color:#bbb;font-size:0.95em;margin-bottom:25px;}
-  .buttons{display:flex;justify-content:center;gap:15px;flex-wrap:wrap;margin-top:15px;}
-  .btn{padding:12px 22px;border-radius:30px;font-size:1em;border:none;cursor:pointer;color:#fff;transition:.3s;}
-  .btn-live{background:#e91e63;}
-  .btn-live:hover{background:#ff4b8f;}
-  .btn-chat{background:#2196f3;}
-  .btn-chat:hover{background:#4dabf7;}
-  .btn-whatsapp{background:#25D366;}
-  .btn-whatsapp:hover{background:#46e27d;}
-  footer{margin-top:60px;font-size:.9em;color:#666;}
-  footer span{color:#fff;}
-  .floating-whatsapp{
-    position:fixed;bottom:25px;right:25px;background:#25D366;color:#fff;
-    border-radius:50%;padding:15px 18px;text-decoration:none;font-size:28px;
-    box-shadow:0 0 10px #111;z-index:999;
-  }
-  .floating-whatsapp:hover{background:#46e27d;}
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dingin FM | Sessizliğin Sesi Burada Başlar</title>
+
+  <style>
+    body {
+      margin: 0;
+      background-color: #0d0d0d;
+      color: #d4af37;
+      font-family: "Montserrat", sans-serif;
+      text-align: center;
+    }
+
+    header {
+      padding: 40px 20px 10px 20px;
+    }
+
+    header img {
+      width: 220px;
+      opacity: 0.9;
+    }
+
+    h1 {
+      font-size: 1.5rem;
+      margin-top: 10px;
+      font-weight: 400;
+      letter-spacing: 2px;
+      color: #f5e9cf;
+    }
+
+    audio {
+      margin-top: 30px;
+      width: 80%;
+      max-width: 500px;
+    }
+
+    /* İstek formu */
+    #istek {
+      background-color: #111;
+      border: 1px solid #d4af37;
+      border-radius: 10px;
+      width: 80%;
+      max-width: 500px;
+      margin: 50px auto;
+      padding: 20px;
+      color: #fff;
+    }
+
+    input, textarea {
+      width: 90%;
+      padding: 10px;
+      margin-top: 10px;
+      border-radius: 5px;
+      border: none;
+    }
+
+    button {
+      background-color: #d4af37;
+      color: #000;
+      border: none;
+      padding: 10px 20px;
+      margin-top: 10px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    button:hover {
+      background-color: #b9962e;
+    }
+
+    /* Sohbet butonu */
+    .chat-btn {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      background-color: #d4af37;
+      color: #000;
+      border: none;
+      border-radius: 50%;
+      width: 60px;
+      height: 60px;
+      font-size: 26px;
+      cursor: pointer;
+      box-shadow: 0 0 10px #000;
+    }
+
+    /* İletişim alanı */
+    footer {
+      margin-top: 60px;
+      padding: 20px;
+      font-size: 0.9rem;
+      color: #f5e9cf;
+      background-color: #111;
+    }
+
+    a {
+      color: #d4af37;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    .quote {
+      font-style: italic;
+      color: #c8b87a;
+      margin-top: 8px;
+    }
+  </style>
 </head>
+
 <body>
+  <header>
+    <img src="logo.png" alt="Dingin FM Logo" />
+    <h1>Sessizliğin Sesi Burada Başlar</h1>
+  </header>
 
-<!-- Logo -->
-<img src="DinginFMLogo.png" alt="Dingin FM Logo" class="logo">
+  <!-- Yayın oynatıcı -->
+  <audio controls autoplay>
+    <source src="http://localhost:8000/live.mp3" type="audio/mpeg" />
+    Tarayıcınız bu ses oynatıcıyı desteklemiyor.
+  </audio>
 
-<!-- Başlık -->
-<h1>
-  <img src="https://upload.wikimedia.org/wikipedia/commons/5/59/Headphones_icon.svg" alt="Kulaklık">
-  Dingin FM
-</h1>
+  <!-- Şarkı istek formu -->
+  <section id="istek">
+    <h2>🎧 Şarkı İsteği Gönder</h2>
+    <form>
+      <input type="text" placeholder="Adınız veya takma adınız" /><br />
+      <textarea placeholder="Şarkı isteğiniz veya mesajınız..." rows="3"></textarea><br />
+      <button type="submit">Gönder</button>
+    </form>
+  </section>
 
-<!-- Yayın durumu -->
-<div class="status" id="status">
-  Yayın Durumu: <span class="offline">🔴 Kapalı</span> – Dinleyici: <span id="listeners">0</span>
-</div>
+  <!-- Sohbet butonu -->
+  <button class="chat-btn" title="Sohbet (yakında)">💬</button>
 
-<p class="slogan">Sessizliğin Sesi Burada Başlar</p>
-
-<!-- Player -->
-<audio id="radioPlayer" controls>
-  <source src="http://localhost:8000/live.mp3" type="audio/mpeg">
-  Tarayıcınız ses oynatmayı desteklemiyor.
-</audio>
-
-<!-- Şu an çalan -->
-<div class="info" id="nowPlaying">🎵 Şu an çalan: Bekleniyor...</div>
-
-<!-- Butonlar -->
-<div class="buttons">
-  <button class="btn btn-live" onclick="window.open('http://localhost:8000/live.mp3','_blank')">🔴 Canlı Yayın</button>
-  <button class="btn btn-chat" onclick="window.open('https://t.me/dinginfmchat','_blank')">💬 Sohbet</button>
-  <button class="btn btn-whatsapp" onclick="alert('WhatsApp bağlantısı yakında aktif olacak!')">📞 WhatsApp</button>
-</div>
-
-<footer>© <span>Dingin FM</span> – SonSatırdanSonra Prodüksiyon 2025</footer>
-
-<!-- Uçan WhatsApp -->
-<a href="#" class="floating-whatsapp" onclick="alert('WhatsApp yakında aktif!')">💬</a>
-
-<!-- JS – Yayın durumu, dinleyici, şu an çalan -->
-<script>
-const statusEl=document.getElementById("status");
-const listenersEl=document.getElementById("listeners");
-const nowPlayingEl=document.getElementById("nowPlaying");
-async function updateRadioStatus(){
- try{
-   const r=await fetch("http://localhost:8000/status-json.xsl");
-   const d=await r.json();
-   const s=d.icestats.source;
-   if(s&&s.listeners>=0){
-     statusEl.innerHTML='Yayın Durumu: <span class="online">🟢 Canlı</span> – Dinleyici: <span id="listeners">'+s.listeners+'</span>';
-     nowPlayingEl.textContent="🎵 Şu an çalan: "+(s.title||"Bilinmiyor");
-   }else{
-     statusEl.innerHTML='Yayın Durumu: <span class="offline">🔴 Kapalı</span> – Dinleyici: 0';
-     nowPlayingEl.textContent="🎵 Şu an çalan: –";
-   }
- }catch(e){
-   statusEl.innerHTML='Yayın Durumu: <span class="offline">🔴 Kapalı</span> – Dinleyici: 0';
-   nowPlayingEl.textContent="🎵 Şu an çalan: –";
- }}
-setInterval(updateRadioStatus,5000);
-</script>
-
+  <!-- İletişim -->
+  <footer>
+    <p><strong>İLETİŞİM</strong></p>
+    <p>
+      📧 <a href="mailto:dinginfm@gmail.com">dinginfm@gmail.com</a><br />
+      📸 <a href="https://instagram.com/dinginfm" target="_blank">@dinginfm</a>
+    </p>
+    <p class="quote">“Her mesaj, sessizliğin içindeki yeni bir notadır.”</p>
+    <p>© 2025 Dingin FM — Sessizliğin Sesi Burada Başlar</p>
+  </footer>
 </body>
 </html>
