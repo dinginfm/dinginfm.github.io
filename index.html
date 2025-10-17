@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dingin FM | Sessizliğin Sesi</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Montserrat', sans-serif;
+      background: linear-gradient(180deg, #000000 0%, #1a0000 100%);
+      color: #f5f5f5;
+      text-align: center;
+    }
+    header {
+      background: rgba(0,0,0,0.9);
+      border-bottom: 1px solid #400000;
+      text-align: center;
+      padding: 10px 0;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    header img {
+      height: 55px;
+      width: auto;
+      vertical-align: middle;
+    }
+    header span {
+      color: #ff3b3b;
+      font-size: 1.5em;
+      font-weight: 600;
+      letter-spacing: 1px;
+      margin-left: 10px;
+    }
+    nav {
+      margin-top: 8px;
+    }
+    nav a {
+      color: #ccc;
+      text-decoration: none;
+      margin: 0 10px;
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+    nav a:hover { color: #ff3b3b; }
+
+    section {
+      padding: 120px 20px;
+    }
+
+    h2 {
+      color: #ff3b3b;
+      font-size: 2.4em;
+      margin-bottom: 15px;
+    }
+
+    p {
+      color: #ddd;
+      max-width: 700px;
+      margin: 0 auto 20px auto;
+      line-height: 1.6;
+      font-size: 1.05em;
+    }
+
+    audio {
+      margin-top: 30px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 25px 0;
+      font-size: 0.9em;
+      color: #777;
+      border-top: 1px solid #300000;
+    }
+
+    /* Görsel kutular */
+    #nowPlayingPanel {
+      position: fixed;
+      bottom: 15px;
+      left: 15px;
+      background: rgba(17, 17, 17, 0.95);
+      color: #ff3b3b;
+      padding: 12px 20px;
+      border: 1px solid #400000;
+      border-radius: 12px;
+      font-size: 14px;
+      box-shadow: 0 0 10px rgba(255,0,0,0.3);
+      font-family: 'Montserrat', sans-serif;
+    }
+
+    #adminPanel {
+      position: fixed;
+      bottom: 15px;
+      right: 15px;
+      background: rgba(17, 17, 17, 0.95);
+      color: #00bcd4;
+      padding: 12px 20px;
+      border: 1px solid #003c4d;
+      border-radius: 12px;
+      font-size: 14px;
+      font-family: 'Montserrat', sans-serif;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- ÜST LOGO ve MENÜ -->
+  <header>
+    <a href="index.html" style="text-decoration:none; display:inline-flex; align-items:center; gap:10px;">
+      <img src="logo.png" alt="Dingin FM Logo">
+      <span>Dingin FM</span>
+    </a>
+    <nav>
+      <a href="index.html">Ana Sayfa</a> |
+      <a href="dj.html">DJ</a> |
+      <a href="tarihce.html">Tarihçe</a> |
+      <a href="podcast.html">Podcast</a> |
+      <a href="iletisim.html">İletişim</a> |
+      <a href="blog.html">Blog</a>
+    </nav>
+  </header>
+
+  <!-- ANA SAYFA -->
+  <section>
+    <h2>Sessizliğin Sesi Burada Başlar</h2>
+    <p>Dingin FM, müziği sessizlikle harmanlayan bir radyo deneyimidir.  
+    Her nota, her sessizlik bir hikâye anlatır.  
+    Şimdi kulak ver, şehir sustu — sıra bizde.</p>
+    <audio controls>
+      <source src="http://localhost:8000/live.mp3" type="audio/mpeg">
+      Tarayıcınız ses oynatmayı desteklemiyor.
+    </audio>
+  </section>
+
+  <footer>
+    © 2025 Dingin FM | SonSatırdanSonra Prodüksiyon
+  </footer>
+
+  <!-- ŞU ANDA ÇALIYOR (ZİYARETÇİ GÖRÜR) -->
+  <script>
+    async function nowPlaying() {
+      try {
+        const response = await fetch('http://localhost:8000/status-json.xsl'); // Icecast JSON
+        const data = await response.json();
+        const source = data.icestats.source;
+        const title = source.title || "Yayın devam ediyor...";
+        const panel = document.getElementById('nowPlayingPanel') || document.createElement('div');
+        panel.id = 'nowPlayingPanel';
+        panel.innerHTML = `🎵 <b>Şu anda çalıyor:</b> ${title}`;
+        if (!document.getElementById('nowPlayingPanel')) document.body.appendChild(panel);
+      } catch (error) {
+        console.log('Şarkı bilgisi alınamadı:', error);
+      }
+    }
+    nowPlaying();
+    setInterval(nowPlaying, 15000);
+  </script>
+
+  <!-- SADECE ADMIN GÖRÜR (DİNLEYİCİ SAYISI) -->
+  <script>
+    if (document.cookie.includes('admin_mode=true')) {
+      async function showListeners() {
+        try {
+          const response = await fetch('http://localhost:8000/status-json.xsl');
+          const data = await response.json();
+          const listeners = data.icestats.source.listeners;
+          const adminPanel = document.getElementById('adminPanel') || document.createElement('div');
+          adminPanel.id = 'adminPanel';
+          adminPanel.innerHTML = `🎧 <b>Dinleyici Sayısı:</b> ${listeners}`;
+          if (!document.getElementById('adminPanel')) document.body.appendChild(adminPanel);
+        } catch (error) {
+          console.log('Dinleyici sayısı alınamadı:', error);
+        }
+      }
+      showListeners();
+      setInterval(showListeners, 15000);
+    }
+  </script>
+</body>
+</html>
