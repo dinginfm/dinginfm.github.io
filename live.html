@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Canlı Yayın | Dingin FM</title>
+  <link rel="stylesheet" href="stil.css">
+</head>
+
+<body>
+  <div class="background-logo"></div>
+
+  <header>
+    <nav>
+      <ul>
+        <li><a href="index.html">Ana Sayfa</a></li>
+        <li><a href="live.html" class="active">Canlı Yayın</a></li>
+        <li><a href="dj.html">DJ</a></li>
+        <li><a href="sohbet.html">Sohbet</a></li>
+        <li><a href="blog.html">Blog</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section class="live">
+      <h1>🎙️ Dingin FM – Canlı Yayın</h1>
+      <p>Sessizliğin Sesi Burada Başlar</p>
+
+      <!-- Yayın Oynatıcı -->
+      <audio controls>
+        <source src="http://localhost:8000/live.mp3" type="audio/mpeg">
+        Tarayıcınız bu ses oynatıcıyı desteklemiyor.
+      </audio>
+
+      <div class="live-links">
+        <a class="chat-btn" href="sohbet.html">💬 Sohbete Katıl</a>
+        <a class="live-btn" href="index.html">⬅️ Ana Sayfa</a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    © 2025 Dingin FM | Tüm Hakları Saklıdır
+  </footer>
+</body>
+</html>
