@@ -138,3 +138,24 @@ footer {
     flex-direction: column;
   }
 }
+.redirect {
+  text-align: center;
+  margin-top: 120px;
+  color: #ddd;
+  animation: fadeIn 2s ease-in-out;
+}
+
+.redirect a {
+  color: #66ccff;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.redirect a:hover {
+  text-decoration: underline;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
