@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sohbet | Dingin FM</title>
+  <link rel="stylesheet" href="stil.css">
+  <style>
+    body {
+      background-color: #081018;
+      color: white;
+      font-family: 'Segoe UI', sans-serif;
+      text-align: center;
+      padding: 20px;
+    }
+    header nav ul {
+      list-style: none;
+      display: flex;
+      justify-content: center;
+      padding: 0;
+    }
+    header nav ul li {
+      margin: 0 15px;
+    }
+    header nav ul li a {
+      color: white;
+      text-decoration: none;
+    }
+    .chat-box {
+      background-color: rgba(255, 255, 255, 0.05);
+      border-radius: 10px;
+      padding: 15px;
+      width: 70%;
+      margin: 30px auto;
+      text-align: left;
+      max-height: 400px;
+      overflow-y: auto;
+    }
+    .chat-input {
+      margin-top: 20px;
+    }
+    .chat-input input, .chat-input textarea {
+      width: 60%;
+      padding: 10px;
+      margin: 5px;
+      border-radius: 5px;
+      border: none;
+      outline: none;
+    }
+    .chat-input button {
+      padding: 10px 20px;
+      background-color: #2d89ef;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    footer {
+      margin-top: 50px;
+      font-size: 12px;
+      opacity: 0.7;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <nav>
+      <ul>
+        <li><a href="index.html">Ana Sayfa</a></li>
+        <li><a href="live.html">Canlı Yayın</a></li>
+        <li><a href="dj.html">DJ</a></li>
+        <li><a href="sohbet.html" class="active">Sohbet</a></li>
+        <li><a href="blog.html">Blog</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <h1>💬 Canlı Sohbet</h1>
+  <p>Dingin FM yayınına mesaj gönder — DJ Aylak seni duyuyor 🎙️</p>
+
+  <div class="chat-box" id="chat-box">
+    <p><strong>Dinleyici:</strong> Merhaba DJ Aylak! ☕</p>
+  </div>
+
+  <div class="chat-input">
+    <input type="text" id="username" placeholder="Adın">
+    <textarea id="message" placeholder="Mesajını yaz..."></textarea>
+    <button onclick="sendMessage()">Gönder</button>
+  </div>
+
+  <footer>© 2025 Dingin FM | DJ Aylak 🎧</footer>
+
+  <script>
+    function sendMessage() {
+      const username = document.getElementById('username').value || "Anonim";
+      const message = document.getElementById('message').value;
+      if (message.trim() === "") return;
+
+      const chatBox = document.getElementById('chat-box');
+      const newMsg = document.createElement('p');
+      newMsg.innerHTML = `<strong>${username}:</strong> ${message}`;
+      chatBox.appendChild(newMsg);
+
+      document.getElementById('message').value = "";
+      chatBox.scrollTop = chatBox.scrollHeight;
+    }
+  </script>
+
+</body>
+</html>
