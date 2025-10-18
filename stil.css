@@ -1,0 +1,140 @@
+/* 🎧 DINGIN FM | Sessizliğin Sesi Burada 💙 */
+
+/* GENEL GÖRÜNÜM */
+body {
+  background-color: #0b1220;
+  color: #e0e0e0;
+  font-family: 'Poppins', sans-serif;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+/* LOGO EFEKTİ */
+@keyframes logoPulse {
+  0% { opacity: 0.05; filter: brightness(1); }
+  50% { opacity: 0.1; filter: brightness(1.3); }
+  100% { opacity: 0.05; filter: brightness(1); }
+}
+
+.background-logo {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url('logo.png') center/contain no-repeat;
+  opacity: 0.08;
+  z-index: -1;
+  animation: logoPulse 6s ease-in-out infinite;
+}
+
+/* MENÜ */
+nav {
+  background: rgba(11, 18, 32, 0.7);
+  display: flex;
+  justify-content: center;
+  padding: 15px;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+nav ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  gap: 25px;
+}
+
+nav a {
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: bold;
+  transition: color 0.3s ease;
+}
+
+nav a:hover,
+nav a.active {
+  color: #8ac7ff;
+}
+
+/* ANA METİN */
+main {
+  text-align: center;
+  padding: 120px 20px;
+}
+
+h1 {
+  font-size: 2em;
+  margin-bottom: 15px;
+  letter-spacing: 0.5px;
+}
+
+p {
+  font-size: 1.1em;
+  opacity: 0.9;
+  line-height: 1.6;
+}
+
+/* BUTONLAR */
+.live-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 50px;
+}
+
+.live-btn,
+.chat-btn {
+  padding: 12px 25px;
+  border-radius: 8px;
+  font-weight: bold;
+  text-decoration: none;
+  color: white;
+  transition: all 0.3s ease;
+}
+
+.live-btn {
+  background: #e63946;
+}
+
+.chat-btn {
+  background: #1d3557;
+}
+
+.live-btn:hover,
+.chat-btn:hover {
+  transform: scale(1.05);
+  opacity: 0.9;
+}
+
+/* ALT BİLGİ */
+footer {
+  text-align: center;
+  padding: 25px;
+  font-size: 0.9em;
+  opacity: 0.8;
+  background: rgba(11, 18, 32, 0.6);
+}
+
+/* MOBİL GÖRÜNÜM */
+@media (max-width: 768px) {
+  nav ul {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  h1 {
+    font-size: 1.6em;
+  }
+
+  p {
+    font-size: 1em;
+  }
+
+  .live-buttons {
+    flex-direction: column;
+  }
+}
