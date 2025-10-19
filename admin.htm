@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dingin FM | Yönetim Paneli</title>
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #0d1b2a;
+      color: #e0e1dd;
+      text-align: center;
+      background-image: url('assets/logo.png');
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: 45%;
+      opacity: 0.98;
+      font-size: 14px;
+      margin: 0;
+      padding: 0;
+    }
+
+    h1 {
+      color: #ffd700;
+      margin-top: 25px;
+      font-size: 22px;
+      letter-spacing: 0.5px;
+    }
+
+    p {
+      line-height: 1.4;
+      margin: 5px 0;
+    }
+
+    .panel {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 18px;
+      margin-top: 25px;
+    }
+
+    .card {
+      background-color: rgba(17, 45, 78, 0.9);
+      border-radius: 14px;
+      padding: 18px;
+      width: 200px;
+      text-align: center;
+      box-shadow: 0 0 12px rgba(0, 0, 0, 0.3);
+      transition: all 0.3s ease-in-out;
+      font-size: 13px;
+    }
+
+    .card:hover {
+      transform: scale(1.04);
+      background-color: rgba(25, 60, 100, 0.95);
+    }
+
+    .card h3 {
+      color: #ffcc00;
+      margin-bottom: 8px;
+      font-size: 15px;
+    }
+
+    .stats {
+      background-color: rgba(20, 60, 100, 0.9);
+      border-radius: 14px;
+      margin: 40px auto 30px;
+      width: 450px;
+      padding: 20px;
+      font-size: 13px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.3);
+    }
+
+    audio {
+      margin-top: 10px;
+      width: 250px;
+    }
+
+    h2 {
+      color: #ffd700;
+      font-size: 18px;
+      margin-top: 20px;
+    }
+
+    footer {
+      margin-top: 40px;
+      font-size: 12px;
+      color: #778da9;
+    }
+
+    a {
+      color: #84c9fb;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    a:hover {
+      text-decoration: underline;
+      color: #ffcc00;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>🎧 Dingin FM Yönetim Paneli</h1>
+  <p>Hoş geldin DJ Aylak — Sessizliğin Sesi Burada.</p>
+
+  <div class="panel">
+    <div class="card"><h3>👥 Dinleyici Sayısı</h3><p>1 kişi</p></div>
+    <div class="card"><h3>📻 Yayın Konsolu</h3><a href="http://localhost:8000" target="_blank">Icecast Panel</a></div>
+    <div class="card"><h3>📝 Blog</h3><a href="https://madamaylak0.wordpress.com/" target="_blank">WordPress</a></div>
+    <div class="card"><h3>🎵 Spotify</h3><a href="#" target="_blank">Spotify Aç</a></div>
+    <div class="card"><h3>📺 YouTube</h3><a href="#" target="_blank">YouTube Aç</a></div>
+  </div>
+
+  <div class="stats">
+    <h2>📊 Yayın İstatistikleri</h2>
+    <p>Toplam Mesaj: 0</p>
+    <p>Son Mesaj: -</p>
+    <p>Toplam Yayın Süresi: 00:10</p>
+  </div>
+
+  <h2>🎙️ Aylak Podcast Yönetimi</h2>
+  <p><b>Bölüm 1 – Kahve Molasında Kendinle Konuşmak</b></p>
+  <audio controls>
+    <source src="assets/podcast1.mp3" type="audio/mpeg">
+  </audio>
+  <p>Yayın Tarihi: 19 Ekim 2025</p>
+
+  <p><b>Bölüm 2 – Sessizliğin İçinde Bir Kahkaha</b><br><i>Hazırlanıyor...</i></p>
+
+  <footer>
+    © 2025 Dingin FM — Sessizliğin Sesi Burada
+  </footer>
+</body>
+</html>
