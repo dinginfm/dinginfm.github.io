@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aylak Podcast | Dingin FM</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background-color: #0d1b2a;
+      color: #d4b483;
+      text-align: center;
+      min-height: 100vh;
+      background-image: url('assets/logo.png');
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: 320px;
+      background-attachment: fixed;
+      opacity: 0.98;
+    }
+
+    header {
+      background-color: rgba(27, 38, 59, 0.95);
+      text-align: center;
+      padding: 15px 0;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    header h1 {
+      color: #00aaff;
+      margin: 0;
+      font-size: 28px;
+    }
+
+    nav a {
+      color: #d4b483;
+      text-decoration: none;
+      margin: 0 15px;
+      font-weight: 500;
+      transition: color 0.3s ease;
+    }
+
+    nav a:hover {
+      color: #ffffff;
+    }
+
+    section {
+      padding: 70px 20px;
+    }
+
+    h2 {
+      color: #00aaff;
+      margin-bottom: 20px;
+    }
+
+    .podcast-card {
+      background-color: #1b263b;
+      border-radius: 15px;
+      padding: 25px;
+      margin: 20px auto;
+      width: 320px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.4);
+      text-align: center;
+    }
+
+    audio {
+      width: 100%;
+      margin-top: 10px;
+      border-radius: 10px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      font-size: 12px;
+      opacity: 0.7;
+      background-color: rgba(27,38,59,0.95);
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Dingin FM</h1>
+    <nav>
+      <a href="index.html">Ana Sayfa</a>
+      <a href="dj.html">DJ Aylak</a>
+      <a href="tarihce.html">Tarihçe</a>
+      <a href="podcast.html">Podcast</a>
+      <a href="contact.html">İletişim</a>
+    </nav>
+  </header>
+
+  <section>
+    <h2>🎧 Aylak Podcast</h2>
+    <p>DJ Aylak’ın kahve eşliğinde hayat, müzik ve sessizlik üzerine yaptığı içten sohbetler ☕</p>
+
+    <!-- Bölüm 1 -->
+    <div class="podcast-card">
+      <h3>🎙️ Bölüm 1 — Kahve Molasında Kendinle Konuşmak</h3>
+      <audio controls>
+        <source src="assets/podcast/aylakpodcast-bolum1.mp3" type="audio/mpeg">
+        Tarayıcınız ses oynatmayı desteklemiyor.
+      </audio>
+      <p style="font-size:13px;opacity:0.8;margin-top:8px;">
+        © 2025 Dingin FM | Aylak Podcast — Tüm hakları saklıdır
+      </p>
+    </div>
+
+    <!-- Bölüm 2 -->
+    <div class="podcast-card">
+      <h3>🌙 Bölüm 2 — Sessizliğin İçinde Bir Kahkaha</h3>
+      <p style="font-style:italic;opacity:0.8;">Hazırlanıyor... 🎧</p>
+    </div>
+
+    <p style="margin-top:40px;font-size:13px;opacity:0.7;">
+      Tüm bölümler Dingin FM stüdyolarında kaydedilmiştir.  
+      <br>Yetkisiz çoğaltılamaz veya paylaşılamaz.
+    </p>
+  </section>
+
+  <footer>
+    © 2025 Dingin FM — Sessizliğin Sesi Burada ☕  
+    <br>Tüm hakları saklıdır.
+  </footer>
+
+</body>
+</html>
