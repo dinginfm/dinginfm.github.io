@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Podcast | Dingin FM</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #0d1b2a; /* Gece mavisi */
+      color: #d4b483; /* Sütlü kahve */
+      font-family: 'Poppins', sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    h1 {
+      color: #00aaff;
+      margin-top: 60px;
+    }
+
+    p {
+      color: #d4b483;
+      font-size: 15px;
+      margin-bottom: 30px;
+      text-align: center;
+    }
+
+    .podcast-card {
+      background-color: #1b263b;
+      border-radius: 12px;
+      padding: 25px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.4);
+      text-align: center;
+      width: 320px;
+      margin-bottom: 20px;
+      transition: transform 0.3s ease;
+    }
+
+    .podcast-card:hover {
+      transform: scale(1.03);
+    }
+
+    iframe {
+      border-radius: 12px;
+      margin-top: 10px;
+      width: 100%;
+      height: 152px;
+    }
+
+    .coming-soon {
+      font-style: italic;
+      opacity: 0.8;
+      margin-top: 10px;
+    }
+
+    .footer {
+      margin-top: 40px;
+      font-size: 12px;
+      opacity: 0.6;
+      text-align: center;
+    }
+
+    .button-group {
+      margin-top: 15px;
+    }
+
+    .button-group a {
+      display: inline-block;
+      background-color: #00aaff;
+      color: white;
+      text-decoration: none;
+      padding: 8px 18px;
+      border-radius: 25px;
+      margin: 5px;
+      transition: all 0.3s ease;
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    .button-group a:hover {
+      background-color: #0077cc;
+      transform: scale(1.05);
+    }
+  </style>
+</head>
+<body>
+
+  <h1>🎙️ Dingin FM Podcastleri</h1>
+  <p>Kahve molasında, sessizliğin içinden doğan sohbetler...</p>
+
+  <!-- Podcast 1 -->
+  <div class="podcast-card">
+    <h3>☕ Kahve Molasında Sohbetler</h3>
+    <p class="coming-soon">Yeni bölümler yakında burada!</p>
+
+    <!-- Spotify veya YouTube örnek embed -->
+    <!-- Şimdilik placeholder -->
+    <iframe src="https://open.spotify.com/embed/episode/2cCxr4tM5XoFzqLhYx3a3X?utm_source=generator" 
+      frameBorder="0" allowfullscreen="" 
+      allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
+
+    <div class="button-group">
+      <a href="https://open.spotify.com/" target="_blank">Spotify'da Dinle</a>
+      <a href="https://youtube.com/" target="_blank">YouTube'da Dinle</a>
+    </div>
+  </div>
+
+  <!-- Podcast 2 -->
+  <div class="podcast-card">
+    <h3>🌙 Sessizliğin Sesi</h3>
+    <p class="coming-soon">Hazırlık aşamasında...</p>
+  </div>
+
+  <div class="footer">
+    © 2025 Dingin FM — Sessizliğin Sesi Burada ☕
+  </div>
+
+</body>
+</html>
