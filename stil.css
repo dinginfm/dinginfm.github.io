@@ -1,0 +1,150 @@
+/* 🌙 DINGIN FM GENEL STİL DOSYASI */
+/* by Kuzen & DJ Aylak 🎧☕ */
+
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Poppins', sans-serif;
+  background-color: #0d1b2a; /* Dingin koyu lacivert */
+  color: #d4b483; /* Sıcak amber ton */
+  min-height: 100vh;
+  text-align: center;
+  overflow-x: hidden;
+}
+
+/* 🎧 LOGO FİLİGRAN */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: url('assets/logo.png') no-repeat center center;
+  background-size: 450px;
+  opacity: 0.07; /* Hafif saydamlık */
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* 🧭 ÜST MENÜ */
+header {
+  background-color: rgba(27, 38, 59, 0.97);
+  padding: 18px 0;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+}
+
+header h1 {
+  color: #00aaff;
+  font-size: 28px;
+  margin: 0;
+}
+
+nav {
+  margin-top: 10px;
+}
+
+nav a {
+  color: #d4b483;
+  text-decoration: none;
+  margin: 0 15px;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+nav a:hover {
+  color: #ffffff;
+}
+
+/* 🎙️ BAŞLIK VE PARAGRAFLAR */
+h2, h3 {
+  color: #00aaff;
+}
+
+p {
+  line-height: 1.6;
+  max-width: 600px;
+  margin: 10px auto;
+  font-size: 15px;
+}
+
+/* 🎛️ PODCAST KARTLARI */
+.podcast-card {
+  background-color: rgba(27, 38, 59, 0.9);
+  border-radius: 15px;
+  padding: 25px;
+  margin: 25px auto;
+  width: 320px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+  text-align: center;
+}
+
+audio {
+  width: 100%;
+  margin-top: 10px;
+  border-radius: 10px;
+}
+
+/* 📬 İLETİŞİM FORMU */
+form {
+  background-color: rgba(27, 38, 59, 0.95);
+  border-radius: 15px;
+  width: 350px;
+  margin: 30px auto;
+  padding: 25px;
+  box-shadow: 0 0 25px rgba(0, 0, 0, 0.4);
+}
+
+input, textarea {
+  width: 90%;
+  padding: 10px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 8px;
+  background-color: #1b263b;
+  color: #d4b483;
+  resize: none;
+}
+
+button {
+  background-color: #00aaff;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 10px 25px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #008ecc;
+}
+
+/* 🎚️ CANLI YAYIN OYNATICI */
+audio {
+  background-color: #1b263b;
+  border-radius: 10px;
+  padding: 5px;
+}
+
+/* 🧩 ALT KISIM */
+footer {
+  text-align: center;
+  padding: 20px;
+  font-size: 13px;
+  opacity: 0.7;
+  background-color: rgba(27, 38, 59, 0.95);
+  color: #d4b483;
+  margin-top: 60px;
+}
+
+/* 📱 MOBİL UYUMLULUK */
+@media (max-width: 600px) {
+  nav a {
+    display: inline-block;
+    margin: 8px;
+  }
+  .podcast-card, form {
+    width: 90%;
+  }
+}
