@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DinginFM — Sessizliğin Sesi Burada</title>
+<style>
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #001626;
+  font-family: 'Segoe UI', sans-serif;
+  color: #e6edf3;
+  text-align: center;
+  position: relative;
+  overflow-x: hidden;
+}
+body::before {
+  content: "";
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: url('assets/logo.png') no-repeat center center fixed;
+  background-size: 45%;
+  opacity: 0.15;
+  z-index: 0;
+}
+header {
+  background: #002743;
+  padding: 22px 0;
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  box-shadow: 0 3px 12px rgba(0,0,0,.6);
+}
+nav a {
+  color: #ffd43b;
+  text-decoration: none;
+  margin: 0 18px;
+  font-weight: bold;
+  font-size: 16px;
+  transition: color 0.3s;
+}
+nav a:hover { color: #fff; }
+
+main {
+  position: relative;
+  z-index: 1;
+  margin-top: 140px;
+}
+h1 {
+  font-size: 48px;
+  color: #ffd43b;
+  text-shadow: 2px 2px 5px rgba(0,0,0,0.7);
+}
+h2 {
+  color: #9fbdd3;
+  font-weight: normal;
+  font-size: 18px;
+  margin-top: -10px;
+}
+#status {
+  font-size: 18px;
+  font-weight: bold;
+  margin-top: 20px;
+}
+.onair { color: #00cc66; }
+.offair { color: #cc3333; }
+.btn {
+  display: inline-block;
+  margin-top: 40px;
+  padding: 14px 36px;
+  background: #ffd43b;
+  color: #001626;
+  border-radius: 8px;
+  font-weight: bold;
+  font-size: 17px;
+  text-decoration: none;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+  transition: all 0.3s;
+}
+.btn:hover {
+  background: #fff;
+  transform: scale(1.05);
+}
+.schedule {
+  margin-top: 70px;
+  color: #9fbdd3;
+  font-style: italic;
+  font-size: 16px;
+  background: rgba(2,43,71,0.6);
+  padding: 25px;
+  border-radius: 12px;
+  width: 70%;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.6;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.5);
+}
+footer {
+  margin-top: 90px;
+  background: rgba(0,0,0,0.4);
+  color: #9fbdd3;
+  padding: 10px 0;
+  font-size: 14px;
+  line-height: 1.6;
+}
+</style>
+</head>
+<body>
+<header>
+  <nav>
+    <a href="index.html">Ana Sayfa</a>
+    <a href="dj.html">DJ Aylak</a>
+    <a href="podcast.html">Podcast</a>
+    <a href="contact.html">İletişim</a>
+    <a href="admin.html">Admin</a>
+  </nav>
+</header>
+
+<main>
+  <h1>DinginFM</h1>
+  <h2>Sessizliğin Sesi Burada</h2>
+  <div id="status" class="offair">🔴 Yayın Dışı</div>
+  <a href="http://localhost:8000/live" class="btn">🎙️ Canlı Yayını Dinle</a>
+
+  <div class="schedule">
+    🎧 DinginFM’de yayın akışı plansızdır.<br>
+    DJ Aylak ne zaman isterse, o zaman başlar yayına.<br>
+    ☕ Bazı sessizlikler planlanmaz.
+  </div>
+</main>
+
+<footer>
+  © 2025 DinginFM — Sessizliğin Sesi Burada<br>
+  Tüm yayın ve içerik hakları saklıdır.
+</footer>
+
+<script>
+// test için simülasyon; ileride Icecast bağlantısına bağlanacak
+let onAir = false;
+setInterval(() => {
+  onAir = !onAir;
+  const s = document.getElementById('status');
+  if (onAir) {
+    s.textContent = "🟢 Yayında";
+    s.className = "onair";
+  } else {
+    s.textContent = "🔴 Yayın Dışı";
+    s.className = "offair";
+  }
+}, 10000);
+</script>
+</body>
+</html>
