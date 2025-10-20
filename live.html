@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dingin FM — Live</title>
+<link rel="stylesheet" href="stil.css">
+<style>
+body {background:#001626; color:#e6edf3; font-family:'Segoe UI',sans-serif; text-align:center; margin:0;}
+header {background:#002743; padding:25px 10px; box-shadow:0 3px 10px rgba(0,0,0,.5);}
+h1 {color:#ffd43b;}
+a {color:#ffd43b; text-decoration:none;}
+footer {margin-top:60px; color:#9fbdd3;}
+audio {margin-top:40px;}
+</style>
+</head>
+<body>
+<header>
+  <h1>📡 DINGIN FM — LIVE</h1>
+  <nav>
+    <a href="index.html">Home</a> |
+    <a href="connect.html">Connect</a> |
+    <a href="admin.html">Admin</a>
+  </nav>
+</header>
+
+<main>
+  <audio controls autoplay>
+    <source src="http://localhost:8000/live.mp3" type="audio/mpeg">
+    Your browser does not support audio playback.
+  </audio>
+  <p style="margin-top:25px;">Now streaming from the heart of silence 🎶</p>
+  <p><a href="index.html">← Back to Home</a></p>
+</main>
+
+<footer>
+  © 2025 Dingin FM — The Sound of Silence
+</footer>
+</body>
+</html>
