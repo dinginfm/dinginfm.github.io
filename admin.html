@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DinginFM — DJ Aylak Yönetim Paneli</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="logo-bg"></div>
+
+<header>
+  <h1>🎧 DinginFM — DJ Aylak Yönetim Paneli</h1>
+  <h2>Sessizliğin Sesi Burada</h2>
+</header>
+
+<main>
+  <section>
+    <h3>📡 Yayın Durumu: 
+      <span id="status" style="color:#ff6b6b;">OFF AIR</span> | 
+      <span id="icecast-status" style="color:#bbb;">Bağlantı: Kontrol ediliyor...</span>
+    </h3>
+    <p>🎙️ Dinleyici: <span id="listeners">0</span> | Bitrate: 128 kbps | Şarkı: <span id="currentSong">Belirtilmedi</span></p>
+
+    <div class="panel-buttons">
+      <button class="btn" onclick="toggleBroadcast()">Yayını Aç / Kapat</button>
+      <button class="btn" onclick="openIcecast()">Icecast Paneli</button>
+      <button class="btn" onclick="window.location.href='live.html'">Canlı Yayın</button>
+      <button class="btn" onclick="window.location.href='connect.html'">Dinleyici Mesajları</button>
+      <button class="btn" onclick="window.location.href='podcast.html'">Podcast</button>
+      <button class="btn" onclick="window.location.href='dj.html'">DJ Sayfası</button>
+      <button class="btn" onclick="window.location.href='tarihce.html'">Tarihçe</button>
+      <button class="btn" onclick="window.location.href='blog.html'">Blog</button>
+    </div>
+  </section>
+
+  <section class="stat-box">
+    <h3>📊 Yayın İstatistikleri</h3>
+    <table>
+      <tr><th>Parametre</th><th>Değer</th></tr>
+      <tr><td>Toplam Dinleyici</td><td id="totalListeners">0</td></tr>
+      <tr><td>Peak (En Yüksek)</td><td id="peakListeners">0</td></tr>
+      <tr><td>Toplam Süre</td><td id="totalHours">0 saat</td></tr>
+      <tr><td>Son Güncelleme</td><td id="lastUpdate">—</td></tr>
+    </table>
+  </section>
+
+  <section class="message-box">
+    <h3>💬 Dinleyici Mesajları</h3>
+    <form onsubmit="simulateNewMessage(event)">
+      <input type="text" id="msgName" placeholder="Adınız">
+      <textarea id="msgText" placeholder="Mesajınız..."></textarea>
+      <button type="submit" class="btn">Gönder</button>
+    </form>
+  </section>
+</main>
+
+<footer>
+  <p>© 2025 DinginFM — Tüm yayın ve içerik hakları saklıdır.</p>
+</footer>
+
+<audio id="notifySound" src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_698b8f343e.mp3?filename=notification-1-126505.mp3" preload="auto"></audio>
+
+<script>
+let isOnAir = false;
+let totalHours = 0;
+
+/* 🔴🟢 Bağlantı kontrolü */
+async function checkIcecast() {
+  const statusEl = document.getElementById("icecast-status");
+  try {
+    const res = await fetch("http://localhost:8000", { method: "HEAD" });
+    if (res.ok) {
+      statusEl.textContent = "Bağlantı Aktif 🔵";
+      statusEl.style.color = "#00ff88";
+    } else {
+      statusEl.textContent = "Bağlantı Kapalı 🔴";
+      statusEl.style.color = "#ff6b6b";
+    }
+  } catch (e) {
+    statusEl.textContent = "Bağlantı Kapalı 🔴";
+    statusEl.style.color = "#ff6b6b";
+  }
+}
+setInterval(checkIcecast, 10000); // 10 saniyede bir kontrol et
+checkIcecast();
+
+/* 🎚️ Yayın ON/OFF */
+function toggleBroadcast() {
+  const s = document.getElementById("status");
+  if (!isOnAir) {
+    s.style.color = "#00ff88";
+    s.textContent = "ON AIR";
+    simulateListeners();
+  } else {
+    s.style.color = "#ff6b6b";
+    s.textContent = "OFF AIR";
+  }
+  isOnAir = !isOnAir;
+}
+
+/* 👂 Dinleyici sayısı simülasyonu */
+function simulateListeners() {
+  const l = document.getElementById("listeners");
+  const peakEl = document.getElementById("peakListeners");
+  const totalEl = document.getElementById("totalListeners");
+  const upd = document.getElementById("lastUpdate");
+  const hours = document.getElementById("totalHours");
+
+  const count = Math.floor(Math.random() * 30) + 5;
+  l.textContent = count;
+  peakEl.textContent = Math.max(count, Number(peakEl.textContent));
+  totalEl.textContent = Number(totalEl.textContent) + count;
+  hours.textContent = (totalHours += 1) + " saat";
+  upd.textContent = new Date().toLocaleTimeString("tr-TR");
+}
+
+/* 📩 Yeni mesaj geldiğinde ses çal */
+function simulateNewMessage(e) {
+  e.preventDefault();
+  const name = document.getElementById("msgName").value;
+  const text = document.getElementById("msgText").value;
+  if (name && text) {
+    const audio = document.getElementById("notifySound");
+    audio.currentTime = 0;
+    audio.play();
+    alert(`📨 Yeni Mesaj: ${name} - "${text}"`);
+    document.getElementById("msgName").value = "";
+    document.getElementById("msgText").value = "";
+  } else {
+    alert("Lütfen adınızı ve mesajınızı girin.");
+  }
+}
+
+/* 🔗 Icecast paneli */
+function openIcecast() {
+  window.open("http://localhost:8000", "_blank");
+}
+</script>
+
+</body>
+</html>
