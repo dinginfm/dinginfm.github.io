@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DinginFM — DJ Aylak Yönetim Paneli</title>
+<link rel="stylesheet" href="stil.css">
+</head>
+
+<body>
+
+<header>
+  <h1>🎧 DinginFM — DJ Aylak Yönetim Paneli</h1>
+  <h2>Sessizliğin Sesi Burada</h2>
+</header>
+
+<section>
+  <h3>📡 Yayın Durumu <span id="status" class="status off">OFF AIR</span></h3>
+  <p>Anlık: <span id="anlik">0</span> | Peak: <span id="peak">0</span> | Bitrate: 128 kbps | Şarkı: —</p>
+
+  <div class="buton-grup">
+    <button onclick="window.open('http://localhost:8000','_blank')">Icecast Paneli</button>
+    <button id="yayiniBaslat" onclick="yayiniBaslat()">Canlı Yayını Başlat</button>
+    <button id="yayiniDurdur" onclick="yayiniDurdur()">Canlı Yayını Durdur</button>
+    <button onclick="yeniMesaj()">Mesajlar</button>
+  </div>
+</section>
+
+<footer>
+  © 2025 DinginFM — Tüm yayın ve içerik hakları saklıdır.
+</footer>
+
+<!-- 📢 Ses Efekti -->
+<audio id="mesajSesi" src="https://assets.mixkit.co/sfx/preview/mixkit-software-interface-start-2574.mp3"></audio>
+
+<script>
+function yayiniBaslat() {
+  const status = document.getElementById("status");
+  status.textContent = "ON AIR";
+  status.classList.remove("off");
+  status.classList.add("on");
+}
+
+function yayiniDurdur() {
+  const status = document.getElementById("status");
+  status.textContent = "OFF AIR";
+  status.classList.remove("on");
+  status.classList.add("off");
+}
+
+function yeniMesaj() {
+  const ses = document.getElementById("mesajSesi");
+  ses.play();
+  alert("📢 Yeni mesaj var DJ Aylak!");
+}
+</script>
+
+</body>
+</html>
