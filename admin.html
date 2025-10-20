@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DinginFM — DJ Aylak Yönetim Paneli</title>
+<style>
+  body {
+    background:#001626;
+    color:#e6edf3;
+    font-family:'Segoe UI',sans-serif;
+    margin:0;
+    text-align:center;
+  }
+  header {
+    background:#002743;
+    padding:28px 10px;
+    box-shadow:0 3px 12px rgba(0,0,0,.6);
+  }
+  h1 {color:#ffd43b; margin:0; font-size:28px;}
+  h2 {color:#9fbdd3; font-weight:normal; font-size:15px; margin-top:6px;}
+  .panel {
+    max-width:950px;
+    margin:30px auto;
+    background:#022b47;
+    border-radius:14px;
+    padding:25px;
+    box-shadow:0 4px 14px rgba(0,0,0,.5);
+  }
+  .status {
+    display:inline-block;
+    margin-top:10px;
+    padding:8px 20px;
+    border-radius:10px;
+    font-weight:bold;
+    font-size:16px;
+  }
+  .off {background:#c0392b; color:#fff;}
+  .on {background:#27ae60; color:#fff;}
+  .info {
+    display:flex;
+    justify-content:space-around;
+    flex-wrap:wrap;
+    margin-top:25px;
+  }
+  .info-box {
+    background:#013458;
+    border-radius:10px;
+    padding:15px;
+    width:180px;
+    margin:8px;
+    box-shadow:0 2px 8px rgba(0,0,0,.4);
+  }
+  .info-box h3 {
+    margin:0;
+    font-size:15px;
+    color:#ffd43b;
+  }
+  .info-box p {
+    margin:6px 0 0;
+    font-size:18px;
+    font-weight:bold;
+  }
+  .btn-group {
+    margin-top:35px;
+  }
+  a.button {
+    display:inline-block;
+    margin:8px;
+    padding:12px 22px;
+    border-radius:10px;
+    text-decoration:none;
+    font-weight:bold;
+    color:#fff;
+    transition:0.25s;
+  }
+  a.live {background:#ffd43b; color:#001626;}
+  a.icecast {background:#007bff;}
+  a.msg {background:#9b59b6;}
+  a.platform {background:#16a085;}
+  a.button:hover {transform:scale(1.05); opacity:0.9;}
+  footer {
+    margin-top:40px;
+    padding:20px;
+    color:#708090;
+    font-size:14px;
+  }
+</style>
+</head>
+
+<body>
+  <header>
+    <h1>DinginFM — DJ Aylak Yönetim Paneli</h1>
+    <h2>Sessizliğin Sesi Burada</h2>
+  </header>
+
+  <section class="panel">
+    <div id="status" class="status off">🔴 OFF AIR</div>
+
+    <div class="info">
+      <div class="info-box">
+        <h3>Anlık Dinleyici</h3><p id="listeners">0</p>
+      </div>
+      <div class="info-box">
+        <h3>Peak</h3><p id="peak">0</p>
+      </div>
+      <div class="info-box">
+        <h3>Bitrate</h3><p id="bitrate">—</p>
+      </div>
+      <div class="info-box">
+        <h3>Şarkı / Yayın</h3><p id="song">—</p>
+      </div>
+    </div>
+
+    <div class="btn-group">
+      <a href="https://marcelo-nonrotational-elke.ngrok-free.dev" class="button icecast" target="_blank">🔗 Icecast Paneli</a>
+      <a href="#" class="button live" onclick="manualRefresh()">🔴 Canlı Yayını Yenile</a>
+      <a href="#" class="button msg">💬 Mesajlar</a>
+      <a href="#" class="button platform">🎵 Platformlar</a>
+    </div>
+  </section>
+
+  <footer>
+    © 2025 Dingin FM | Tüm Hakları Saklıdır<br>
+    <small>DJ Aylak tarafından yönetilmektedir ☕🎧</small>
+  </footer>
+
+<script>
+const STATUS_URL = "https://marcelo-nonrotational-elke.ngrok-free.dev/status-json.xsl";
+const STREAM_URL = "https://marcelo-nonrotational-elke.ngrok-free.dev/live.mp3";
+
+async function fetchStatus() {
+  try {
+    const response = await fetch(STATUS_URL);
+    if (!response.ok) throw new Error("Bağlantı kurulamadı");
+    const data = await response.json();
+    const source = data.icestats.source;
+
+    // Güncelleme
+    document.getElementById("listeners").innerText = source.listeners ?? 0;
+    document.getElementById("peak").innerText = source.listener_peak ?? 0;
+    document.getElementById("bitrate").innerText = source.bitrate ? source.bitrate + " kbps" : "—";
+    document.getElementById("song").innerText = source.title ?? "—";
+
+    // Yayın durumu
+    const statusEl = document.getElementById("status");
+    if (source.listeners >= 0) {
+      statusEl.classList.remove("off");
+      statusEl.classList.add("on");
+      statusEl.innerText = "🟢 ON AIR";
+    } else {
+      statusEl.classList.remove("on");
+      statusEl.classList.add("off");
+      statusEl.innerText = "🔴 OFF AIR";
+    }
+  } catch (error) {
+    console.log("Durum alınamadı:", error);
+    const statusEl = document.getElementById("status");
+    statusEl.classList.remove("on");
+    statusEl.classList.add("off");
+    statusEl.innerText = "🔴 OFF AIR";
+  }
+}
+
+// Manuel yenileme butonu
+function manualRefresh() {
+  document.getElementById("status").innerText = "⏳ Güncelleniyor...";
+  fetchStatus();
+}
+
+// İlk çalıştırma + 10 saniyede bir yenile
+fetchStatus();
+setInterval(fetchStatus, 10000);
+</script>
+</body>
+</html>
