@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dingin FM — Yönetim Paneli</title>
+  <link rel="stylesheet" href="stil.css">
+</head>
+<body>
+  <section id="admin-panel" style="text-align:center; margin-top:80px;">
+    <h1>🎧 Dingin FM — Yönetim Paneli</h1>
+    <p>Sessizliğin Sesi Burada Başlar ☕</p>
+
+    <div id="statusBox" style="margin:20px auto; padding:20px; width:50%; background:#0a1b2b; border-radius:10px;">
+      <h2>📡 Yayın Durumu</h2>
+      <p id="statusPill" class="pill off">OFF AIR</p>
+      <p>Dinleyici Sayısı: <span id="listenerCount">0</span></p>
+      <p><a id="statusLink" href="#" target="_blank" style="color:#facc15;">Icecast Yönetim Panelini Aç</a></p>
+    </div>
+
+    <div id="messagesBox" style="margin:40px auto; width:60%; background:#0a1b2b; border-radius:10px; padding:15px;">
+      <h3>💬 Dinleyici Mesajları</h3>
+      <ul id="msgList" style="list-style:none; padding:0; color:#ddd; font-size:14px;"></ul>
+    </div>
+
+    <div id="linksBox" style="margin-top:30px;">
+      <h3>🎵 Yayın Platformları</h3>
+      <a href="https://open.spotify.com" target="_blank" style="color:#1DB954;">Spotify</a> |
+      <a href="https://www.youtube.com" target="_blank" style="color:#FF0000;">YouTube</a> |
+      <a href="podcast.html" style="color:#facc15;">Podcast</a>
+    </div>
+
+    <p style="margin-top:40px; font-size:12px; color:#aaa;">
+      © 2025 Dingin FM — Sessizliğin Sesi Burada ☕<br>
+      Tüm yayın, içerik ve görsel hakları saklıdır.
+    </p>
+  </section>
+
+  <audio id="ping" src="assets/ping.mp3" preload="auto"></audio>
+
+  <script>
+    // 🌐 Ngrok adresini buradan değiştir (her tünel yenilendiğinde)
+    const NGROK_BASE = "https://dinginfm.ngrok-free.dev";
+
+    // 🔄 Icecast durumunu güncelle
+    async function updateStats() {
+      try {
+        const res = await fetch(`${NGROK_BASE}/status-json.xsl`);
+        const data = await res.json();
+        const src = data.icestats.source;
+        const pill = document.getElementById("statusPill");
+        const listeners = src.listeners || 0;
+
+        document.getElementById("listenerCount").textContent = listeners;
+        document.getElementById("statusLink").href = `${NGROK_BASE}/status.xsl`;
+
+        if (listeners > 0) {
+          pill.textContent = "ON AIR 🎙️";
+          pill.className = "pill on";
+        } else {
+          pill.textContent = "OFF AIR";
+          pill.className = "pill off";
+        }
+      } catch (e) {
+        document.getElementById("statusPill").textContent = "OFFLINE ❌";
+        document.getElementById("statusPill").className = "pill off";
+      }
+    }
+
+    setInterval(updateStats, 15000);
+    updateStats();
+
+    // 💬 Mesajları yükle
+    async function loadMessages() {
+      try {
+        const res = await fetch("messages.json?t=" + Date.now());
+        const msgs = await res.json();
+        const list = document.getElementById("msgList");
+        list.innerHTML = "";
+
+        msgs.forEach(m => {
+          const li = document.createElement("li");
+          li.textContent = `${m.name}: ${m.text}`;
+          list.appendChild(li);
+        });
+
+        if (msgs.length > 0) document.getElementById("ping").play().catch(()=>{});
+      } catch(e) {
+        console.warn("Mesajlar yüklenemedi.");
+      }
+    }
+
+    setInterval(loadMessages, 20000);
+    loadMessages();
+  </script>
+</body>
+</html>
