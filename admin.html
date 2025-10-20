@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dingin FM — Yönetim Paneli</title>
+<style>
+  :root{
+    --bg:#001829; --card:#022540; --muted:#003153; --text:#e6f0ff; --sub:#a8c0d7;
+    --acc:#ffcc33; --ok:#22c55e; --warn:#f59e0b; --err:#ef4444; --shadow:rgba(0,0,0,.35);
+  }
+  *{box-sizing:border-box} body{margin:0; background:var(--bg); color:var(--text);
+    font:16px/1.5 "Segoe UI",system-ui,-apple-system,sans-serif; padding:28px 14px}
+  h1{margin:0 0 6px; font-size:28px; color:var(--acc); text-align:center}
+  .tag{color:var(--sub); text-align:center; margin:0 0 24px}
+  .wrap{max-width:1100px; margin:0 auto; display:grid; gap:16px; grid-template-columns: 1.1fr .9fr}
+  @media(max-width:900px){.wrap{grid-template-columns:1fr}}
+  .card{background:var(--card); border:1px solid var(--muted); border-radius:14px; box-shadow:0 6px 24px var(--shadow); padding:18px}
+  .card h2{margin:0 0 10px; font-size:18px; color:#cfe6ff}
+  .row{display:flex; gap:12px; flex-wrap:wrap}
+  .stat{flex:1 1 180px; background:var(--muted); border-radius:12px; padding:14px}
+  .stat b{display:block; color:var(--acc); font-size:14px}
+  .value{font-size:22px; margin-top:4px}
+  .btn{display:inline-block; padding:12px 18px; border-radius:10px; font-weight:700; text-decoration:none; background:var(--muted); color:var(--acc); border:1px solid #0d3950}
+  .btn:hover{background:#084766; color:#fff}
+  .btn-danger{background:var(--err); color:#fff; border:none}
+  .links a{margin-right:10px}
+  .dim{color:var(--sub); font-size:13px}
+  footer{margin-top:22px; text-align:center; color:var(--sub); font-size:13px}
+  .messages ul{list-style:none; margin:10px 0 0; padding:0}
+  .messages li{background:var(--muted); margin:8px 0; padding:10px 12px; border-radius:10px}
+  .pill{display:inline-block; padding:3px 8px; border-radius:999px; font-size:12px; vertical-align:middle}
+  .pill.on{background:rgba(34,197,94,.18); color:#86efac; border:1px solid #14532d}
+  .pill.off{background:rgba(239,68,68,.18); color:#fecaca; border:1px solid #7f1d1d}
+  .top-actions{display:flex; gap:10px; flex-wrap:wrap; align-items:center}
+  dialog{border:none; border-radius:14px; padding:0; max-width:680px; width:calc(100% - 24px); background:#0a1f33; color:var(--text)}
+  dialog header{padding:16px 18px; border-bottom:1px solid var(--muted); font-weight:700}
+  dialog .content{padding:16px 18px}
+  dialog .content ol{margin:0 0 0 18px}
+  dialog .actions{display:flex; justify-content:flex-end; gap:10px; padding:16px 18px; border-top:1px solid var(--muted)}
+  code,kbd{background:#0b2a43; padding:2px 6px; border-radius:6px; font-size:92%}
+</style>
+</head>
+<body>
+  <h1>🎧 Dingin FM — Yönetim Paneli</h1>
+  <p class="tag">Sessizliğin Sesi Burada Başlar ☕</p>
+
+  <div class="wrap">
+    <!-- SOL SÜTUN -->
+    <section class="card" id="liveCard">
+      <h2>📡 Canlı Yayın Durumu <span id="pill" class="pill off">OFF AIR</span></h2>
+      <div class="top-actions">
+        <a class="btn" id="statusLink" href="https://marcelo-nonrotational-elke.ngrok-free.dev/status.xsl" target="_blank">Icecast Panelini Aç</a>
+        <a class="btn" href="https://dinginfm.github.io/live.html" target="_blank">Dinleyici Sayfasını Aç</a>
+        <button class="btn" id="goLiveBtn">🔴 Canlı Yayına Bağlan</button>
+      </div>
+      <p class="dim" id="lastUpdate">Son güncelleme: —</p>
+      <div class="row">
+        <div class="stat"><b>Dinleyici (Anlık)</b><div class="value" id="v_current">0</div></div>
+        <div class="stat"><b>Dinleyici (Peak)</b><div class="value" id="v_peak">0</div></div>
+        <div class="stat"><b>Bitrate</b><div class="value" id="v_bitrate">—</div></div>
+        <div class="stat"><b>Mount</b><div class="value" id="v_mount">/live.mp3</div></div>
+      </div>
+      <div class="row" style="margin-top:10px">
+        <div class="stat"><b>Başlangıç</b><div class="value" id="v_started">—</div></div>
+        <div class="stat"><b>Başlık</b><div class="value" id="v_title">—</div></div>
+      </div>
+      <p class="dim">Not: Ngrok adresin her açılışta değişirse, yukarıdaki “Icecast Panelini Aç” linkini güncelle.</p>
+    </section>
+
+    <!-- SAĞ SÜTUN -->
+    <section class="card">
+      <h2>🎵 Bağlantılar</h2>
+      <div class="links">
+        <a class="btn" href="https://youtube.com" target="_blank">▶️ YouTube</a>
+        <a class="btn" href="https://spotify.com" target="_blank">🎧 Spotify</a>
+        <a class="btn" href="https://dinginfm.github.io/podcast.html" target="_blank">🎙️ Podcast</a>
+      </div>
+      <hr style="border-color:var(--muted); margin:16px 0">
+      <h2>📩 Dinleyici Mesajları</h2>
+      <div class="messages">
+        <ul id="messageList"><li class="dim">Henüz mesaj yok…</li></ul>
+        <div class="top-actions">
+          <button class="btn" id="refreshMsg">Mesajları Yenile</button>
+          <button class="btn btn-danger" id="markRead">Hepsini Okundu Say</button>
+        </div>
+        <p class="dim">Yeni mesaj geldiğinde kısa bir ses çalar.</p>
+      </div>
+    </section>
+  </div>
+
+  <footer>© 2025 Dingin FM — Sessizliğin Sesi Burada ☕ • Tüm yayın, içerik ve görsel hakları saklıdır.</footer>
+
+  <!-- Mixxx → Icecast rehberi (butonla açılan pencere) -->
+  <dialog id="liveDialog">
+    <header>🔴 Canlı Yayına Bağlan — Hızlı Rehber</header>
+    <div class="content">
+      <ol>
+        <li><b>Icecast</b>’i başlat: <kbd>icecast -c icecast.xml</kbd> (port <b>8000</b>)</li>
+        <li><b>Ngrok</b> tüneli: <kbd>ngrok http 8000</kbd> → çıkan adresi (örn. <code>https://…ngrok-free.dev</code>) yukarıdaki linke yaz.</li>
+        <li><b>Mixxx → Live Broadcasting</b>: Type=Icecast2, Host=<code>127.0.0.1</code>, Port=8000, Mount=<code>/live.mp3</code>, User=<code>source</code>, Password=<i>xml’deki</i></li>
+        <li><b>Sound Hardware</b>: Master Output=<code>VB-Audio Cable Input</code>, Headphones=<i>kulaklığın</i></li>
+        <li>Spotify/Chrome çıkışı=<code>VB-Audio Cable Output</code> → Mixxx’te VU metre hareket ediyorsa <b>Connect</b>.</li>
+      </ol>
+    </div>
+    <div class="actions">
+      <button class="btn" id="closeDialog">Kapat</button>
+      <a class="btn" href="https://marcelo-nonrotational-elke.ngrok-free.dev/status.xsl" target="_blank">Icecast Paneli</a>
+    </div>
+  </dialog>
+
+  <!-- Ping sesi (base64, dış bağımlılık yok) -->
+  <audio id="ping" preload="auto"
+    src="data:audio/ogg;base64,T2dnUwACAAAAAAAAAABp7bQkAAAAABYF6HcBHgF2b3JiaXMAAAAAAkSsAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA">
+  </audio>
+
+<script>
+/* ====== AYARLAR (burayı güncelleyebilirsin) ====== */
+const NGROK_BASE = "https://marcelo-nonrotational-elke.ngrok-free.dev"; // aktif tünelin
+const STATUS_JSON = NGROK_BASE + "/status-json.xsl";
+const STATUS_XSL  = NGROK_BASE + "/status.xsl";
+const MOUNT       = "/live.mp3";
+
+/* ====== LİVE STATS ====== */
+const el = (id)=>document.getElementById(id);
+el("statusLink").href = STATUS_XSL;
+el("v_mount").textContent = MOUNT;
+
+let lastMsgCount = 0;
+
+async function refreshStats(){
+  try{
+    const res = await fetch(STATUS_JSON + "?t=" + Date.now(), {mode:"cors"});
+    const data = await res.json();
+    // source tek obje veya dizi olabilir
+    let src = data.icestats.source;
+    if (Array.isArray(src)) {
+      src = src.find(s => (s.listenurl||"").endsWith(MOUNT)) || src[0];
+    }
+    if (!src){ throw new Error("No source"); }
+
+    const onAir = !!(src.listeners != null);
+    el("pill").textContent = onAir ? "ON AIR" : "OFF AIR";
+    el("pill").className = "pill " + (onAir ? "on" : "off");
+
+    el("v_current").textContent = src.listeners ?? 0;
+    el("v_peak").textContent    = src.listener_peak ?? (src.listener_peak === 0 ? 0 : "—");
+    el("v_bitrate").textContent = src.bitrate ? (src.bitrate + " kbps") : (src.audio_info || "—");
+    el("v_title").textContent   = src.title || "—";
+    el("v_started").textContent = src.stream_start_iso8601 || src.stream_start || "—";
+    el("lastUpdate").textContent = "Son güncelleme: " + new Date().toLocaleTimeString("tr-TR");
+  }catch(e){
+    el("pill").textContent = "OFF AIR";
+    el("pill").className = "pill off";
+    el("v_current").textContent = "0";
+    el("v_peak").textContent = "0";
+    el("v_bitrate").textContent = "—";
+    el("v_title").textContent = "—";
+    el("v_started").textContent = "—";
+    el("lastUpdate").textContent = "Bağlantı yok";
+  }
+}
+
+/* ====== MESAJLAR + PİNG ======
+   messages.json dosyası eklersen (repo köküne), örnek format:
+   [
+     {"name":"Zeynep","text":"Yayın harika!"},
+     {"name":"Ali","text":"DJ Aylak selamlar!"}
+   ]
+*/
+async function refreshMessages(manual=false){
+  const list = el("messageList");
+  try{
+    const r = await fetch("messages.json?t=" + Date.now());
+    if (!r.ok) throw new Error("no messages.json");
+    const msgs = await r.json();
+    list.innerHTML = "";
+    msgs.forEach(m=>{
+      const li = document.createElement("li");
+      li.textContent = (m.name? m.name+": " : "") + (m.text||"");
+      list.appendChild(li);
+    });
+    // yeni mesaj sesi
+    if (!manual && msgs.length > lastMsgCount){
+      el("ping").currentTime = 0;
+      el("ping").play().catch(()=>{/* otomatik çalma kısıtlaması olabilir */});
+    }
+    lastMsgCount = msgs.length;
+  }catch(e){
+    // demo veri (messages.json yoksa)
+    const demo = [
+      {name:"Demo", text:"Mesaj kutusu hazır. messages.json ekleyince canlı çalışır."}
+    ];
+    list.innerHTML = "";
+    demo.forEach(m=>{
+      const li = document.createElement("li");
+      li.textContent = m.name + ": " + m.text;
+      list.appendChild(li);
+    });
+    lastMsgCount = demo.length;
+  }
+}
+
+/* ====== DİYALOG ====== */
+const dlg = document.getElementById("liveDialog");
+document.getElementById("goLiveBtn").addEventListener("click", ()=>dlg.showModal());
+document.getElementById("closeDialog").addEventListener("click", ()=>dlg.close());
+
+/* ====== BUTONLAR ====== */
+document.getElementById("refreshMsg").addEventListener("click", ()=>refreshMessages(true));
+document.getElementById("markRead").addEventListener("click", ()=>{
+  lastMsgCount = 0;
+});
+
+/* ====== DÖNGÜ ====== */
+refreshStats();
+refreshMessages();
+setInterval(refreshStats, 15000);
+setInterval(refreshMessages, 15000);
+</script>
+</body>
+</html>
