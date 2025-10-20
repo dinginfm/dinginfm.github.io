@@ -1,0 +1,109 @@
+/* 🌙 GENEL GÖRÜNÜM */
+body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #001a2d;
+  background-image: url('assets/logo.png'); /* LOGO SAYDAM ARKAPLAN */
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  color: #e6edf3;
+  text-align: center;
+}
+
+/* 🔹 ÜST BAŞLIK */
+header {
+  background: rgba(0, 39, 67, 0.9);
+  padding: 25px 10px;
+  box-shadow: 0 3px 12px rgba(0,0,0,.6);
+  border-bottom: 1px solid #113a5f;
+}
+h1 {
+  color: #ffd43b;
+  font-size: 26px;
+  margin: 0;
+}
+h2 {
+  color: #9fbdd3;
+  font-weight: normal;
+  font-size: 15px;
+  margin-top: 6px;
+}
+
+/* 🎚️ YAYIN PANELİ */
+section {
+  max-width: 950px;
+  margin: 40px auto;
+  background: rgba(2, 43, 71, 0.8);
+  border-radius: 14px;
+  padding: 25px;
+  box-shadow: 0 0 20px rgba(0,0,0,.4);
+  border: 1px solid rgba(255,255,255,0.08);
+}
+
+/* 🟢 YAYIN DURUMU */
+.status {
+  padding: 5px 14px;
+  border-radius: 6px;
+  font-weight: bold;
+  transition: all 0.3s ease;
+  display: inline-block;
+}
+.status.off {
+  color: #fff;
+  background: #b00020;
+}
+.status.on {
+  color: #fff;
+  background: #00c853;
+  box-shadow: 0 0 20px #00ff88;
+  animation: pulse 1.5s infinite alternate;
+}
+@keyframes pulse {
+  from { box-shadow: 0 0 10px #00ff88; }
+  to { box-shadow: 0 0 25px #00ff88; }
+}
+
+/* 🟨 BUTONLAR */
+button {
+  background: #ffd43b;
+  border: none;
+  border-radius: 6px;
+  padding: 10px 18px;
+  margin: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  color: #001626;
+  transition: all 0.3s;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+}
+button:hover {
+  background: #ffcc00;
+  transform: scale(1.05);
+}
+button:active {
+  background: #ffe47a;
+}
+.buton-grup {
+  margin-top: 20px;
+}
+
+/* 💬 MESAJ ALERT STİLİ */
+.alert {
+  margin-top: 20px;
+  background: rgba(255,212,59,0.1);
+  border: 1px solid rgba(255,212,59,0.4);
+  border-radius: 8px;
+  padding: 15px;
+  font-size: 14px;
+  display: none;
+}
+
+/* 📜 ALT KISIM */
+footer {
+  margin-top: 50px;
+  font-size: 12px;
+  color: #9fb2c3;
+  text-shadow: 0 0 4px rgba(0,0,0,0.4);
+}
