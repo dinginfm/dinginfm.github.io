@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DinginFM — DJ Aylak Yönetim Paneli</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="logo-bg"></div>
+
+<header>
+  <h1>🎧 DinginFM — DJ Aylak Yönetim Paneli</h1>
+  <h2>Sessizliğin Sesi Burada</h2>
+</header>
+
+<main>
+  <!-- Yayın Durumu -->
+  <section>
+    <h3>📡 Yayın Durumu: <span id="status-info" class="status">Kontrol ediliyor...</span></h3>
+    <p>Anlık Dinleyici: <span id="listener-count">0</span> | Peak: <span id="peak-count">0</span> | Bitrate: 128 kbps</p>
+    <button class="btn" onclick="startBroadcast()">Yayını Aç / Kapat</button>
+  </section>
+
+  <!-- Medya Yükleme -->
+  <section>
+    <h3>🎵 Medya Yükleme</h3>
+    <input type="text" id="spotify" placeholder="Spotify linkini yapıştır">
+    <button class="btn" onclick="openSpotify()">Spotify Ekle</button><br>
+    <input type="text" id="youtube" placeholder="YouTube linkini yapıştır">
+    <button class="btn" onclick="openYouTube()">YouTube Ekle</button><br>
+    <input type="file" id="podcastFile">
+    <button class="btn" onclick="uploadPodcast()">Podcast Yükle</button>
+  </section>
+
+  <!-- Yayın İstatistikleri -->
+  <section class="stat-box">
+    <h3>📊 Yayın İstatistikleri</h3>
+    <table>
+      <tr><th>Parametre</th><th>Değer</th></tr>
+      <tr><td>Toplam Dinleyici</td><td id="totalListeners">0</td></tr>
+      <tr><td>Peak Dinleyici</td><td id="peakListeners">0</td></tr>
+      <tr><td>Toplam Yayın Süresi</td><td id="totalHours">0 saat</td></tr>
+      <tr><td>Son Güncelleme</td><td id="lastUpdate">—</td></tr>
+    </table>
+  </section>
+
+  <!-- Dinleyici Mesajları -->
+  <section class="message-box">
+    <h3>💬 Dinleyici Mesajları</h3>
+    <form onsubmit="sendMessage(event)">
+      <input type="text" id="name" placeholder="Adınız" required>
+      <textarea id="message" placeholder="Mesajınız..." required></textarea>
+      <button type="submit" class="btn">Gönder</button>
+    </form>
+  </section>
+
+</main>
+
+<footer>
+  © 2025 DinginFM — Tüm yayın ve içerik hakları saklıdır.  
+  🎙️ "Burada sessizliğin sesi var."
+</footer>
+
+<audio id="msgSound" src="https://actions.google.com/sounds/v1/alarms/beep_short.ogg"></audio>
+
+<script>
+// --- Spotify ve YouTube bağlantıları ---
+function openSpotify() {
+  const link = document.getElementById('spotify').value;
+  if (link) window.open(link, '_blank');
+  else alert('Spotify linki boş olamaz!');
+}
+function openYouTube() {
+  const link = document.getElementById('youtube').value;
+  if (link) window.open(link, '_blank');
+  else alert('YouTube linki boş olamaz!');
+}
+function uploadPodcast() {
+  const file = document.getElementById('podcastFile').files[0];
+  if (file) alert(`🎙️ Podcast "${file.name}" yüklendi (örnek simülasyon).`);
+  else alert('Lütfen bir dosya seçin.');
+}
+
+// --- Icecast Durum Kontrolü ---
+async function checkIcecastStatus() {
+  const statusElement = document.getElementById("status-info");
+  try {
+    const res = await fetch("http://localhost:8000/status-json.xsl");
+    if (!res.ok) throw new Error("Bağlantı yok");
+    const data = await res.json();
+    const src = data.icestats.source || {};
+    document.getElementById("listener-count").innerText = src.listeners || 0;
+    document.getElementById("peak-count").innerText = src.listener_peak || 0;
+    statusElement.innerHTML = "🔵 Aktif";
+    statusElement.classList.add("onair");
+  } catch {
+    statusElement.innerHTML = "🔴 Kapalı";
+    statusElement.classList.remove("onair");
+  }
+}
+setInterval(checkIcecastStatus, 5000);
+checkIcecastStatus();
+
+// --- Yayını Aç/Kapat Komutu (Simülasyon) ---
+function startBroadcast() {
+  alert("🎧 Yayın başlatılıyor... Icecast ve Ngrok çalıştırılmalı!");
+}
+
+// --- Mesaj Bildirimi ---
+function sendMessage(event) {
+  event.preventDefault();
+  const name = document.getElementById("name").value;
+  const msg = document.getElementById("message").value;
+  if (name && msg) {
+    document.getElementById("msgSound").play();
+    alert(`📩 ${name}: ${msg}`);
+  }
+}
+</script>
+
+</body>
+</html>
