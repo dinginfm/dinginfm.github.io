@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DinginFM — DJ Aylak Yönetim Paneli</title>
+<link rel="stylesheet" href="style.css">
+<style>
+/* Butonlar düzgün dizilsin */
+.panel-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+/* Yayın durumu göstergesi */
+.status {
+  font-weight: bold;
+  padding: 6px 12px;
+  border-radius: 8px;
+  display: inline-block;
+  background-color: #440000;
+  color: #ff6b6b;
+  box-shadow: 0 0 10px rgba(255,0,0,0.3);
+}
+.status.onair {
+  background-color: #004400;
+  color: #00ff88;
+  box-shadow: 0 0 10px rgba(0,255,150,0.4);
+}
+
+/* Mesaj alanı */
+.message-box {
+  margin-top: 25px;
+}
+</style>
+</head>
+<body>
+
+<!-- Saydam logo arka plan -->
+<div class="logo-bg"></div>
+
+<header>
+  <h1>🎧 DinginFM — DJ Aylak Yönetim Paneli</h1>
+  <h2>Sessizliğin Sesi Burada</h2>
+</header>
+
+<main>
+  <section>
+    <h3>📡 Yayın Durumu: <span id="status" class="status">OFF AIR</span></h3>
+    <p>Anlık Dinleyici: 0 | Peak: — | Bitrate: 128 kbps | Şarkı: —</p>
+
+    <!-- Buton grubu -->
+    <div class="panel-buttons">
+      <button class="btn" onclick="toggleStatus()">Yayını Aç / Kapat</button>
+      <button class="btn">Icecast Paneli</button>
+      <button class="btn">Canlı Yayını Başlat</button>
+      <button class="btn">Canlı Yayını Durdur</button>
+      <button class="btn">Mesajlar</button>
+      <button class="btn">Platformlar</button>
+      <button class="btn">Jingle Çal</button>
+      <button class="btn">Podcast Yükle</button>
+      <button class="btn">İstatistik</button>
+      <button class="btn">Yedek Al</button>
+    </div>
+  </section>
+
+  <section class="message-box">
+    <h3>💬 Dinleyici Mesajları</h3>
+    <form>
+      <input type="text" placeholder="Adınız">
+      <textarea placeholder="Mesajınız..."></textarea>
+      <button type="submit" class="btn">Gönder</button>
+    </form>
+  </section>
+</main>
+
+<footer>
+  <p>© 2025 DinginFM — Tüm yayın ve içerik hakları saklıdır.</p>
+  <a href="index.html" class="btn">← Ana Sayfa</a>
+</footer>
+
+<script>
+/* ON AIR - OFF AIR animasyonu */
+function toggleStatus() {
+  const el = document.getElementById("status");
+  if (el.classList.contains("onair")) {
+    el.classList.remove("onair");
+    el.textContent = "OFF AIR";
+  } else {
+    el.classList.add("onair");
+    el.textContent = "ON AIR";
+  }
+}
+</script>
+
+</body>
+</html>
