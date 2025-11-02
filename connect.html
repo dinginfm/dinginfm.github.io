@@ -15,7 +15,6 @@
       overflow-x: hidden;
     }
 
-    /* Arka plan logosu */
     .logo {
       position: fixed;
       top: 0;
@@ -31,30 +30,29 @@
     header {
       background: rgba(0, 39, 67, 0.85);
       padding: 25px 10px;
-      box-shadow: 0 3px 10px rgba(0, 0, 0, .5);
+      box-shadow: 0 3px 10px rgba(0,0,0,.5);
       position: sticky;
       top: 0;
       z-index: 10;
-      backdrop-filter: blur(5px);
     }
 
     h1 {
       color: #ffd43b;
-      font-size: 30px;
       margin-bottom: 5px;
+      font-size: 30px;
     }
 
     h2 {
       color: #9fbdd3;
       font-weight: normal;
       font-size: 15px;
-      margin-top: 0;
+      margin: 0;
     }
 
     nav {
-      background: rgba(0, 39, 67, 0.85);
+      background: rgba(0,39,67,0.85);
       padding: 10px 0;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, .4);
+      box-shadow: 0 2px 8px rgba(0,0,0,.4);
     }
 
     nav a {
@@ -79,29 +77,17 @@
     }
 
     section {
-      background: rgba(2, 43, 71, 0.75);
+      background: rgba(2,43,71,0.75);
       margin: 20px auto;
       padding: 30px 20px;
       width: 90%;
       max-width: 600px;
       border-radius: 15px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
-    }
-
-    p, h3 {
-      color: #a9c4d8;
-      font-size: 16px;
-    }
-
-    form {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      margin-top: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.4);
     }
 
     input, textarea {
-      background: rgba(255, 255, 255, 0.1);
+      background: rgba(255,255,255,0.1);
       border: none;
       border-radius: 8px;
       color: #e6edf3;
@@ -109,10 +95,6 @@
       padding: 10px;
       width: 100%;
       resize: none;
-    }
-
-    input::placeholder, textarea::placeholder {
-      color: #b6c5d4;
     }
 
     button.btn {
@@ -132,39 +114,24 @@
     }
 
     footer {
-      background: rgba(0, 39, 67, 0.85);
+      background: rgba(0,39,67,0.85);
       padding: 15px;
       font-size: 13px;
       color: #9fbdd3;
       margin-top: 60px;
-      box-shadow: 0 -2px 10px rgba(0, 0, 0, .4);
-      position: relative;
-      z-index: 1;
-    }
-
-    @media (max-width: 600px) {
-      section {
-        width: 95%;
-        padding: 20px 10px;
-      }
-      input, textarea {
-        font-size: 14px;
-      }
+      box-shadow: 0 -2px 10px rgba(0,0,0,.4);
     }
   </style>
 </head>
 
 <body>
-  <!-- Arka plan logosu -->
   <img src="assets/logo.png" alt="DinginFM Logo" class="logo">
 
-  <!-- Üst kısım -->
   <header>
     <h1>📬 DinginFM — İletişim</h1>
     <h2>Fikirlerini, Önerilerini, Sessizliğini Paylaş</h2>
   </header>
 
-  <!-- Menü -->
   <nav>
     <a href="index.html">Ana Sayfa</a>
     <a href="live.html">Canlı Yayın</a>
@@ -175,7 +142,6 @@
     <a href="connect.html" class="active">İletişim</a>
   </nav>
 
-  <!-- İçerik -->
   <main>
     <section>
       <p>📧 <b>dinginfm@gmail.com</b></p>
@@ -184,68 +150,47 @@
 
     <section>
       <h3>💌 İstek & Öneri Formu</h3>
-
-      <!-- 🔗 Formspree bağlantısı -->
-      <form action="https://formspree.io/f/XXXXYYYY" method="POST" id="contactForm">
-        <input type="text" name="name" placeholder="Adınız Soyadınız" required>
-        <input type="email" name="email" placeholder="E-posta Adresiniz" required>
-        <textarea name="message" placeholder="Mesajınız..." rows="4" required></textarea>
+      <form id="contactForm">
+        <input type="text" id="name" placeholder="Adınız Soyadınız" required>
+        <input type="email" id="email" placeholder="E-posta Adresiniz" required>
+        <textarea id="message" placeholder="Mesajınız..." rows="4" required></textarea>
         <button type="submit" class="btn">Gönder</button>
       </form>
-
       <p id="formStatus" style="color:#9fbdd3;margin-top:10px;"></p>
     </section>
   </main>
 
-  <!-- Alt kısım -->
   <footer>
     © 2025 Dingin FM — İletişim Sayfası<br>
-    Tüm yayın ve içerik hakları saklıdır.<br>
-    Bu sayfadaki tüm bilgiler yalnızca iletişim amaçlıdır, ticari kullanım yasaktır.<br>
-    DinginFM markası ve içerikleri izinsiz kopyalanamaz veya paylaşılmaz.
+    Tüm yayın ve içerik hakları saklıdır.
   </footer>
 
-  <!-- 🧠 Form gönderimi sonrası bildirim -->
   <script>
   const form = document.getElementById("contactForm");
   const statusText = document.getElementById("formStatus");
 
-  form.addEventListener("submit", async (e) => {
+  form.addEventListener("submit", (e) => {
     e.preventDefault();
-    statusText.textContent = "⏳ Mesaj gönderiliyor...";
-    const formData = new FormData(form);
+    const name = document.getElementById("name").value.trim();
+    const email = document.getElementById("email").value.trim();
+    const message = document.getElementById("message").value.trim();
 
-    try {
-      const res = await fetch(form.action, {
-        method: "POST",
-        body: formData,
-        headers: { 'Accept': 'application/json' }
-      });
-
-      if (res.ok) {
-        statusText.textContent = "📨 Teşekkürler! Mesajın başarıyla iletildi.";
-        localSaveMessage(formData);
-        form.reset();
-      } else {
-        statusText.textContent = "⚠️ Bir hata oluştu, lütfen tekrar dene.";
-      }
-    } catch {
-      statusText.textContent = "🚫 Bağlantı hatası. İnternetini kontrol et.";
+    if (!name || !email || !message) {
+      statusText.textContent = "⚠️ Lütfen tüm alanları doldurun.";
+      return;
     }
-  });
 
-  // 💾 Yerel kayıt (Admin paneline düşmesi için)
-  function localSaveMessage(formData) {
-    const list = JSON.parse(localStorage.getItem("dinginfm_messages") || "[]");
-    const newMsg = {
+    // Mesajı LocalStorage’a kaydet
+    const messages = JSON.parse(localStorage.getItem("dinginfm_messages") || "[]");
+    messages.unshift({
       ts: new Date().toLocaleString("tr-TR"),
-      name: formData.get("name"),
-      email: formData.get("email"),
-      message: formData.get("message")
-    };
-    list.unshift(newMsg);
-    localStorage.setItem("dinginfm_messages", JSON.stringify(list));
-  }
+      name, email, message
+    });
+    localStorage.setItem("dinginfm_messages", JSON.stringify(messages));
+
+    form.reset();
+    statusText.textContent = "📨 Teşekkürler! Mesajın iletildi (admin paneline kaydedildi).";
+  });
   </script>
 </body>
 </html>
