@@ -1,124 +1,190 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>DJ Aylak — DinginFM</title>
-<style>
-body {
-  margin: 0;
-  padding: 0;
-  background-color: #001626;
-  color: #e6edf3;
-  font-family: 'Segoe UI', sans-serif;
-  text-align: center;
-  position: relative;
-  overflow-x: hidden;
-}
-body::before {
-  content: "";
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: url('assets/logo.png') no-repeat center center fixed;
-  background-size: cover; /* Logo tüm sayfayı kaplar */
-  opacity: 0.12; /* 🔹 Saydamlık ayarı */
-  z-index: 0;
-}
-header {
-  background: rgba(0, 39, 67, 0.9);
-  padding: 22px 0;
-  box-shadow: 0 3px 12px rgba(0,0,0,.6);
-  position: sticky;
-  top: 0;
-  z-index: 2;
-}
-nav a {
-  color: #ffd43b;
-  text-decoration: none;
-  margin: 0 18px;
-  font-weight: bold;
-  font-size: 16px;
-  transition: color 0.3s;
-}
-nav a:hover { color: #fff; }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DJ Aylak — DinginFM</title>
+  <link rel="stylesheet" href="stil.css">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #001626;
+      color: #e6edf3;
+      font-family: 'Segoe UI', sans-serif;
+      text-align: center;
+      overflow-x: hidden;
+      position: relative;
+    }
 
-main {
-  position: relative;
-  z-index: 1;
-  max-width: 850px;
-  margin: 80px auto;
-  padding: 30px;
-  background: rgba(2, 43, 71, 0.75);
-  border-radius: 16px;
-  box-shadow: 0 4px 14px rgba(0,0,0,0.6);
-  text-align: left;
-}
-main h1 {
-  text-align: center;
-  color: #ffd43b;
-  font-size: 34px;
-  margin-bottom: 10px;
-}
-main h2 {
-  text-align: center;
-  color: #9fbdd3;
-  font-weight: normal;
-  font-size: 18px;
-  margin-bottom: 25px;
-}
-p {
-  font-size: 16px;
-  line-height: 1.7;
-  color: #c4d7e3;
-  margin-bottom: 15px;
-}
-footer {
-  margin-top: 60px;
-  background: rgba(0,0,0,0.4);
-  color: #9fbdd3;
-  padding: 12px 0;
-  font-size: 14px;
-}
-</style>
+    /* Saydam logo arka plan */
+    .logo {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      object-fit: cover;
+      opacity: 0.08;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    /* Header sabit */
+    header {
+      background: rgba(0, 39, 67, 0.85);
+      padding: 20px 10px;
+      box-shadow: 0 3px 10px rgba(0, 0, 0, .5);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      backdrop-filter: blur(5px);
+    }
+
+    .header-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+    }
+
+    h1.site-title {
+      color: #ffd43b;
+      font-size: 28px;
+      margin: 0;
+      letter-spacing: 1px;
+    }
+
+    h2.site-subtitle {
+      color: #9fbdd3;
+      font-weight: normal;
+      font-size: 14px;
+      margin: 0 0 10px 0;
+    }
+
+    nav a {
+      color: #e6edf3;
+      margin: 0 12px;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 15px;
+      transition: .3s;
+    }
+
+    nav a:hover, nav a.active {
+      color: #ffd43b;
+      border-bottom: 2px solid #ffd43b;
+      padding-bottom: 3px;
+    }
+
+    /* İçerik alanı */
+    main {
+      position: relative;
+      z-index: 1;
+      max-width: 850px;
+      margin: 80px auto;
+      padding: 30px;
+      background: rgba(2, 43, 71, 0.75);
+      border-radius: 16px;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.6);
+      text-align: left;
+    }
+
+    main h1 {
+      text-align: center;
+      color: #ffd43b;
+      font-size: 34px;
+      margin-bottom: 10px;
+    }
+
+    main h2 {
+      text-align: center;
+      color: #9fbdd3;
+      font-weight: normal;
+      font-size: 18px;
+      margin-bottom: 25px;
+    }
+
+    p {
+      font-size: 16px;
+      line-height: 1.7;
+      color: #c4d7e3;
+      margin-bottom: 15px;
+    }
+
+    /* Footer */
+    footer {
+      margin-top: 60px;
+      background: rgba(0, 39, 67, 0.85);
+      color: #9fbdd3;
+      padding: 15px;
+      font-size: 13px;
+      text-align: center;
+      box-shadow: 0 -2px 10px rgba(0,0,0,.4);
+      position: relative;
+      z-index: 1;
+    }
+
+    @media (max-width: 600px) {
+      nav a {
+        display: inline-block;
+        margin: 6px;
+        font-size: 14px;
+      }
+      main {
+        width: 90%;
+        padding: 20px;
+      }
+    }
+  </style>
 </head>
 <body>
-<header>
-  <nav>
-    <a href="index.html">Ana Sayfa</a>
-    <a href="dj.html">DJ Aylak</a>
-    <a href="podcast.html">Podcast</a>
-    <a href="tarihce.html">Tarihçe</a>
-    <a href="contact.html">İletişim</a>
-  </nav>
-</header>
+  <!-- Arka plan logosu -->
+  <img src="assets/logo.png" alt="DinginFM Logo" class="logo">
 
-<main>
-  <h1>DJ Aylak</h1>
-  <h2>DinginFM’in Ses Perdesi</h2>
+  <!-- Üst kısım -->
+  <header>
+    <div class="header-container">
+      <h1 class="site-title">DINGIN FM</h1>
+      <h2 class="site-subtitle">Sessizliğin Sesi Burada</h2>
+      <nav>
+        <a href="index.html">Ana Sayfa</a>
+        <a href="live.html">Canlı Yayın</a>
+        <a href="dj.html" class="active">DJ Aylak</a>
+        <a href="podcast.html">Podcast</a>
+        <a href="blog.html">Blog</a>
+        <a href="tarihce.html">Tarihçe</a>
+        <a href="connect.html">İletişim</a>
+      </nav>
+    </div>
+  </header>
 
-  <p>DJ Aylak, sessizliğin içinden geçen bir ses...  
-  Mikrofonun ucunda kahvesini karıştıran bir düşünür.  
-  Ne bir saate bağlı, ne bir kalıba; çünkü onun yayını da kendisi gibi — özgür, içten ve biraz aylak.</p>
+  <!-- İçerik -->
+  <main>
+    <h1>DJ Aylak</h1>
+    <h2>DinginFM’in Ses Perdesi</h2>
 
-  <p>DinginFM’de her yayın, bir hikâyenin yankısıdır.  
-  Müzik, kelimelerin nefes aldığı bir arka plan; sohbetlerse hayatın kısa molalarıdır.  
-  Dinleyiciyle arasında cam değil, samimiyet vardır.</p>
+    <p>DJ Aylak, sessizliğin içinden geçen bir ses...  
+    Mikrofonun ucunda kahvesini karıştıran bir düşünür.  
+    Ne bir saate bağlı, ne bir kalıba; çünkü onun yayını da kendisi gibi — özgür, içten ve biraz aylak.</p>
 
-  <p>“Sessizliğin Sesi Burada” derken kastı budur aslında:  
-  bazen bir cümle susturur şarkıyı, bazen bir nota anlatır her şeyi.  
-  DJ Aylak, işte o anın bekçisidir — kahvesini yudumlarken sesini ayarlar,  
-  sonra bir gülümsemeyle mikrofona döner:  
-  <em>“Hazırsak, DinginFM başlıyor.”</em></p>
-</main>
+    <p>DinginFM’de her yayın, bir hikâyenin yankısıdır.  
+    Müzik, kelimelerin nefes aldığı bir arka plan; sohbetlerse hayatın kısa molalarıdır.  
+    Dinleyiciyle arasında cam değil, samimiyet vardır.</p>
 
-<footer>
-  © 2025 DinginFM — DJ Aylak<br>
-  Tüm yayın ve içerik hakları saklıdır.
-</footer>
-<div class="logo-bg"></div>
+    <p>“Sessizliğin Sesi Burada” derken kastı budur aslında:  
+    bazen bir cümle susturur şarkıyı, bazen bir nota anlatır her şeyi.  
+    DJ Aylak, işte o anın bekçisidir — kahvesini yudumlarken sesini ayarlar,  
+    sonra bir gülümsemeyle mikrofona döner:  
+    <em>“Hazırsak, DinginFM başlıyor.”</em></p>
+  </main>
 
+  <!-- Alt kısım -->
+  <footer>
+    © 2025 Dingin FM — DJ Aylak<br>
+    Tüm yayın ve içerik hakları saklıdır.<br>
+    Bu sayfadaki tüm metinler, ses içerikleri ve görseller DinginFM’e aittir.  
+    İzinsiz kopyalanamaz veya yeniden yayınlanamaz.
+  </footer>
 </body>
 </html>
