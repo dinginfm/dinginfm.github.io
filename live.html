@@ -1,37 +1,171 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>DinginFM — Canlı Yayın</title>
-<link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dingin FM — Canlı Yayın</title>
+  <link rel="stylesheet" href="stil.css">
+  <style>
+    body {
+      margin: 0;
+      background: #001626;
+      color: #e6edf3;
+      font-family: 'Segoe UI', sans-serif;
+      text-align: center;
+      overflow-x: hidden;
+    }
+
+    /* Tam saydam logo arka plan */
+    .logo {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      object-fit: cover;
+      opacity: 0.08;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    /* Header sabit */
+    header {
+      background: rgba(0, 39, 67, 0.85);
+      padding: 20px 10px;
+      box-shadow: 0 3px 10px rgba(0, 0, 0, .5);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      backdrop-filter: blur(5px);
+    }
+
+    .header-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+    }
+
+    h1.site-title {
+      color: #ffd43b;
+      font-size: 28px;
+      margin: 0;
+      letter-spacing: 1px;
+    }
+
+    h2.site-subtitle {
+      color: #9fbdd3;
+      font-weight: normal;
+      font-size: 14px;
+      margin: 0 0 10px 0;
+    }
+
+    nav a {
+      color: #e6edf3;
+      margin: 0 12px;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 15px;
+      transition: .3s;
+    }
+
+    nav a:hover, nav a.active {
+      color: #ffd43b;
+      border-bottom: 2px solid #ffd43b;
+      padding-bottom: 3px;
+    }
+
+    main {
+      margin-top: 60px;
+      position: relative;
+      z-index: 1;
+    }
+
+    section {
+      background: rgba(0, 39, 67, 0.65);
+      margin: 20px auto;
+      padding: 30px 20px;
+      width: 90%;
+      max-width: 600px;
+      border-radius: 15px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+    }
+
+    p {
+      color: #a9c4d8;
+      font-size: 16px;
+      line-height: 1.6;
+    }
+
+    audio {
+      width: 90%;
+      max-width: 400px;
+      margin-top: 15px;
+      border-radius: 10px;
+      outline: none;
+    }
+
+    footer {
+      background: rgba(0, 39, 67, 0.85);
+      padding: 15px;
+      font-size: 13px;
+      color: #9fbdd3;
+      margin-top: 60px;
+      box-shadow: 0 -2px 10px rgba(0, 0, 0, .4);
+      position: relative;
+      z-index: 1;
+    }
+
+    @media (max-width: 600px) {
+      nav a {
+        display: inline-block;
+        margin: 6px;
+        font-size: 14px;
+      }
+      section {
+        width: 95%;
+        padding: 20px 10px;
+      }
+    }
+  </style>
 </head>
+
 <body>
+  <!-- Arka plan logosu -->
+  <img src="assets/logo.png" alt="DinginFM Logo" class="logo">
 
-<header>
-<nav>
-  <a href="index.html" class="btn">🏠 Ana Sayfa</a>
-  <a href="podcast.html" class="btn">🎙️ Podcast</a>
-  <a href="blog.html" class="btn">📝 Blog</a>
-  <a href="connect.html" class="btn">📬 İletişim</a>
-</nav>
+  <!-- Üst kısım -->
+  <header>
+    <div class="header-container">
+      <h1 class="site-title">DINGIN FM</h1>
+      <h2 class="site-subtitle">Sessizliğin Sesi Burada</h2>
+      <nav>
+        <a href="index.html">Ana Sayfa</a>
+        <a href="live.html" class="active">Canlı Yayın</a>
+        <a href="dj.html">DJ Aylak</a>
+        <a href="podcast.html">Podcast</a>
+        <a href="blog.html">Blog</a>
+        <a href="tarihce.html">Tarihçe</a>
+        <a href="connect.html">İletişim</a>
+      </nav>
+    </div>
+  </header>
 
+  <!-- Ana içerik -->
+  <main>
+    <section>
+      <p>🎙️ Yayını dinlemek için aşağıdaki oynatıcıyı kullanabilirsin:</p>
+      <audio controls preload="none">
+        <source src="https://dinginfm.com.tr/live.mp3" type="audio/mpeg">
+        Tarayıcınız ses oynatmayı desteklemiyor.
+      </audio>
+      <p>Bağlantı aktif değilse, lütfen DJ Aylak’ın yayına başlamasını bekleyin.</p>
+    </section>
+  </main>
 
-
-<main>
-  <section>
-    <p>🎙️ Yayını dinlemek için aşağıdaki oynatıcıyı kullanabilirsin:</p>
-    <audio controls autoplay>
-      <source src="http://localhost:8000/live" type="audio/mpeg">
-      Tarayıcınız ses oynatmayı desteklemiyor.
-    </audio>
-    <p>Bağlantı aktif değilse, lütfen DJ Aylak’ın yayına başlamasını bekleyin.</p>
-  </section>
-</main>
-
-<footer>
-  © 2025 DinginFM — Sessizliğin Sesi Burada Başlar.
-</footer>
-
+  <!-- Alt kısım -->
+  <footer>
+    © 2025 Dingin FM — Tüm Yayın ve İçerik Hakları Saklıdır · <i>Sessizliğin Sesi Burada Başlar</i>
+  </footer>
 </body>
 </html>
