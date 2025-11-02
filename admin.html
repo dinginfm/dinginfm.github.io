@@ -105,6 +105,7 @@ footer {
   <section>
     <h3>💬 Dinleyici Mesajları</h3>
     <ul id="messageList" style="list-style:none;padding:0;color:#cfe0ea"></ul>
+    <button class="btn" onclick="clearMessages()">🧹 Mesajları Temizle</button>
   </section>
 </main>
 
@@ -115,7 +116,7 @@ footer {
 <audio id="msgSound" src="https://actions.google.com/sounds/v1/alarms/beep_short.ogg"></audio>
 
 <script>
-// 🎧 Icecast Durumu
+// 🔹 Icecast Yayın Durumu
 async function checkIcecastStatus() {
   const status = document.getElementById("status-info");
   try {
@@ -138,53 +139,45 @@ async function checkIcecastStatus() {
 setInterval(checkIcecastStatus, 5000);
 checkIcecastStatus();
 
-// 🎶 Buton İşlevleri
-function openSpotify(){const l=document.getElementById('spotify').value;if(l)window.open(l);else alert('Spotify linki boş!');}
-function openYouTube(){const l=document.getElementById('youtube').value;if(l)window.open(l);else alert('YouTube linki boş!');}
-function uploadPodcast(){const f=document.getElementById('podcastFile').files[0];alert(f?`🎙️ Podcast "${f.name}" yüklendi.`:'Lütfen dosya seçin.');}
-
+// 🔹 Yayın Kontrolü (simülasyon)
 function startBroadcast(){
   alert("🎧 Yayın başlatılıyor... (Simülasyon)");
   document.getElementById("toggleBtn").style.background="#6cf";
 }
 
-// 💬 Formspree + LocalStorage mesaj senkronu
-const FORM_URL = "https://formspree.io/f/XXXXYYYY"; // kendi linkini koy
+// 🔹 Medya Butonları
+function openSpotify(){const l=document.getElementById('spotify').value;if(l)window.open(l);else alert('Spotify linki boş!');}
+function openYouTube(){const l=document.getElementById('youtube').value;if(l)window.open(l);else alert('YouTube linki boş!');}
+function uploadPodcast(){const f=document.getElementById('podcastFile').files[0];alert(f?`🎙️ Podcast "${f.name}" yüklendi.`:'Lütfen dosya seçin.');}
 
-async function loadMessages() {
-  const listEl = document.getElementById("messageList");
-  listEl.innerHTML = "⏳ Mesajlar yükleniyor...";
-  try {
-    const res = await fetch(FORM_URL + ".json");
-    if (res.ok) {
-      const data = await res.json();
-      listEl.innerHTML = "";
-      data.forEach(m => {
-        const li = document.createElement("li");
-        li.textContent = `📩 ${m.name}: ${m.message}`;
-        listEl.appendChild(li);
-      });
-    } else renderLocalMessages();
-  } catch {
-    renderLocalMessages();
-  }
-}
-
-// 💾 LocalStorage yedeği
+// 💬 Dinleyici Mesajlarını Göster (LocalStorage)
 function renderLocalMessages(){
-  const data = JSON.parse(localStorage.getItem("dinginfm_messages")||"[]");
+  const data = JSON.parse(localStorage.getItem("dinginfm_messages") || "[]");
   const listEl = document.getElementById("messageList");
   listEl.innerHTML = "";
-  if (!data.length) return listEl.innerHTML = "Henüz mesaj yok.";
+  if (!data.length) {
+    listEl.innerHTML = "<li>Henüz mesaj yok.</li>";
+    return;
+  }
   data.forEach(m=>{
     const li=document.createElement("li");
-    li.textContent=`📩 ${m.name}: ${m.message}`;
+    li.innerHTML = `
+      <b>${m.name}</b> <small>(${m.email})</small><br>
+      🕓 ${m.ts}<br>
+      ${m.message}<hr>`;
     listEl.appendChild(li);
   });
 }
 
-loadMessages();
-setInterval(loadMessages,30000);
+// 💾 Mesajları Temizle
+function clearMessages(){
+  if(confirm("Tüm mesajlar silinsin mi?")){
+    localStorage.removeItem("dinginfm_messages");
+    renderLocalMessages();
+  }
+}
+
+renderLocalMessages();
 </script>
 </body>
 </html>
