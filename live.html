@@ -96,9 +96,20 @@
     }
 
     .status {
-      font-size: 14px;
+      font-size: 15px;
       color: #ffd43b;
       margin-bottom: 15px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .led {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      box-shadow: 0 0 10px currentColor;
     }
 
     audio {
@@ -155,11 +166,16 @@
 
   <main>
     <section>
-      <p class="status">🔴 Yayın aktifse aşağıdaki oynatıcıdan dinleyebilirsin:</p>
-      <audio controls autoplay preload="none">
+      <div class="status">
+        <span id="led" class="led" style="color:gray;"></span>
+        <span id="statusText">Bağlantı kontrol ediliyor...</span>
+      </div>
+
+      <audio id="player" controls preload="none">
         <source src="https://live.dinginfm.com.tr/live.mp3" type="audio/mpeg">
         Tarayıcınız ses oynatmayı desteklemiyor.
       </audio>
+
       <p>📻 Eğer ses gelmiyorsa DJ Aylak henüz yayında değil olabilir. Birazdan geri dön!</p>
     </section>
   </main>
@@ -167,5 +183,28 @@
   <footer>
     © 2025 Dingin FM — Tüm Yayın ve İçerik Hakları Saklıdır · <i>Sessizliğin Sesi Burada Başlar</i>
   </footer>
+
+  <script>
+    async function checkStream() {
+      const led = document.getElementById('led');
+      const statusText = document.getElementById('statusText');
+      try {
+        const response = await fetch('https://live.dinginfm.com.tr/live.mp3', { method: 'HEAD' });
+        if (response.ok) {
+          led.style.color = 'red';
+          statusText.textContent = '🔴 ON AIR · Yayın Aktif';
+        } else {
+          led.style.color = 'gray';
+          statusText.textContent = '⚪ Yayın Kapalı';
+        }
+      } catch (err) {
+        led.style.color = 'gray';
+        statusText.textContent = '⚪ Yayın Kapalı';
+      }
+    }
+
+    checkStream();
+    setInterval(checkStream, 15000);
+  </script>
 </body>
 </html>
