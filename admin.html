@@ -5,6 +5,61 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>DinginFM — DJ Aylak Yönetim Paneli</title>
 <link rel="stylesheet" href="style.css">
+<style>
+body {
+  margin: 0;
+  background: #001626;
+  color: #e6edf3;
+  font-family: 'Segoe UI', sans-serif;
+  text-align: center;
+  overflow-x: hidden;
+}
+.logo-bg {
+  position: fixed;
+  inset: 0;
+  background: url('assets/logo.png') center/cover no-repeat;
+  opacity: 0.08;
+  z-index: 0;
+}
+header {
+  background: rgba(0,39,67,0.85);
+  padding: 25px 10px;
+  box-shadow: 0 3px 10px rgba(0,0,0,.5);
+  position: relative;
+  z-index: 1;
+}
+h1 { color:#ffd43b; margin-bottom:5px; }
+h2 { color:#9fbdd3; font-weight:normal; margin:0 0 20px 0; }
+main { position:relative; z-index:1; max-width:800px; margin:0 auto; }
+section {
+  background: rgba(2,43,71,0.75);
+  margin:20px;
+  padding:20px;
+  border-radius:10px;
+  box-shadow:0 4px 12px rgba(0,0,0,.4);
+}
+.btn {
+  background:#ffd43b;
+  color:#001626;
+  border:none;
+  padding:10px 16px;
+  border-radius:6px;
+  cursor:pointer;
+  font-weight:bold;
+  margin-top:10px;
+  transition:0.3s;
+}
+.btn:hover { background:#ffea84; }
+.status.on { color:#5cff75; font-weight:bold; }
+.status.off { color:#ff5555; font-weight:bold; }
+footer {
+  background:rgba(0,39,67,0.85);
+  padding:15px;
+  color:#9fbdd3;
+  margin-top:40px;
+  box-shadow:0 -2px 10px rgba(0,0,0,.4);
+}
+</style>
 </head>
 <body>
 
@@ -18,26 +73,26 @@
 <main>
   <!-- Yayın Durumu -->
   <section>
-    <h3>📡 Yayın Durumu: <span id="status-info" class="status">Kontrol ediliyor...</span></h3>
-    <p>Anlık Dinleyici: <span id="listener-count">0</span> | Peak: <span id="peak-count">0</span> | Bitrate: 128 kbps</p>
-    <button class="btn" onclick="startBroadcast()">Yayını Aç / Kapat</button>
+    <h3>📡 Yayın Durumu: <span id="status-info" class="status off">Kontrol ediliyor...</span></h3>
+    <p>Anlık Dinleyici: <span id="listener-count">0</span> | Peak: <span id="peak-count">0</span> | Bitrate: <span id="bitrate">—</span></p>
+    <button id="toggleBtn" class="btn" onclick="startBroadcast()">Yayını Aç / Kapat</button>
   </section>
 
   <!-- Medya Yükleme -->
   <section>
     <h3>🎵 Medya Yükleme</h3>
-    <input type="text" id="spotify" placeholder="Spotify linkini yapıştır">
-    <button class="btn" onclick="openSpotify()">Spotify Ekle</button><br>
-    <input type="text" id="youtube" placeholder="YouTube linkini yapıştır">
-    <button class="btn" onclick="openYouTube()">YouTube Ekle</button><br>
-    <input type="file" id="podcastFile">
+    <input type="text" id="spotify" placeholder="Spotify linkini yapıştır"><br>
+    <button class="btn" onclick="openSpotify()">Spotify Ekle</button><br><br>
+    <input type="text" id="youtube" placeholder="YouTube linkini yapıştır"><br>
+    <button class="btn" onclick="openYouTube()">YouTube Ekle</button><br><br>
+    <input type="file" id="podcastFile"><br>
     <button class="btn" onclick="uploadPodcast()">Podcast Yükle</button>
   </section>
 
   <!-- Yayın İstatistikleri -->
-  <section class="stat-box">
+  <section>
     <h3>📊 Yayın İstatistikleri</h3>
-    <table>
+    <table style="width:100%;color:#cfe0ea">
       <tr><th>Parametre</th><th>Değer</th></tr>
       <tr><td>Toplam Dinleyici</td><td id="totalListeners">0</td></tr>
       <tr><td>Peak Dinleyici</td><td id="peakListeners">0</td></tr>
@@ -47,78 +102,60 @@
   </section>
 
   <!-- Dinleyici Mesajları -->
-  <section class="message-box">
+  <section>
     <h3>💬 Dinleyici Mesajları</h3>
-    <form onsubmit="sendMessage(event)">
-      <input type="text" id="name" placeholder="Adınız" required>
-      <textarea id="message" placeholder="Mesajınız..." required></textarea>
-      <button type="submit" class="btn">Gönder</button>
-    </form>
+    <ul id="messageList" style="list-style:none;padding:0;color:#cfe0ea"></ul>
   </section>
-
 </main>
 
 <footer>
-  © 2025 DinginFM — Tüm yayın ve içerik hakları saklıdır.  
-  🎙️ "Burada sessizliğin sesi var."
+  © 2025 DinginFM — Tüm yayın ve içerik hakları saklıdır. 🎙️ "Burada sessizliğin sesi var."
 </footer>
 
 <audio id="msgSound" src="https://actions.google.com/sounds/v1/alarms/beep_short.ogg"></audio>
 
 <script>
-// --- Spotify ve YouTube bağlantıları ---
-function openSpotify() {
-  const link = document.getElementById('spotify').value;
-  if (link) window.open(link, '_blank');
-  else alert('Spotify linki boş olamaz!');
-}
-function openYouTube() {
-  const link = document.getElementById('youtube').value;
-  if (link) window.open(link, '_blank');
-  else alert('YouTube linki boş olamaz!');
-}
-function uploadPodcast() {
-  const file = document.getElementById('podcastFile').files[0];
-  if (file) alert(`🎙️ Podcast "${file.name}" yüklendi (örnek simülasyon).`);
-  else alert('Lütfen bir dosya seçin.');
-}
-
-// --- Icecast Durum Kontrolü ---
 async function checkIcecastStatus() {
-  const statusElement = document.getElementById("status-info");
+  const status = document.getElementById("status-info");
   try {
-    const res = await fetch("http://localhost:8000/status-json.xsl");
-    if (!res.ok) throw new Error("Bağlantı yok");
+    const res = await fetch("/status-json.xsl", {cache:"no-store"});
     const data = await res.json();
-    const src = data.icestats.source || {};
-    document.getElementById("listener-count").innerText = src.listeners || 0;
-    document.getElementById("peak-count").innerText = src.listener_peak || 0;
-    statusElement.innerHTML = "🔵 Aktif";
-    statusElement.classList.add("onair");
+    let src = data?.icestats?.source;
+    if (Array.isArray(src)) src = src.find(s => s.listenurl?.includes("/live"));
+    const active = !!src;
+    document.getElementById("listener-count").textContent = src?.listeners || 0;
+    document.getElementById("peak-count").textContent = src?.listener_peak || 0;
+    document.getElementById("bitrate").textContent = src?.bitrate ? src.bitrate + " kbps" : "—";
+    status.textContent = active ? "🔵 Aktif" : "🔴 Kapalı";
+    status.className = "status " + (active ? "on" : "off");
+    document.getElementById("lastUpdate").textContent = new Date().toLocaleTimeString("tr-TR");
   } catch {
-    statusElement.innerHTML = "🔴 Kapalı";
-    statusElement.classList.remove("onair");
+    status.textContent = "🔴 Kapalı";
+    status.className = "status off";
   }
 }
 setInterval(checkIcecastStatus, 5000);
 checkIcecastStatus();
 
-// --- Yayını Aç/Kapat Komutu (Simülasyon) ---
-function startBroadcast() {
-  alert("🎧 Yayın başlatılıyor... Icecast ve Ngrok çalıştırılmalı!");
+function openSpotify(){const l=document.getElementById('spotify').value;if(l)window.open(l);else alert('Spotify linki boş!');}
+function openYouTube(){const l=document.getElementById('youtube').value;if(l)window.open(l);else alert('YouTube linki boş!');}
+function uploadPodcast(){const f=document.getElementById('podcastFile').files[0];alert(f?`🎙️ Podcast "${f.name}" yüklendi.`:'Lütfen dosya seçin.');}
+
+function startBroadcast(){
+  alert("🎧 Yayın başlatılıyor... (Simülasyon)");
+  document.getElementById("toggleBtn").style.background="#6cf";
 }
 
-// --- Mesaj Bildirimi ---
-function sendMessage(event) {
-  event.preventDefault();
-  const name = document.getElementById("name").value;
-  const msg = document.getElementById("message").value;
-  if (name && msg) {
-    document.getElementById("msgSound").play();
-    alert(`📩 ${name}: ${msg}`);
-  }
-}
+// Mesajları test amaçlı simüle et
+const fakeMessages = [
+  {name:"Ayşe", message:"Harika yayın!"},
+  {name:"Emre", message:"Tarkan gelsin lütfen."}
+];
+fakeMessages.forEach(m=>{
+  const li=document.createElement("li");
+  li.textContent=`📩 ${m.name}: ${m.message}`;
+  document.getElementById("messageList").appendChild(li);
+});
 </script>
-
 </body>
 </html>
