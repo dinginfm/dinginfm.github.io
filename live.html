@@ -1,86 +1,75 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Dingin FM — Canlı Yayın</title>
-<style>
-  body {
-    margin:0;
-    font-family:'Segoe UI',sans-serif;
-    background:#001626;
-    color:#e6edf3;
-    text-align:center;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    justify-content:center;
-    height:100vh;
-  }
-  h1 { color:#ffd43b; font-size:32px; margin-bottom:10px; }
-  .status {
-    display:flex;
-    align-items:center;
-    gap:10px;
-    margin-bottom:20px;
-    font-size:18px;
-  }
-  .led {
-    width:16px;
-    height:16px;
-    border-radius:50%;
-    box-shadow:0 0 10px currentColor;
-    transition:0.3s;
-  }
-  a.button {
-    display:inline-block;
-    padding:15px 35px;
-    background:#ffd43b;
-    color:#001626;
-    font-weight:700;
-    text-decoration:none;
-    border-radius:10px;
-    font-size:18px;
-    transition:0.3s;
-  }
-  a.button:hover { background:#e6c200; transform:scale(1.05); }
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dingin FM — Canlı Yayın</title>
+  <link rel="stylesheet" href="stil.css">
+  <style>
+    body {margin:0; background:#001626; color:#e6edf3; font-family:'Segoe UI',sans-serif; text-align:center;}
+    .logo {width:150px; margin:20px auto; display:block;}
+    header {background:rgba(0,39,67,.85); padding:15px; box-shadow:0 3px 10px rgba(0,0,0,.5);}
+    header h1 {color:#ffd43b; margin:0; font-size:28px;}
+    header h2 {color:#9fbdd3; margin:5px 0 0 0; font-weight:400;}
+    main {margin-top:30px;}
+    .status {margin:20px 0; font-size:16px; display:flex; justify-content:center; align-items:center; gap:10px; color:#ffd43b;}
+    .led {width:14px; height:14px; border-radius:50%; background:gray; display:inline-block; box-shadow:0 0 10px currentColor;}
+    .btn {background:#ffd43b; color:#001626; text-decoration:none; font-weight:700; padding:12px 25px; border-radius:8px; display:inline-block; margin-top:15px; transition:.3s;}
+    .btn:hover {background:#ffea84; transform:scale(1.05);}
+    footer {background:rgba(0,39,67,.85); padding:15px; font-size:13px; color:#9fbdd3; margin-top:50px;}
+  </style>
 </head>
 <body>
+  <img src="assets/logo.png" alt="DinginFM Logo" class="logo">
 
-<h1>Dingin FM — Canlı Yayın</h1>
+  <header>
+    <h1>DINGIN FM</h1>
+    <h2>Sessizliğin Sesi Burada</h2>
+  </header>
 
-<div class="status">
-  <span id="led" class="led" style="color:gray;"></span>
-  <span id="statusText">Yayın durumu kontrol ediliyor...</span>
-</div>
+  <main>
+    <div class="status">
+      <span id="led" class="led"></span>
+      <span id="statusText">Yayında değil</span>
+    </div>
 
-<a href="http://localhost:8000/stream" target="_blank" class="button">🎧 Canlı Yayını Başlat</a>
+    <a href="#" id="startButton" class="btn">🎧 Canlı Yayını Başlat</a>
+  </main>
 
-<script>
-async function checkStream() {
-  const led = document.getElementById('led');
-  const statusText = document.getElementById('statusText');
-  try {
-    // Icecast yayın URL’in burada
-    const res = await fetch('http://localhost:8000/stream', { method:'HEAD', cache:'no-store' });
-    if(res.ok){
-      led.style.color = '#00e676';
-      statusText.textContent = '🟢 ON AIR · Dingin FM Yayında';
-    } else {
-      led.style.color = 'gray';
-      statusText.textContent = '⚪ Yayında Değil';
+  <footer>
+    © 2025 Dingin FM — Tüm Yayın ve İçerik Hakları Saklıdır
+  </footer>
+
+  <script>
+    const led = document.getElementById('led');
+    const statusText = document.getElementById('statusText');
+    const startBtn = document.getElementById('startButton');
+
+    // Yayın durumunu kontrol et
+    async function checkStream() {
+      try {
+        const res = await fetch('/status'); // Sunucuda yayın durumunu verecek endpoint
+        const data = await res.json();
+        if(data.live) {
+          led.style.backgroundColor = '#00e676';
+          statusText.textContent = '🟢 Yayında';
+        } else {
+          led.style.backgroundColor = 'gray';
+          statusText.textContent = '⚪ Yayında değil';
+        }
+      } catch(err) {
+        led.style.backgroundColor = 'gray';
+        statusText.textContent = '⚪ Bağlantı hatası';
+      }
     }
-  } catch(e){
-    led.style.color = 'gray';
-    statusText.textContent = '⚪ Yayında Değil · Bağlantı hatası';
-  }
-}
 
-// İlk kontrol ve her 10 saniyede bir güncelle
-checkStream();
-setInterval(checkStream, 10000);
-</script>
+    checkStream();
+    setInterval(checkStream, 10000);
 
+    // Canlı yayını başlat
+    startBtn.addEventListener('click', () => {
+      window.open('/play', '_blank'); // Bu endpoint sunucuda yayın akışını başlatacak
+    });
+  </script>
 </body>
 </html>
