@@ -4,28 +4,32 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Dingin FM — Canlı Yayın</title>
-  <link rel="stylesheet" href="stil.css">
   <style>
     body { margin:0; background:#001626; color:#e6edf3; font-family:'Segoe UI',sans-serif; text-align:center; overflow-x:hidden }
     .logo { position:fixed; top:0; left:0; width:100vw; height:100vh; object-fit:cover; opacity:.08; z-index:0; pointer-events:none }
     header { background:rgba(0,39,67,.85); padding:20px 10px; box-shadow:0 3px 10px rgba(0,0,0,.5); position:sticky; top:0; z-index:10; backdrop-filter:blur(5px) }
     .header-container { display:flex; flex-direction:column; align-items:center; gap:6px }
-    h1.site-title { color:#ffd43b; font-size:28px; margin:0; letter-spacing:1px }
+    h1.site-title { color:#ffd43b; font-size:28px; margin:0 }
     h2.site-subtitle { color:#9fbdd3; font-weight:normal; font-size:14px; margin:0 0 10px 0 }
     nav a { color:#e6edf3; margin:0 12px; text-decoration:none; font-weight:500; font-size:15px; transition:.3s }
     nav a:hover, nav a.active { color:#ffd43b; border-bottom:2px solid #ffd43b; padding-bottom:3px }
-    main { margin-top:60px; position:relative; z-index:1 }
+    main { margin-top:60px; z-index:1; position:relative }
     section { background: rgba(0,39,67,.65); margin:20px auto; padding:30px 20px; width:90%; max-width:650px; border-radius:15px; box-shadow:0 0 10px rgba(255,212,59,.3) }
     p { color:#a9c4d8; font-size:16px; line-height:1.6 }
     .status { font-size:15px; color:#ffd43b; margin-bottom:15px; display:flex; justify-content:center; align-items:center; gap:10px }
     .led { width:14px; height:14px; border-radius:50%; box-shadow:0 0 10px currentColor; transition:.3s }
     a.button { display:inline-block; background:#ffd43b; color:#001626; text-decoration:none; font-weight:700; padding:12px 24px; border-radius:8px; margin-top:25px; transition:.3s }
     a.button:hover { background:#ffea84; transform:scale(1.05) }
-    footer { background:rgba(0,39,67,.85); padding:15px; font-size:13px; color:#9fbdd3; margin-top:60px; box-shadow:0 -2px 10px rgba(0,0,0,.4); position:relative; z-index:1 }
-    @media (max-width:600px){nav a{display:inline-block;margin:6px;font-size:14px}}
+    footer { background:rgba(0,39,67,.85); padding:15px; font-size:13px; color:#9fbdd3; margin-top:60px; box-shadow:0 -2px 10px rgba(0,0,0,.4) }
   </style>
 </head>
 <body>
+
+  <script>
+    const STREAM_URL = "https://dinginfm.com.tr/live.mp3"; 
+    // Veya alternatif: "http://45.143.99.51:8000/live.mp3"
+  </script>
+
   <img src="assets/logo.png" alt="DinginFM Logo" class="logo">
 
   <header>
@@ -50,15 +54,13 @@
         <span id="led" class="led" style="color:gray;"></span>
         <span id="statusText">⚪ Yayında Değil</span>
       </div>
-      <p>📻 Yayın başlamadıysa, DJ Aylak henüz yayında değil. Birazdan frekans açılır ☕🎶</p>
-      <!-- Play Tuşu -->
+      <p>📻 Yayın başlamadıysa DJ Aylak henüz mikrofona eğilmemiştir… Birazdan gelir ☕🎶</p>
+
       <a href="#" class="button" id="playBtn">▶️ Yayını Başlat</a>
     </section>
   </main>
 
-  <footer>
-    © 2025 Dingin FM — Tüm Yayın ve İçerik Hakları Saklıdır · <i>Sessizliğin Sesi Burada</i>
-  </footer>
+  <footer>© 2025 Dingin FM — Tüm Hakları Saklıdır · Sessizliğin Sesi Burada</footer>
 
   <script>
     const playBtn = document.getElementById('playBtn');
@@ -68,13 +70,14 @@
 
     playBtn.addEventListener('click', () => {
       if (!audio) {
-        audio = new Audio('http://localhost:8000/stream'); // Icecast mountpoint
+        audio = new Audio(STREAM_URL);
         audio.autoplay = true;
-        audio.play().catch(() => {
-          alert('Yayın başlatılamıyor. Sunucu çalışıyor mu?');
+        audio.play().then(() => {
+          led.style.color = '#00e676';
+          statusText.textContent = '🟢 Yayında · Dingin FM';
+        }).catch(() => {
+          alert('Yayın başlatılamıyor. Icecast çalışıyor mu?');
         });
-        led.style.color = '#00e676';
-        statusText.textContent = '🟢 Yayında · Dingin FM';
       } else {
         audio.paused ? audio.play() : audio.pause();
       }
@@ -82,7 +85,7 @@
 
     async function checkStream() {
       try {
-        const res = await fetch('http://localhost:8000', { method: 'HEAD', cache: 'no-store' });
+        const res = await fetch(STREAM_URL, { method: 'HEAD', cache: 'no-store' });
         if (res.ok && (!audio || audio.paused)) {
           led.style.color = 'gray';
           statusText.textContent = '⚪ Yayında Değil';
@@ -96,5 +99,6 @@
     checkStream();
     setInterval(checkStream, 10000);
   </script>
+
 </body>
 </html>
