@@ -57,33 +57,35 @@
 
   <script>
     // Direkt Icecast stream URL
-   const STREAM_URL = "https://dinginfm.com.tr/live.mp3";
-    const led = document.getElementById("led");
-    const statusText = document.getElementById("statusText");
-    const playBtn = document.getElementById("playBtn");
+<script>
+  const STREAM_URL = "https://dinginfm.com.tr/live.mp3"; // HTTPS
+  const led = document.getElementById("led");
+  const statusText = document.getElementById("statusText");
+  const playBtn = document.getElementById("playBtn");
 
-    let audio = new Audio(STREAM_URL);
-    audio.preload = "none";
+  let audio = new Audio(STREAM_URL);
+  audio.preload = "none";
 
-    playBtn.addEventListener("click", async () => {
-      if (audio.paused) {
-        try {
-          await audio.play();
-          led.style.color = "#00e676";
-          statusText.textContent = "🟢 Yayında · Dingin FM";
-          playBtn.textContent = "⏸ Yayını Durdur";
-        } catch (err) {
-          led.style.color = "gray";
-          statusText.textContent = "⚪ Yayında Değil";
-          alert("Yayın başlatılamıyor… Sunucu veri göndermiyor olabilir.");
-        }
-      } else {
-        audio.pause();
+  playBtn.addEventListener("click", async () => {
+    if (audio.paused) {
+      try {
+        await audio.play();
+        led.style.color = "#00e676";
+        statusText.textContent = "🟢 Yayında · Dingin FM";
+        playBtn.textContent = "⏸ Yayını Durdur";
+      } catch (err) {
         led.style.color = "gray";
         statusText.textContent = "⚪ Yayında Değil";
-        playBtn.textContent = "▶️ Yayını Başlat";
+        alert("Yayın başlatılamıyor… Sunucu veri göndermiyor olabilir.");
       }
-    });
-  </script>
+    } else {
+      audio.pause();
+      led.style.color = "gray";
+      statusText.textContent = "⚪ Yayında Değil";
+      playBtn.textContent = "▶️ Yayını Başlat";
+    }
+  });
+</script>
+
 </body>
 </html>
