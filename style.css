@@ -1,0 +1,68 @@
+body{
+margin:0;
+padding:0;
+min-height:100vh;
+font-family:'Segoe UI',sans-serif;
+background:radial-gradient(circle at top,#eef6ff 0%,#d9ecff 40%,#c7e0ff 70%,#b7d4ff 100%);
+color:#1f3b4d;
+text-align:center;
+overflow-x:hidden;
+}
+
+/* Logo / başlık yazıları */
+h1,h2,h3,h4,h5,h6{
+color:#2a4f6e;
+font-weight:500;
+}
+
+/* Linkler */
+a{
+color:#2a6fb0;
+text-decoration:none;
+font-weight:500;
+}
+a:hover{
+color:#1d4f85;
+}
+
+/* Genel buton stili (sarı yok) */
+button,.btn{
+background:transparent;
+border:2px solid #5fa8e8;
+color:#2a6fb0;
+padding:10px 22px;
+border-radius:30px;
+cursor:pointer;
+font-size:15px;
+transition:all .3s ease;
+}
+button:hover,.btn:hover{
+background:#5fa8e8;
+color:#ffffff;
+}
+
+/* Ortak içerik alanları */
+main,section{
+max-width:1000px;
+margin:30px auto;
+padding:25px;
+background:rgba(255,255,255,0.55);
+backdrop-filter:blur(6px);
+border-radius:18px;
+box-shadow:0 10px 25px rgba(0,0,0,0.08);
+}
+
+/* Footer */
+footer{
+margin:40px 0 20px;
+font-size:13px;
+color:#5a7d99;
+}
+
+/* Mobil */
+@media(max-width:768px){
+main,section{
+margin:20px;
+padding:20px;
+}
+}
