@@ -3,175 +3,136 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>DinginFM — Blog</title>
-
-<link rel="stylesheet" href="style.css">
+<title>Dingin FM — Blog</title>
 
 <style>
-/* === ZEMİN: ANA SİTEYLE AYNI === */
+/* === ANA ZEMİN (SİTEYLE AYNI) === */
 body{
   margin:0;
   min-height:100vh;
-  font-family:'Segoe UI',sans-serif;
+  font-family:'Segoe UI', sans-serif;
   text-align:center;
-  overflow-x:hidden;
-  color:#4fb9ff;
 
-  background:radial-gradient(
-    circle at center,
-    #ffffff 0%,
-    #f1f8ff 35%,
-    #e3f0ff 65%,
-    #d6e9ff 100%
-  );
-}
+  --fm-blue:#6fc9ff;
+  --fm-blue-soft:#9fdcff;
 
-/* ARKA PLAN LOGOSU (SU İZİ) */
-.logo-bg{
-  position:fixed;
-  inset:0;
-  background:url('assets/logo.png') center/420px no-repeat;
-  opacity:0.06;
-  z-index:0;
-  pointer-events:none;
+  color:var(--fm-blue);
+
+  background:
+    url("assets/logo.png") center center / 60% no-repeat,
+    radial-gradient(
+      circle at center,
+      #ffffff 0%,
+      #f1f8ff 40%,
+      #e3f0ff 70%,
+      #d6e9ff 100%
+    );
 }
 
 /* HEADER */
 header{
-  position:relative;
-  z-index:1;
-  padding:30px 10px 22px;
-  background:rgba(255,255,255,0.65);
-  backdrop-filter:blur(4px);
-  box-shadow:0 3px 10px rgba(0,0,0,.15);
+  padding:34px 10px 20px;
 }
 
-/* GERÇEK LOGO */
-.header-logo{
-  display:flex;
-  justify-content:center;
-  margin-bottom:10px;
-}
-.header-logo img{
-  max-width:360px;
-  width:90%;
-  height:auto;
+h1{
+  margin:0;
+  font-size:28px;
+  letter-spacing:1px;
 }
 
-/* BAŞLIK */
-header h2{
+h2{
   margin:6px 0 0;
   font-size:14px;
   font-weight:400;
-  color:#6fc9ff;
+  color:var(--fm-blue-soft);
 }
 
 /* NAV */
 nav{
-  position:relative;
-  z-index:1;
-  margin-top:10px;
+  margin-top:18px;
 }
 nav a{
   margin:0 12px;
   font-size:15px;
-  font-weight:500;
   text-decoration:none;
-  color:#4fb9ff;
+  color:var(--fm-blue);
 }
-nav a:hover,
-nav a.active{
+nav a.active,
+nav a:hover{
   text-decoration:underline;
 }
 
 /* MAIN */
 main{
-  position:relative;
-  z-index:1;
+  max-width:680px;
   margin:60px auto;
+  padding:20px;
 }
 
-/* BLOG KARTI – İÇERİK KORUNDU */
+/* BLOG METİN ALANI (ARTIK KOYU DEĞİL) */
 section{
-  background:rgba(0,22,38,0.85);
-  width:90%;
-  max-width:600px;
-  margin:0 auto;
-  padding:30px 20px;
-  border-radius:15px;
-  box-shadow:0 6px 16px rgba(0,0,0,.35);
-  color:#e6edf3;
+  background:rgba(255,255,255,0.78);
+  backdrop-filter:blur(6px);
+  padding:34px 26px;
+  border-radius:18px;
+  box-shadow:0 6px 18px rgba(0,0,0,.12);
+  color:#4a6f8a;
 }
 
-section p{
-  color:#a9c4d8;
+p{
   font-size:16px;
-  line-height:1.6;
+  line-height:1.7;
+  margin-bottom:18px;
 }
 
 /* BUTON */
 a.btn{
   display:inline-block;
-  background:#ffd43b;
-  color:#001626;
+  padding:12px 28px;
+  border-radius:30px;
+  border:2px solid var(--fm-blue);
+  color:var(--fm-blue);
   text-decoration:none;
-  font-weight:bold;
-  padding:12px 24px;
-  border-radius:8px;
-  margin-top:15px;
-  transition:.3s;
+  font-weight:600;
+  transition:.25s;
 }
 a.btn:hover{
-  background:#ffea84;
-  transform:scale(1.05);
+  background:var(--fm-blue);
+  color:#fff;
 }
 
 /* FOOTER */
 footer{
-  position:relative;
-  z-index:1;
-  background:rgba(255,255,255,0.6);
-  backdrop-filter:blur(3px);
-  padding:20px 10px;
+  margin-top:60px;
+  padding:18px;
   font-size:13px;
-  color:#6fc9ff;
-  margin-top:80px;
+  color:var(--fm-blue-soft);
 }
 
 /* MOBİL */
 @media(max-width:600px){
-  section{
-    width:95%;
-    padding:20px 12px;
-  }
-  a.btn{
-    font-size:15px;
-    padding:10px 20px;
-  }
+  h1{font-size:24px}
+  section{padding:26px 18px}
 }
 </style>
 </head>
 
 <body>
 
-<div class="logo-bg"></div>
-
 <header>
-  <div class="header-logo">
-    <img src="assets/logo.png" alt="Dingin FM">
-  </div>
-  <h2>☕ MadamAylak Blog · Yazılar, Kahve ve Sessiz Düşünceler</h2>
-</header>
+  <h1>DINGIN FM — Blog</h1>
+  <h2>Yazılar, kahve ve sessiz düşünceler</h2>
 
-<nav>
-  <a href="index.html">Ana Sayfa</a>
-  <a href="live.html">Canlı Yayın</a>
-  <a href="dj.html">DJ Aylak</a>
-  <a href="podcast.html">Podcast</a>
-  <a href="blog.html" class="active">Blog</a>
-  <a href="tarihce.html">Tarihçe</a>
-  <a href="connect.html">İletişim</a>
-</nav>
+  <nav>
+    <a href="index.html">Ana Sayfa</a>
+    <a href="live.html">Canlı Yayın</a>
+    <a href="dj.html">DJ Aylak</a>
+    <a href="podcast.html">Podcast</a>
+    <a href="blog.html" class="active">Blog</a>
+    <a href="tarihce.html">Tarihçe</a>
+    <a href="connect.html">İletişim</a>
+  </nav>
+</header>
 
 <main>
   <section>
@@ -181,17 +142,14 @@ footer{
       MadamAylak Blogu Aç
     </a>
 
-    <p>
-      Kelimelerin kahveyle buluştuğu, sessiz ama derin bir köşe seni bekliyor.
+    <p style="margin-top:22px">
+      Kelimelerin kahveyle buluştuğu, sessiz ama derin bir köşe.
     </p>
   </section>
 </main>
 
 <footer>
-  © 2025 Dingin FM — MadamAylak Blog<br>
-  Tüm yayın ve içerik hakları saklıdır.<br>
-  Bu sayfadaki tüm yazılar, görseller ve bağlantılar DinginFM ve MadamAylak markasına aittir.<br>
-  İzinsiz kopyalanamaz, alıntılanamaz veya yeniden yayınlanamaz.
+  © 2025 Dingin FM — Sessizliğin Sesi Burada
 </footer>
 
 </body>
