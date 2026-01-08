@@ -1,8 +1,9 @@
 /* ================================
    DINGIN FM — TEK PARÇA ANA STİL
-   Zemin + Logo + Yazılar UYUMLU
+   Zemin + Logo + Yazılar BÜTÜN
 ================================ */
 
+/* GENEL */
 body{
   margin:0;
   padding:0;
@@ -10,9 +11,8 @@ body{
   font-family:'Segoe UI',sans-serif;
   text-align:center;
   overflow-x:hidden;
-  position:relative;
 
-  /* BUZ MAVİSİ ZEMİN — LOGO İLE AYNI */
+  /* BUZ MAVİSİ ZEMİN — LOGO GÖRSELİYLE AYNI */
   background:radial-gradient(
     circle at center,
     #ffffff 0%,
@@ -21,36 +21,28 @@ body{
     #d6e9ff 100%
   );
 
-  color:#3aaeea; /* FM yazısı tonu */
+  /* FM YAZI TONU */
+  color:#3aaeea;
+  position:relative;
 }
 
-/* ARKA PLAN LOGO — SABİT & TEK PARÇA */
+/* ARKA PLAN LOGO — TEK PARÇA */
 body::before{
   content:"";
   position:fixed;
   inset:0;
   background:url("assets/logo.png") center center no-repeat;
   background-size:70%;
-  background-attachment:fixed;
-  opacity:0.18;
+  opacity:0.22;
   z-index:-1;
   pointer-events:none;
 }
 
-/* GENEL LINKLER */
-a{
-  color:#5cc9ff;
-  text-decoration:none;
-}
-a:hover{
-  text-shadow:0 0 8px rgba(120,220,255,.8);
-}
-
-/* BAŞLIKLAR — NEON FM */
+/* BAŞLIKLAR — FM RENGİ */
 h1,h2,h3,h4,h5,h6{
   color:#5cc9ff;
   font-weight:500;
-  text-shadow:0 0 12px rgba(120,220,255,0.6);
+  text-shadow:0 0 12px rgba(120,220,255,.6);
 }
 
 /* ÜST BAŞLIK */
@@ -65,21 +57,11 @@ h1,h2,h3,h4,h5,h6{
   color:#7fd7ff;
 }
 
-/* HEADER — ZEMİNLE BÜTÜN */
-header{
-  background:rgba(255,255,255,0.35);
-  backdrop-filter:blur(6px);
-  -webkit-backdrop-filter:blur(6px);
-  padding:20px 10px;
-}
-
 /* MENÜ */
-nav{
-  margin-top:8px;
-}
 nav a{
   color:#5cc9ff;
   margin:0 12px;
+  text-decoration:none;
   font-weight:500;
   transition:.3s;
 }
@@ -88,61 +70,41 @@ nav a.active{
   color:#ffffff;
   text-shadow:0 0 10px rgba(120,220,255,.9);
   border-bottom:2px solid #5cc9ff;
-  padding-bottom:3px;
 }
 
-/* BUTONLAR — FM TONU */
-button,
-.btn,
+/* BUTON */
 a.button{
   background:transparent;
   border:2px solid #5cc9ff;
   color:#3aaeea;
   padding:12px 26px;
   border-radius:30px;
-  cursor:pointer;
   font-size:15px;
-  transition:all .3s ease;
+  transition:.3s;
 }
-button:hover,
-.btn:hover,
 a.button:hover{
   background:#5cc9ff;
   color:#ffffff;
   box-shadow:0 0 18px rgba(120,220,255,.9);
 }
 
-/* ORTA İÇERİK — CAM EFEKTİ */
-main,section{
+/* İÇERİK */
+main{
   max-width:1000px;
   margin:40px auto;
   padding:30px;
-  background:rgba(255,255,255,0.45);
-  backdrop-filter:blur(6px);
-  -webkit-backdrop-filter:blur(6px);
-  border-radius:20px;
 }
 
-/* FOOTER — AŞAĞIDA ve SADE */
+/* FOOTER — SAYFANIN EN ALTINDA */
 footer{
-  margin-top:80px;
-  padding:20px 10px;
+  margin-top:120px;
+  padding-bottom:30px;
   font-size:13px;
   color:#5cc9ff;
-  border-top:1px solid rgba(120,220,255,0.25);
 }
 
 /* MOBİL */
 @media(max-width:768px){
-  main,section{
-    margin:20px;
-    padding:20px;
-  }
-  .site-title{
-    font-size:24px;
-  }
-  nav a{
-    margin:0 8px;
-    font-size:14px;
-  }
+  .site-title{font-size:24px;}
+  main{margin:20px;}
 }
