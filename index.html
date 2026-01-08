@@ -1,164 +1,170 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dingin FM — Sessizliğin Sesi Burada</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dingin FM — Sessizliğin Sesi Burada</title>
 
-  <!-- Kareografik font -->
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700&display=swap" rel="stylesheet">
+<!-- Kareografik font -->
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700&display=swap" rel="stylesheet">
 
-  <style>
-    /* RESET + ZEMİN */
-    html, body{
-      height:100%;
-      margin:0;
-    }
+<style>
+/* === GENEL RENKLER === */
+:root{
+  --fm-main:#6fc9ff;     /* logo FM rengi */
+  --fm-soft:#9fdcff;
+  --text-soft:#4a6f8a;
+}
 
-    body{
-      display:flex;
-      flex-direction:column;
-      font-family:'Segoe UI', sans-serif;
-      text-align:center;
-      color:#4fb9ff;
+/* === ZEMİN (LOGO GÖMÜLÜ) === */
+html,body{
+  height:100%;
+  margin:0;
+}
 
-      background:radial-gradient(
-        circle at center,
-        #ffffff 0%,
-        #f1f8ff 35%,
-        #e3f0ff 65%,
-        #d6e9ff 100%
-      );
-    }
+body{
+  display:flex;
+  flex-direction:column;
+  font-family:'Segoe UI',sans-serif;
+  text-align:center;
+  color:var(--fm-main);
 
-    /* HEADER */
-    header{
-      padding:36px 10px 20px;
-    }
+  background:
+    url("assets/logo.png") center center / 55% no-repeat,
+    radial-gradient(
+      circle at center,
+      #ffffff 0%,
+      #f1f8ff 40%,
+      #e3f0ff 70%,
+      #d6e9ff 100%
+    );
+}
 
-    /* KAREOGRAFİK LOGO YAZISI */
-    .logo-text{
-      font-family:'Orbitron', sans-serif;
-      font-size:34px;
-      font-weight:600;
-      letter-spacing:3px;
-      color:#4fb9ff;
-      text-shadow:
-        0 0 6px rgba(79,185,255,.35),
-        0 0 14px rgba(79,185,255,.25);
-      margin-bottom:6px;
-    }
+/* === HEADER === */
+header{
+  padding:36px 10px 18px;
+}
 
-    /* SLOGAN */
-    .site-subtitle{
-      font-size:14px;
-      font-weight:400;
-      color:#6fc9ff;
-      margin-bottom:18px;
-    }
+/* KAREOGRAFİK MARKA YAZISI */
+.logo-text{
+  font-family:'Orbitron',sans-serif;
+  font-size:34px;
+  font-weight:600;
+  letter-spacing:3px;
+  color:var(--fm-main);
+  margin-bottom:6px;
+}
 
-    /* NAV */
-    nav a{
-      margin:0 12px;
-      font-size:15px;
-      font-weight:500;
-      text-decoration:none;
-      color:#4fb9ff;
-    }
+/* SLOGAN */
+.site-subtitle{
+  font-size:14px;
+  font-weight:400;
+  color:var(--fm-soft);
+  margin-bottom:18px;
+}
 
-    nav a.active,
-    nav a:hover{
-      text-decoration:underline;
-    }
+/* === NAV === */
+nav a{
+  margin:0 12px;
+  font-size:15px;
+  font-weight:500;
+  text-decoration:none;
+  color:var(--fm-main);
+}
 
-    /* MAIN */
-    main{
-      flex:1;
-      display:flex;
-      flex-direction:column;
-      justify-content:center;
-      align-items:center;
-      padding:20px;
-    }
+nav a.active,
+nav a:hover{
+  text-decoration:underline;
+}
 
-    main h1{
-      font-size:30px;
-      font-weight:500;
-      margin:0;
-      text-shadow:0 0 12px rgba(79,185,255,.4);
-    }
+/* === MAIN === */
+main{
+  flex:1;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  padding:20px;
+}
 
-    main p{
-      font-size:16px;
-      color:#6fc9ff;
-      line-height:1.6;
-      margin:12px 0 24px;
-    }
+main h1{
+  font-size:30px;
+  font-weight:500;
+  margin:0;
+  color:var(--fm-main);
+}
 
-    /* BUTTON */
-    .button{
-      display:inline-block;
-      padding:12px 30px;
-      border-radius:30px;
-      border:2px solid #4fb9ff;
-      color:#4fb9ff;
-      text-decoration:none;
-      font-weight:500;
-      transition:.3s;
-    }
+main p{
+  font-size:16px;
+  color:var(--fm-soft);
+  line-height:1.6;
+  margin:12px 0 26px;
+}
 
-    .button:hover{
-      background:#4fb9ff;
-      color:#ffffff;
-    }
+/* === BUTON === */
+.button{
+  display:inline-block;
+  padding:12px 32px;
+  border-radius:30px;
+  border:2px solid var(--fm-main);
+  color:var(--fm-main);
+  text-decoration:none;
+  font-weight:500;
+  transition:.3s;
+}
 
-    /* FOOTER */
-    footer{
-      padding:20px 10px;
-      font-size:13px;
-      color:#6fc9ff;
-    }
+.button:hover{
+  background:var(--fm-main);
+  color:#ffffff;
+}
 
-    /* MOBİL */
-    @media(max-width:600px){
-      .logo-text{font-size:26px}
-      main h1{font-size:24px}
-      nav a{margin:0 8px}
-    }
-  </style>
+/* === FOOTER === */
+footer{
+  padding:20px 10px;
+  font-size:13px;
+  color:var(--fm-soft);
+}
+
+/* === MOBİL === */
+@media(max-width:600px){
+  .logo-text{font-size:26px}
+  main h1{font-size:24px}
+  nav a{margin:0 8px}
+}
+</style>
 </head>
 
 <body>
 
-  <header>
-    <div class="logo-text">DINGIN&nbsp;FM</div>
-    <div class="site-subtitle">Sessizliğin Sesi Burada</div>
+<header>
+  <div class="logo-text">DINGIN&nbsp;FM</div>
+  <div class="site-subtitle">Sessizliğin Sesi Burada</div>
 
-    <nav>
-      <a href="index.html" class="active">Ana Sayfa</a>
-      <a href="live.html">Canlı Yayın</a>
-      <a href="dj.html">DJ Aylak</a>
-      <a href="podcast.html">Podcast</a>
-      <a href="blog.html">Blog</a>
-      <a href="tarihce.html">Tarihçe</a>
-      <a href="yayinsaatleri.html">Yayın Saatleri</a>
-      <a href="connect.html">İletişim</a>
-    </nav>
-  </header>
+  <nav>
+    <a href="index.html" class="active">Ana Sayfa</a>
+    <a href="live.html">Canlı Yayın</a>
+    <a href="dj.html">DJ Aylak</a>
+    <a href="podcast.html">Podcast</a>
+    <a href="blog.html">Blog</a>
+    <a href="tarihce.html">Tarihçe</a>
+    <a href="yayinsaatleri.html">Yayın Saatleri</a>
+    <a href="connect.html">İletişim</a>
+  </nav>
+</header>
 
-  <main>
-    <h1>Dingin FM’e Hoş Geldiniz</h1>
-    <p>
-      Kahvenizi alın, sessizliğin sesine kulak verin.<br>
-      Müzik, sohbet ve huzur burada.
-    </p>
+<main>
+  <h1>Dingin FM’e Hoş Geldiniz</h1>
+  <p>
+    Kahvenizi alın, sessizliğin sesine kulak verin.<br>
+    Müzik, sohbet ve huzur burada.
+  </p>
 
-    <a href="live.html" class="button">Canlı Yayına Git</a>
-  </main>
+  <a href="live.html" class="button">Canlı Yayına Git</a>
+</main>
 
-  <footer>
-    © 2025 Dingin FM — Tüm Hakları Saklıdır · Sessizliğin Sesi Burada
-  </footer>
+<footer>
+  © 2025 Dingin FM — Sessizliğin Sesi Burada
+</footer>
 
 </body>
 </html>
