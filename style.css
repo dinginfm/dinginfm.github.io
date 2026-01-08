@@ -1,11 +1,8 @@
 /* ================================
-   DINGIN FM — ANA STİL DOSYASI
-   Zemin: Buz mavisi
-   Yazılar: FM neon hissi
-   Tüm sayfalar ortak
+   DINGIN FM — TEK PARÇA ANA STİL
+   Zemin + Logo + Yazılar UYUMLU
 ================================ */
 
-/* RESET + BODY */
 body{
   margin:0;
   padding:0;
@@ -14,7 +11,7 @@ body{
   text-align:center;
   overflow-x:hidden;
 
-  /* SABİT ZEMİN – BUZ MAVİSİ */
+  /* BUZ MAVİSİ ZEMİN — GÖRSELLE AYNI */
   background:radial-gradient(
     circle at center,
     #ffffff 0%,
@@ -23,150 +20,101 @@ body{
     #d6e9ff 100%
   );
 
-  color:#1f3b4d;
+  color:#3aaeea; /* FM yazısı tonu */
+  position:relative;
 }
 
-/* ARKA PLAN LOGO (saydam, tüm sayfalarda) */
-.logo{
+/* ARKA PLAN LOGO — SABİT & SİLİK */
+body::before{
+  content:"";
   position:fixed;
   inset:0;
-  width:100vw;
-  height:100vh;
-  object-fit:cover;
-  opacity:0.08;
-  z-index:0;
+  background:url("assets/logo.png") center center no-repeat;
+  background-size:70%;
+  opacity:0.18;
+  z-index:-1;
   pointer-events:none;
 }
 
-/* ================= HEADER ================= */
-header{
-  position:sticky;
-  top:0;
-  z-index:10;
-  background:rgba(255,255,255,0.55);
-  backdrop-filter:blur(8px);
-  box-shadow:0 4px 14px rgba(0,0,0,0.08);
-  padding:18px 10px;
+/* BAŞLIKLAR — NEON FM RENGİ */
+h1,h2,h3,h4,h5,h6{
+  color:#5cc9ff;
+  font-weight:500;
+  text-shadow:0 0 12px rgba(120,220,255,0.6);
 }
 
-.header-container{
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  gap:6px;
-}
-
-/* DINGIN FM — FM NEON YAZI */
+/* ÜST LOGO YAZISI (DINGIN FM) */
 .site-title{
   font-size:30px;
-  font-weight:600;
   letter-spacing:1px;
-  color:#8fdcff;
-  text-shadow:
-    0 0 6px rgba(143,220,255,.9),
-    0 0 16px rgba(143,220,255,.6),
-    0 0 28px rgba(143,220,255,.35);
-  margin:0;
 }
 
 /* ALT SLOGAN */
 .site-subtitle{
   font-size:14px;
-  font-weight:400;
-  color:#bfeeff;
-  text-shadow:0 0 6px rgba(180,230,255,.6);
-  margin:0 0 8px;
+  color:#7fd7ff;
 }
 
-/* ================= NAV ================= */
-nav{
-  margin-top:6px;
-}
-
+/* MENÜ */
 nav a{
-  color:#2a6fb0;
+  color:#5cc9ff;
   margin:0 12px;
   text-decoration:none;
-  font-size:15px;
   font-weight:500;
   transition:.3s;
 }
-
 nav a:hover,
 nav a.active{
-  color:#5fa8e8;
-  border-bottom:2px solid #5fa8e8;
-  padding-bottom:3px;
+  color:#ffffff;
+  text-shadow:0 0 10px rgba(120,220,255,.9);
+  border-bottom:2px solid #5cc9ff;
 }
 
-/* ================= MAIN ================= */
-main{
-  position:relative;
-  z-index:1;
-  max-width:1000px;
-  margin:70px auto 40px;
-  padding:30px;
-  background:rgba(255,255,255,0.55);
-  backdrop-filter:blur(6px);
-  border-radius:22px;
-  box-shadow:0 12px 28px rgba(0,0,0,0.1);
-}
-
-/* ANA BAŞLIK – FM NEON */
-main h1{
-  font-size:32px;
-  margin-bottom:10px;
-  color:#8fdcff;
-  text-shadow:
-    0 0 6px rgba(143,220,255,.8),
-    0 0 18px rgba(143,220,255,.5);
-}
-
-main p{
-  font-size:16px;
-  color:#355e7c;
-  line-height:1.6;
-}
-
-/* ================= BUTON ================= */
-a.button,
+/* BUTONLAR — FM TONU */
+button,
 .btn,
-button{
-  display:inline-block;
-  margin-top:24px;
+a.button{
+  background:transparent;
+  border:2px solid #5cc9ff;
+  color:#3aaeea;
   padding:12px 26px;
   border-radius:30px;
-  background:transparent;
-  border:2px solid #5fa8e8;
-  color:#2a6fb0;
-  font-size:15px;
-  font-weight:600;
-  text-decoration:none;
   cursor:pointer;
+  font-size:15px;
   transition:all .3s ease;
 }
-
-a.button:hover,
+button:hover,
 .btn:hover,
-button:hover{
-  background:#5fa8e8;
+a.button:hover{
+  background:#5cc9ff;
   color:#ffffff;
-  box-shadow:0 0 18px rgba(95,168,232,.6);
-  transform:scale(1.05);
+  box-shadow:0 0 18px rgba(120,220,255,.9);
 }
 
-/* ================= FOOTER ================= */
+/* ORTA İÇERİK */
+main,section{
+  max-width:1000px;
+  margin:40px auto;
+  padding:30px;
+  background:rgba(255,255,255,0.45);
+  backdrop-filter:blur(6px);
+  border-radius:20px;
+}
+
+/* FOOTER */
 footer{
-  margin:50px 0 20px;
+  margin:40px 0 20px;
   font-size:13px;
-  color:#5a7d99;
-  position:relative;
-  z-index:1;
+  color:#5cc9ff;
 }
 
-/* ================= MOBİL ================= */
+/* MOBİL */
 @media(max-width:768px){
-  .site-title{font-size:24px}
-  main{margin:50px 15px;padding:22px}
-  nav a{margin:6px;font-size:14px}
+  main,section{
+    margin:20px;
+    padding:20px;
+  }
+  .site-title{
+    font-size:24px;
+  }
 }
