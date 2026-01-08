@@ -5,9 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Dingin FM — Sessizliğin Sesi Burada</title>
 
-  <!-- Ortak stil dosyan -->
-  <link rel="stylesheet" href="style.css">
-
   <style>
     body{
       margin:0;
@@ -15,8 +12,9 @@
       font-family:'Segoe UI',sans-serif;
       text-align:center;
       overflow-x:hidden;
+      color:#4fb9ff;
 
-      /* BUZ MAVİSİ ZEMİN */
+      /* TEK PARÇA ZEMİN */
       background:radial-gradient(
         circle at center,
         #ffffff 0%,
@@ -24,154 +22,141 @@
         #e3f0ff 65%,
         #d6e9ff 100%
       );
-
-      color:#1f3b4d;
     }
 
-    /* Logo sadece arka plan izi */
+    /* ARKA PLAN LOGO – TEK PARÇA */
     .logo{
       position:fixed;
       inset:0;
-      width:100vw;
-      height:100vh;
-      object-fit:cover;
-      opacity:.07;
+      width:100%;
+      height:100%;
+      object-fit:contain;
+      opacity:0.35;
       z-index:0;
       pointer-events:none;
     }
 
     header{
-      background:rgba(255,255,255,.75);
-      padding:20px 10px;
-      position:sticky;
-      top:0;
-      z-index:10;
-      backdrop-filter:blur(6px);
-      box-shadow:0 3px 10px rgba(0,0,0,.08);
-    }
-
-    .header-container{
-      display:flex;
-      flex-direction:column;
-      align-items:center;
-      gap:6px;
+      position:relative;
+      z-index:1;
+      padding:25px 10px 10px;
+      background:transparent;
     }
 
     h1.site-title{
-      font-size:30px;
       margin:0;
-      letter-spacing:1px;
-      color:#2a6fb0; /* FM yazısı tonu */
+      font-size:32px;
+      font-weight:600;
+      color:#4fb9ff;
+      text-shadow:0 0 10px rgba(79,185,255,.6);
     }
 
     h2.site-subtitle{
+      margin:6px 0 14px;
       font-size:14px;
       font-weight:400;
-      margin:0 0 10px;
-      color:#5a7d99;
+      color:#6fc9ff;
     }
 
     nav a{
       margin:0 12px;
-      text-decoration:none;
       font-size:15px;
       font-weight:500;
-      color:#1f3b4d;
-      transition:.3s;
+      text-decoration:none;
+      color:#4fb9ff;
     }
 
-    nav a:hover,
-    nav a.active{
-      color:#2a6fb0;
-      border-bottom:2px solid #2a6fb0;
-      padding-bottom:3px;
+    nav a.active,
+    nav a:hover{
+      text-decoration:underline;
     }
 
     main{
-      margin-top:80px;
       position:relative;
       z-index:1;
+      margin-top:80px;
     }
 
     main h1{
-      font-size:32px;
-      margin-bottom:8px;
-      color:#2a6fb0;
+      font-size:30px;
+      font-weight:500;
+      color:#4fb9ff;
+      text-shadow:0 0 12px rgba(79,185,255,.5);
     }
 
     main p{
       font-size:16px;
-      color:#5a7d99;
+      color:#6fc9ff;
       line-height:1.6;
     }
 
     .button{
       display:inline-block;
-      margin-top:26px;
-      padding:12px 28px;
+      margin-top:28px;
+      padding:12px 30px;
       border-radius:30px;
-      border:2px solid #5fa8e8;
-      color:#2a6fb0;
-      font-weight:600;
+      border:2px solid #4fb9ff;
+      color:#4fb9ff;
       text-decoration:none;
+      font-weight:500;
       transition:.3s;
-      background:transparent;
     }
 
     .button:hover{
-      background:#5fa8e8;
-      color:#fff;
-      transform:translateY(-1px);
+      background:#4fb9ff;
+      color:#ffffff;
     }
 
-    /* SADE, AŞAĞIDA, BAĞIMSIZ FOOTER */
     footer{
+      position:relative;
+      z-index:1;
       margin-top:120px;
       padding:20px 10px;
       font-size:13px;
-      color:#7a9bb5;
-      background:transparent;
+      color:#6fc9ff;
     }
 
     @media(max-width:600px){
-      nav a{margin:6px;font-size:14px}
-      main h1{font-size:26px}
+      h1.site-title{font-size:26px}
+      main h1{font-size:24px}
+      nav a{margin:0 8px}
     }
   </style>
 </head>
 
 <body>
 
-  <img src="assets/logo.png" alt="DinginFM Logo" class="logo">
+  <!-- TEK PARÇA ARKA PLAN LOGO -->
+  <img src="assets/logo.png" alt="Dingin FM Logo" class="logo">
 
   <header>
-    <div class="header-container">
-      <h1 class="site-title">DINGIN FM</h1>
-      <h2 class="site-subtitle">Sessizliğin Sesi Burada</h2>
-      <nav>
-        <a href="index.html" class="active">Ana Sayfa</a>
-        <a href="live.html">Canlı Yayın</a>
-        <a href="dj.html">DJ Aylak</a>
-        <a href="podcast.html">Podcast</a>
-        <a href="blog.html">Blog</a>
-        <a href="tarihce.html">Tarihçe</a>
-        <a href="yayinsaatleri.html">Yayın Saatleri</a>
-        <a href="connect.html">İletişim</a>
-      </nav>
-    </div>
+    <h1 class="site-title">DINGIN FM</h1>
+    <h2 class="site-subtitle">Sessizliğin Sesi Burada</h2>
+
+    <nav>
+      <a href="index.html" class="active">Ana Sayfa</a>
+      <a href="live.html">Canlı Yayın</a>
+      <a href="dj.html">DJ Aylak</a>
+      <a href="podcast.html">Podcast</a>
+      <a href="blog.html">Blog</a>
+      <a href="tarihce.html">Tarihçe</a>
+      <a href="yayinsaatleri.html">Yayın Saatleri</a>
+      <a href="connect.html">İletişim</a>
+    </nav>
   </header>
 
   <main>
-    <h1>🎧 Dingin FM’e Hoş Geldiniz</h1>
+    <h1>Dingin FM’e Hoş Geldiniz</h1>
     <p>
       Kahvenizi alın, sessizliğin sesine kulak verin.<br>
       Müzik, sohbet ve huzur burada.
     </p>
-    <a href="live.html" class="button">📡 Canlı Yayına Git</a>
+    <a href="live.html" class="button">Canlı Yayına Git</a>
   </main>
 
+  <!-- SADECE BURADA -->
   <footer>
-    © 2025 Dingin FM · Sessizliğin Sesi Burada
+    © 2025 Dingin FM — Tüm Hakları Saklıdır · Sessizliğin Sesi Burada
   </footer>
 
 </body>
