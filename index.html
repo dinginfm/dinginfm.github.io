@@ -5,143 +5,137 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Dingin FM — Sessizliğin Sesi Burada</title>
 
-  <!-- DOSYA ADI DÜZELTİLDİ -->
+  <!-- Ortak stil dosyan -->
   <link rel="stylesheet" href="style.css">
 
   <style>
     body{
       margin:0;
-      background:linear-gradient(180deg,#eaf4ff 0%,#dfefff 100%);
-      color:#1e3a4c;
+      min-height:100vh;
       font-family:'Segoe UI',sans-serif;
       text-align:center;
-      overflow-x:hidden
+      overflow-x:hidden;
+
+      /* BUZ MAVİSİ ZEMİN */
+      background:radial-gradient(
+        circle at center,
+        #ffffff 0%,
+        #f1f8ff 35%,
+        #e3f0ff 65%,
+        #d6e9ff 100%
+      );
+
+      color:#1f3b4d;
     }
 
+    /* Logo sadece arka plan izi */
     .logo{
       position:fixed;
-      top:0;
-      left:0;
+      inset:0;
       width:100vw;
       height:100vh;
       object-fit:cover;
-      opacity:.06;
+      opacity:.07;
       z-index:0;
-      pointer-events:none
+      pointer-events:none;
     }
 
     header{
       background:rgba(255,255,255,.75);
       padding:20px 10px;
-      box-shadow:0 3px 10px rgba(0,0,0,.08);
       position:sticky;
       top:0;
       z-index:10;
-      backdrop-filter:blur(6px)
+      backdrop-filter:blur(6px);
+      box-shadow:0 3px 10px rgba(0,0,0,.08);
     }
 
     .header-container{
       display:flex;
       flex-direction:column;
       align-items:center;
-      gap:6px
+      gap:6px;
     }
 
     h1.site-title{
-      color:#1e3a4c;
       font-size:30px;
       margin:0;
-      letter-spacing:1px
+      letter-spacing:1px;
+      color:#2a6fb0; /* FM yazısı tonu */
     }
 
     h2.site-subtitle{
-      color:#4f6b7a;
-      font-weight:400;
       font-size:14px;
-      margin:0 0 10px
-    }
-
-    nav{
-      margin-top:5px
+      font-weight:400;
+      margin:0 0 10px;
+      color:#5a7d99;
     }
 
     nav a{
-      color:#1e3a4c;
       margin:0 12px;
       text-decoration:none;
-      font-weight:500;
       font-size:15px;
-      transition:.3s
+      font-weight:500;
+      color:#1f3b4d;
+      transition:.3s;
     }
 
     nav a:hover,
     nav a.active{
       color:#2a6fb0;
       border-bottom:2px solid #2a6fb0;
-      padding-bottom:3px
+      padding-bottom:3px;
     }
 
     main{
-      margin-top:60px;
+      margin-top:80px;
       position:relative;
-      z-index:1
+      z-index:1;
     }
 
     main h1{
-      color:#1e3a4c;
       font-size:32px;
-      margin-bottom:8px
+      margin-bottom:8px;
+      color:#2a6fb0;
     }
 
     main p{
       font-size:16px;
-      color:#4f6b7a;
-      line-height:1.6
+      color:#5a7d99;
+      line-height:1.6;
     }
 
-    a.button{
+    .button{
       display:inline-block;
-      background:transparent;
-      color:#2a6fb0;
-      text-decoration:none;
-      font-weight:600;
-      padding:12px 26px;
+      margin-top:26px;
+      padding:12px 28px;
       border-radius:30px;
-      margin-top:25px;
       border:2px solid #5fa8e8;
-      transition:.3s
+      color:#2a6fb0;
+      font-weight:600;
+      text-decoration:none;
+      transition:.3s;
+      background:transparent;
     }
 
-    a.button:hover{
+    .button:hover{
       background:#5fa8e8;
-      color:#ffffff;
-      transform:translateY(-1px)
+      color:#fff;
+      transform:translateY(-1px);
     }
 
+    /* SADE, AŞAĞIDA, BAĞIMSIZ FOOTER */
     footer{
-      background:rgba(255,255,255,.75);
-      padding:15px;
+      margin-top:120px;
+      padding:20px 10px;
       font-size:13px;
-      color:#4f6b7a;
-      margin-top:60px;
-      box-shadow:0 -2px 10px rgba(0,0,0,.06);
-      position:relative;
-      z-index:1
+      color:#7a9bb5;
+      background:transparent;
     }
 
-    @media (max-width:600px){
-      nav a{
-        display:inline-block;
-        margin:6px;
-        font-size:14px
-      }
-      main h1{
-        font-size:26px
-      }
-      a.button{
-        padding:10px 22px;
-        font-size:15px
-      }
+    @media(max-width:600px){
+      nav a{margin:6px;font-size:14px}
+      main h1{font-size:26px}
     }
   </style>
 </head>
@@ -169,12 +163,15 @@
 
   <main>
     <h1>🎧 Dingin FM’e Hoş Geldiniz</h1>
-    <p>Kahvenizi alın, sessizliğin sesine kulak verin.<br> Müzik, sohbet ve huzur burada.</p>
+    <p>
+      Kahvenizi alın, sessizliğin sesine kulak verin.<br>
+      Müzik, sohbet ve huzur burada.
+    </p>
     <a href="live.html" class="button">📡 Canlı Yayına Git</a>
   </main>
 
   <footer>
-    © 2025 Dingin FM — Tüm Hakları Saklıdır · <i>Sessizliğin Sesi Burada</i>
+    © 2025 Dingin FM · Sessizliğin Sesi Burada
   </footer>
 
 </body>
