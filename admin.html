@@ -26,7 +26,7 @@ body{
   );
 }
 
-/* LOGO ARKAPLANI (SU İZİ GİBİ) */
+/* LOGO ARKAPLANI (SU İZİ) */
 .logo-bg{
   position:fixed;
   inset:0;
@@ -40,20 +40,26 @@ body{
 header{
   position:relative;
   z-index:1;
-  padding:25px 10px;
+  padding:28px 10px 22px;
   background:rgba(255,255,255,0.65);
   backdrop-filter:blur(4px);
   box-shadow:0 3px 10px rgba(0,0,0,.15);
 }
 
-/* KAREOGRAFİK LOGO YAZISI */
-header h1{
-  margin:0;
-  font-size:28px;
-  font-weight:600;
-  color:#4fb9ff;
+/* GERÇEK LOGO */
+.header-logo{
+  display:flex;
+  justify-content:center;
+  margin-bottom:10px;
+}
+.header-logo img{
+  max-width:360px;
+  width:90%;
+  height:auto;
+  display:block;
 }
 
+/* PANEL BAŞLIK */
 header h2{
   margin:6px 0 0;
   font-size:14px;
@@ -69,7 +75,7 @@ main{
   margin:40px auto;
 }
 
-/* PANEL KARTLARI (KOYU HİSSİ BURADAN GELİYOR) */
+/* PANEL KARTLARI */
 section{
   background:rgba(0,22,38,0.85);
   margin:20px;
@@ -115,17 +121,21 @@ footer{
 <div class="logo-bg"></div>
 
 <header>
-  <h1>DINGIN FM — DJ Aylak Yönetim Paneli</h1>
-  <h2>Sessizliğin Sesi Burada</h2>
+  <div class="header-logo">
+    <img src="assets/logo.png" alt="Dingin FM">
+  </div>
+  <h2>DJ Aylak · Yönetim Paneli — Sessizliğin Sesi Burada</h2>
 </header>
 
 <main>
 
 <section>
   <h3>📡 Yayın Durumu: <span id="status-info" class="status off">Kontrol ediliyor...</span></h3>
-  <p>Anlık Dinleyici: <span id="listener-count">0</span> |
-     Peak: <span id="peak-count">0</span> |
-     Bitrate: <span id="bitrate">—</span></p>
+  <p>
+    Anlık Dinleyici: <span id="listener-count">0</span> |
+    Peak: <span id="peak-count">0</span> |
+    Bitrate: <span id="bitrate">—</span>
+  </p>
   <button id="toggleBtn" class="btn" onclick="manualCheck()">🔄 Güncelle</button>
 </section>
 
@@ -162,9 +172,9 @@ footer{
   © 2025 DinginFM — Tüm yayın ve içerik hakları saklıdır · Sessizliğin Sesi Burada
 </footer>
 
-<!-- SCRIPT BLOĞUNU DEĞİŞTİRMEDİM -->
+<!-- JS BLOĞU BİLİNÇLİ OLARAK DOKUNULMADI -->
 <script>
-/* JS AYNEN KALDI */
+/* mevcut JS aynen kalacak */
 </script>
 
 </body>
