@@ -1,196 +1,224 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>DinginFM — İletişim</title>
-  <link rel="stylesheet" href="stil.css">
-  <style>
-    body {
-      margin: 0;
-      background: #001626;
-      color: #e6edf3;
-      font-family: 'Segoe UI', sans-serif;
-      text-align: center;
-      overflow-x: hidden;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DinginFM — İletişim</title>
 
-    .logo {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      object-fit: cover;
-      opacity: 0.08;
-      z-index: 0;
-      pointer-events: none;
-    }
+<link rel="stylesheet" href="style.css">
 
-    header {
-      background: rgba(0, 39, 67, 0.85);
-      padding: 25px 10px;
-      box-shadow: 0 3px 10px rgba(0,0,0,.5);
-      position: sticky;
-      top: 0;
-      z-index: 10;
-    }
+<style>
+/* === ZEMİN: ANA SİTEYLE AYNI === */
+body{
+  margin:0;
+  min-height:100vh;
+  font-family:'Segoe UI',sans-serif;
+  text-align:center;
+  overflow-x:hidden;
+  color:#4fb9ff;
 
-    h1 {
-      color: #ffd43b;
-      margin-bottom: 5px;
-      font-size: 30px;
-    }
+  background:radial-gradient(
+    circle at center,
+    #ffffff 0%,
+    #f1f8ff 35%,
+    #e3f0ff 65%,
+    #d6e9ff 100%
+  );
+}
 
-    h2 {
-      color: #9fbdd3;
-      font-weight: normal;
-      font-size: 15px;
-      margin: 0;
-    }
+/* ARKA PLAN LOGOSU (SU İZİ) */
+.logo-bg{
+  position:fixed;
+  inset:0;
+  background:url('assets/logo.png') center/420px no-repeat;
+  opacity:0.06;
+  z-index:0;
+  pointer-events:none;
+}
 
-    nav {
-      background: rgba(0,39,67,0.85);
-      padding: 10px 0;
-      box-shadow: 0 2px 8px rgba(0,0,0,.4);
-    }
+/* HEADER */
+header{
+  position:relative;
+  z-index:1;
+  padding:30px 10px 22px;
+  background:rgba(255,255,255,0.65);
+  backdrop-filter:blur(4px);
+  box-shadow:0 3px 10px rgba(0,0,0,.15);
+}
 
-    nav a {
-      color: #e6edf3;
-      margin: 0 12px;
-      text-decoration: none;
-      font-weight: 500;
-      font-size: 15px;
-      transition: .3s;
-    }
+/* GERÇEK LOGO */
+.header-logo{
+  display:flex;
+  justify-content:center;
+  margin-bottom:10px;
+}
+.header-logo img{
+  max-width:360px;
+  width:90%;
+  height:auto;
+}
 
-    nav a:hover, nav a.active {
-      color: #ffd43b;
-      border-bottom: 2px solid #ffd43b;
-      padding-bottom: 3px;
-    }
+/* BAŞLIK */
+header h2{
+  margin:6px 0 0;
+  font-size:14px;
+  font-weight:400;
+  color:#6fc9ff;
+}
 
-    main {
-      margin-top: 50px;
-      position: relative;
-      z-index: 1;
-    }
+/* NAV */
+nav{
+  position:relative;
+  z-index:1;
+  margin-top:10px;
+}
+nav a{
+  margin:0 12px;
+  font-size:15px;
+  font-weight:500;
+  text-decoration:none;
+  color:#4fb9ff;
+}
+nav a:hover,
+nav a.active{
+  text-decoration:underline;
+}
 
-    section {
-      background: rgba(2,43,71,0.75);
-      margin: 20px auto;
-      padding: 30px 20px;
-      width: 90%;
-      max-width: 600px;
-      border-radius: 15px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.4);
-    }
+/* MAIN */
+main{
+  position:relative;
+  z-index:1;
+  margin:60px auto;
+}
 
-    input, textarea {
-      background: rgba(255,255,255,0.1);
-      border: none;
-      border-radius: 8px;
-      color: #e6edf3;
-      font-size: 15px;
-      padding: 10px;
-      width: 100%;
-      resize: none;
-    }
+/* KARTLAR */
+section{
+  background:rgba(0,22,38,0.85);
+  margin:20px auto;
+  padding:30px 20px;
+  width:90%;
+  max-width:600px;
+  border-radius:15px;
+  box-shadow:0 6px 16px rgba(0,0,0,.35);
+  color:#e6edf3;
+}
 
-    button.btn {
-      background: #ffd43b;
-      color: #001626;
-      font-weight: bold;
-      border: none;
-      border-radius: 8px;
-      padding: 10px 20px;
-      cursor: pointer;
-      transition: 0.3s;
-    }
+/* FORM */
+input, textarea{
+  background:rgba(255,255,255,0.1);
+  border:none;
+  border-radius:8px;
+  color:#e6edf3;
+  font-size:15px;
+  padding:10px;
+  width:100%;
+  resize:none;
+  margin-top:10px;
+}
 
-    button.btn:hover {
-      background: #ffea84;
-      transform: scale(1.05);
-    }
+/* BUTON */
+button.btn{
+  background:#ffd43b;
+  color:#001626;
+  font-weight:bold;
+  border:none;
+  border-radius:8px;
+  padding:10px 20px;
+  cursor:pointer;
+  transition:.3s;
+  margin-top:12px;
+}
+button.btn:hover{
+  background:#ffea84;
+  transform:scale(1.05);
+}
 
-    footer {
-      background: rgba(0,39,67,0.85);
-      padding: 15px;
-      font-size: 13px;
-      color: #9fbdd3;
-      margin-top: 60px;
-      box-shadow: 0 -2px 10px rgba(0,0,0,.4);
-    }
-  </style>
+/* FOOTER */
+footer{
+  position:relative;
+  z-index:1;
+  background:rgba(255,255,255,0.6);
+  backdrop-filter:blur(3px);
+  padding:20px 10px;
+  font-size:13px;
+  color:#6fc9ff;
+  margin-top:80px;
+}
+</style>
 </head>
 
 <body>
-  <img src="assets/logo.png" alt="DinginFM Logo" class="logo">
 
-  <header>
-    <h1>📬 DinginFM — İletişim</h1>
-    <h2>Fikirlerini, Önerilerini, Sessizliğini Paylaş</h2>
-  </header>
+<div class="logo-bg"></div>
 
-  <nav>
-    <a href="index.html">Ana Sayfa</a>
-    <a href="live.html">Canlı Yayın</a>
-    <a href="dj.html">DJ Aylak</a>
-    <a href="podcast.html">Podcast</a>
-    <a href="blog.html">Blog</a>
-    <a href="tarihce.html">Tarihçe</a>
-    <a href="connect.html" class="active">İletişim</a>
-  </nav>
+<header>
+  <div class="header-logo">
+    <img src="assets/logo.png" alt="Dingin FM">
+  </div>
+  <h2>📬 İletişim · Fikirlerini, Önerilerini, Sessizliğini Paylaş</h2>
+</header>
 
-  <main>
-    <section>
-      <p>📧 <b>dinginfm@gmail.com</b></p>
-      <p>📸 Instagram: <b>@dinginfm</b></p>
-    </section>
+<nav>
+  <a href="index.html">Ana Sayfa</a>
+  <a href="live.html">Canlı Yayın</a>
+  <a href="dj.html">DJ Aylak</a>
+  <a href="podcast.html">Podcast</a>
+  <a href="blog.html">Blog</a>
+  <a href="tarihce.html">Tarihçe</a>
+  <a href="connect.html" class="active">İletişim</a>
+</nav>
 
-    <section>
-      <h3>💌 İstek & Öneri Formu</h3>
-      <form id="contactForm">
-        <input type="text" id="name" placeholder="Adınız Soyadınız" required>
-        <input type="email" id="email" placeholder="E-posta Adresiniz" required>
-        <textarea id="message" placeholder="Mesajınız..." rows="4" required></textarea>
-        <button type="submit" class="btn">Gönder</button>
-      </form>
-      <p id="formStatus" style="color:#9fbdd3;margin-top:10px;"></p>
-    </section>
-  </main>
+<main>
 
-  <footer>
-    © 2025 Dingin FM — İletişim Sayfası<br>
-    Tüm yayın ve içerik hakları saklıdır.
-  </footer>
+<section>
+  <p>📧 <b>dinginfm@gmail.com</b></p>
+  <p>📸 Instagram: <b>@dinginfm</b></p>
+</section>
 
-  <script>
-  const form = document.getElementById("contactForm");
-  const statusText = document.getElementById("formStatus");
+<section>
+  <h3>💌 İstek & Öneri Formu</h3>
+  <form id="contactForm">
+    <input type="text" id="name" placeholder="Adınız Soyadınız" required>
+    <input type="email" id="email" placeholder="E-posta Adresiniz" required>
+    <textarea id="message" placeholder="Mesajınız..." rows="4" required></textarea>
+    <button type="submit" class="btn">Gönder</button>
+  </form>
+  <p id="formStatus" style="color:#9fbdd3;margin-top:10px;"></p>
+</section>
 
-  form.addEventListener("submit", (e) => {
-    e.preventDefault();
-    const name = document.getElementById("name").value.trim();
-    const email = document.getElementById("email").value.trim();
-    const message = document.getElementById("message").value.trim();
+</main>
 
-    if (!name || !email || !message) {
-      statusText.textContent = "⚠️ Lütfen tüm alanları doldurun.";
-      return;
-    }
+<footer>
+  © 2025 Dingin FM — İletişim Sayfası<br>
+  Tüm yayın ve içerik hakları saklıdır.
+</footer>
 
-    // Mesajı LocalStorage’a kaydet
-    const messages = JSON.parse(localStorage.getItem("dinginfm_messages") || "[]");
-    messages.unshift({
-      ts: new Date().toLocaleString("tr-TR"),
-      name, email, message
-    });
-    localStorage.setItem("dinginfm_messages", JSON.stringify(messages));
+<script>
+const form = document.getElementById("contactForm");
+const statusText = document.getElementById("formStatus");
 
-    form.reset();
-    statusText.textContent = "📨 Teşekkürler! Mesajın iletildi (admin paneline kaydedildi).";
+form.addEventListener("submit",(e)=>{
+  e.preventDefault();
+  const name=document.getElementById("name").value.trim();
+  const email=document.getElementById("email").value.trim();
+  const message=document.getElementById("message").value.trim();
+
+  if(!name||!email||!message){
+    statusText.textContent="⚠️ Lütfen tüm alanları doldurun.";
+    return;
+  }
+
+  const messages=JSON.parse(localStorage.getItem("dinginfm_messages")||"[]");
+  messages.unshift({
+    ts:new Date().toLocaleString("tr-TR"),
+    name,email,message
   });
-  </script>
+  localStorage.setItem("dinginfm_messages",JSON.stringify(messages));
+
+  form.reset();
+  statusText.textContent="📨 Teşekkürler! Mesajın iletildi (admin paneline kaydedildi).";
+});
+</script>
+
 </body>
 </html>
