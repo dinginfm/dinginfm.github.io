@@ -1,139 +1,120 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>DinginFM — Tarihçe</title>
-  <link rel="stylesheet" href="stil.css">
-  <style>
-    body {
-      margin: 0;
-      background: #001626;
-      color: #e6edf3;
-      font-family: 'Segoe UI', sans-serif;
-      text-align: center;
-      overflow-x: hidden;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dingin FM — Tarihçe</title>
 
-    /* Arka plan logosu */
-    .logo {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      object-fit: cover;
-      opacity: 0.08;
-      z-index: 0;
-      pointer-events: none;
-    }
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600&display=swap" rel="stylesheet">
 
-    header {
-      background: rgba(0, 39, 67, 0.85);
-      padding: 25px 10px;
-      box-shadow: 0 3px 10px rgba(0, 0, 0, .5);
-      position: sticky;
-      top: 0;
-      z-index: 10;
-      backdrop-filter: blur(5px);
-    }
+<style>
+:root{
+  --fm-main:#6fc9ff;
+  --fm-soft:#9fdcff;
+}
 
-    h1 {
-      color: #ffd43b;
-      font-size: 30px;
-      margin: 0;
-      letter-spacing: 1px;
-    }
+/* ZEMİN + LOGO GÖMÜLÜ */
+html,body{
+  height:100%;
+  margin:0;
+}
 
-    nav {
-      background: rgba(0, 39, 67, 0.85);
-      padding: 10px 0;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, .4);
-    }
+body{
+  display:flex;
+  flex-direction:column;
+  font-family:'Segoe UI',sans-serif;
+  text-align:center;
+  color:var(--fm-main);
 
-    nav a {
-      color: #e6edf3;
-      margin: 0 12px;
-      text-decoration: none;
-      font-weight: 500;
-      font-size: 15px;
-      transition: .3s;
-    }
+  background:
+    url("assets/logo.png") center center / 55% no-repeat,
+    radial-gradient(
+      circle at center,
+      #ffffff 0%,
+      #f1f8ff 40%,
+      #e3f0ff 70%,
+      #d6e9ff 100%
+    );
+}
 
-    nav a:hover, nav a.active {
-      color: #ffd43b;
-      border-bottom: 2px solid #ffd43b;
-      padding-bottom: 3px;
-    }
+/* HEADER */
+header{
+  padding:36px 10px 18px;
+}
 
-    main {
-      position: relative;
-      z-index: 1;
-      max-width: 700px;
-      margin: 80px auto;
-      padding: 30px 20px;
-      background: rgba(2, 43, 71, 0.75);
-      border-radius: 16px;
-      box-shadow: 0 4px 14px rgba(0,0,0,0.6);
-    }
+.logo-text{
+  font-family:'Orbitron',sans-serif;
+  font-size:34px;
+  font-weight:600;
+  letter-spacing:3px;
+  color:var(--fm-main);
+  margin-bottom:6px;
+}
 
-    p {
-      font-size: 16px;
-      line-height: 1.7;
-      color: #c4d7e3;
-      margin-bottom: 15px;
-    }
+.site-subtitle{
+  font-size:14px;
+  color:var(--fm-soft);
+  margin-bottom:18px;
+}
 
-    a.btn {
-      display: inline-block;
-      background: #ffd43b;
-      color: #001626;
-      text-decoration: none;
-      font-weight: bold;
-      padding: 10px 20px;
-      border-radius: 8px;
-      margin-top: 20px;
-      transition: .3s;
-    }
+nav a{
+  margin:0 12px;
+  font-size:15px;
+  font-weight:500;
+  text-decoration:none;
+  color:var(--fm-main);
+}
 
-    a.btn:hover {
-      background: #ffea84;
-      transform: scale(1.05);
-    }
+nav a.active,
+nav a:hover{
+  text-decoration:underline;
+}
 
-    footer {
-      background: rgba(0, 39, 67, 0.85);
-      padding: 15px;
-      font-size: 13px;
-      color: #9fbdd3;
-      margin-top: 60px;
-      box-shadow: 0 -2px 10px rgba(0, 0, 0, .4);
-      position: relative;
-      z-index: 1;
-    }
+/* MAIN */
+main{
+  flex:1;
+  max-width:720px;
+  margin:60px auto;
+  padding:0 20px;
+  text-align:left;
+}
 
-    @media (max-width: 600px) {
-      main {
-        width: 90%;
-        padding: 20px;
-      }
-      h1 {
-        font-size: 24px;
-      }
-    }
-  </style>
+/* METİN */
+p{
+  font-size:16px;
+  line-height:1.8;
+  color:var(--fm-soft);
+  margin-bottom:18px;
+}
+
+.signature{
+  margin-top:30px;
+  font-style:italic;
+  color:var(--fm-main);
+}
+
+/* FOOTER */
+footer{
+  padding:20px 10px;
+  font-size:13px;
+  color:var(--fm-soft);
+}
+
+/* MOBİL */
+@media(max-width:600px){
+  .logo-text{font-size:26px}
+  nav a{margin:0 8px}
+  main{margin:40px auto}
+}
+</style>
 </head>
 
 <body>
-  <!-- Arka plan logosu -->
-  <img src="assets/logo.png" alt="DinginFM Logo" class="logo">
 
-  <!-- Üst kısım -->
-  <header>
-    <h1>☕ DinginFM Tarihçesi</h1>
-  </header>
+<header>
+  <div class="logo-text">DINGIN&nbsp;FM</div>
+  <div class="site-subtitle">Tarihçe · Sessizliğin Sesi Burada</div>
 
-  <!-- Menü -->
   <nav>
     <a href="index.html">Ana Sayfa</a>
     <a href="live.html">Canlı Yayın</a>
@@ -143,28 +124,41 @@
     <a href="tarihce.html" class="active">Tarihçe</a>
     <a href="connect.html">İletişim</a>
   </nav>
+</header>
 
-  <!-- İçerik -->
-  <main>
-    <p>2025 yılında bir kahve molasında doğdu.</p>
-    <p>Ne büyük ekipler, ne büyük bütçeler... Sadece bir fikir ve bir mikrofondan ibaretti.</p>
-    <p>O fikir de şuydu: <em>“Sessizliğin de sesi olur.”</em></p>
-    <p>Kablolar karıştı, yayınlar koptu ama DinginFM hiç susmadı.</p>
-    <p>Bugün hâlâ aynı: Kahve ısınıyor, yayın başlıyor.</p>
+<main>
+  <p>
+    Dingin FM, 2025 yılında bir kahve molasında doğdu.
+  </p>
 
-    <br>
-    <p>🎙️ “Burada sessizliğin sesi var.”</p>
+  <p>
+    Büyük ekiplerle, büyük bütçelerle değil.  
+    Bir fikirle ve bir mikrofonla.
+  </p>
 
-    <!-- Ana sayfa butonu -->
-    <a href="index.html" class="btn">← Ana Sayfa</a>
-  </main>
+  <p>
+    O fikir basitti:  
+    <em>“Sessizliğin de bir sesi vardır.”</em>
+  </p>
 
-  <!-- Alt kısım -->
-  <footer>
-    © 2025 Dingin FM — Tarihçe<br>
-    Tüm yayın ve içerik hakları saklıdır.<br>
-    Bu sayfadaki tüm yazılı ve görsel içerikler DinginFM markasına aittir.<br>
-    İzinsiz alıntılanamaz, kopyalanamaz veya yeniden paylaşılamaz.
-  </footer>
+  <p>
+    Yayınlar kesildi, kablolar karıştı, geceler uzadı.  
+    Ama Dingin FM susturulmadı.
+  </p>
+
+  <p>
+    Bugün hâlâ aynı yerde duruyor:  
+    Acele etmeden, yükseltmeden, bağırmadan.
+  </p>
+
+  <p class="signature">
+    “Burada sessizliğin sesi var.”
+  </p>
+</main>
+
+<footer>
+  © 2025 Dingin FM — Tarihçe · Sessizliğin Sesi Burada
+</footer>
+
 </body>
 </html>
