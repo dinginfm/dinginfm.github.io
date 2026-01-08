@@ -3,178 +3,218 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>DinginFM — DJ Aylak Yönetim Paneli</title>
-
-<link rel="stylesheet" href="style.css">
+<title>Dingin FM — Canlı Yayın</title>
 
 <style>
-/* === ZEMİN: ANA SİTEYLE AYNI === */
 body{
   margin:0;
   min-height:100vh;
   font-family:'Segoe UI',sans-serif;
   text-align:center;
-  overflow-x:hidden;
   color:#4fb9ff;
 
-  background:radial-gradient(
-    circle at center,
-    #ffffff 0%,
-    #f1f8ff 35%,
-    #e3f0ff 65%,
-    #d6e9ff 100%
-  );
-}
-
-/* LOGO ARKAPLANI (SU İZİ) */
-.logo-bg{
-  position:fixed;
-  inset:0;
-  background:url('assets/logo.png') center/420px no-repeat;
-  opacity:0.06;
-  z-index:0;
-  pointer-events:none;
+  background:
+    url("assets/logo.png") center center / 60% no-repeat,
+    radial-gradient(
+      circle at center,
+      #ffffff 0%,
+      #f1f8ff 40%,
+      #e3f0ff 70%,
+      #d6e9ff 100%
+    );
 }
 
 /* HEADER */
 header{
-  position:relative;
-  z-index:1;
-  padding:28px 10px 22px;
-  background:rgba(255,255,255,0.65);
-  backdrop-filter:blur(4px);
-  box-shadow:0 3px 10px rgba(0,0,0,.15);
+  padding:28px 10px 18px;
+  background:rgba(255,255,255,.75);
+  backdrop-filter:blur(6px);
+  box-shadow:0 2px 8px rgba(0,0,0,.15);
 }
 
-/* GERÇEK LOGO */
-.header-logo{
-  display:flex;
-  justify-content:center;
-  margin-bottom:10px;
-}
-.header-logo img{
-  max-width:360px;
-  width:90%;
-  height:auto;
-  display:block;
+h1{
+  margin:0;
+  font-size:28px;
+  letter-spacing:2px;
 }
 
-/* PANEL BAŞLIK */
-header h2{
+h2{
   margin:6px 0 0;
   font-size:14px;
   font-weight:400;
   color:#6fc9ff;
 }
 
+nav a{
+  margin:0 12px;
+  font-size:15px;
+  text-decoration:none;
+  color:#4fb9ff;
+}
+nav a.active, nav a:hover{ text-decoration:underline; }
+
 /* MAIN */
 main{
-  position:relative;
-  z-index:1;
-  max-width:900px;
-  margin:40px auto;
+  max-width:640px;
+  margin:50px auto;
+  background:rgba(255,255,255,.78);
+  backdrop-filter:blur(6px);
+  padding:28px;
+  border-radius:18px;
+  box-shadow:0 6px 18px rgba(0,0,0,.15);
 }
-
-/* PANEL KARTLARI */
-section{
-  background:rgba(0,22,38,0.85);
-  margin:20px;
-  padding:20px;
-  border-radius:12px;
-  box-shadow:0 6px 16px rgba(0,0,0,.35);
-  color:#e6edf3;
-}
-
-/* BUTON */
-.btn{
-  background:#ffd43b;
-  color:#001626;
-  border:none;
-  padding:10px 16px;
-  border-radius:6px;
-  cursor:pointer;
-  font-weight:bold;
-  margin-top:10px;
-  transition:.3s;
-}
-.btn:hover{ background:#ffea84; }
 
 /* STATUS */
-.status.on{ color:#5cff75; font-weight:bold; }
-.status.off{ color:#ff5555; font-weight:bold; }
+.status{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:10px;
+  margin-bottom:18px;
+}
+.led{
+  width:14px;
+  height:14px;
+  border-radius:50%;
+  background:#aaa;
+  box-shadow:0 0 10px currentColor;
+}
+
+/* BUTTON */
+.button{
+  display:inline-block;
+  padding:12px 28px;
+  border-radius:30px;
+  border:2px solid #4fb9ff;
+  color:#4fb9ff;
+  text-decoration:none;
+  font-weight:600;
+  cursor:pointer;
+  background:transparent;
+  transition:.25s;
+}
+.button:hover{
+  background:#4fb9ff;
+  color:#fff;
+}
+
+/* INFO */
+.info{
+  font-size:15px;
+  color:#5f86a3;
+  line-height:1.6;
+}
 
 /* FOOTER */
 footer{
-  position:relative;
-  z-index:1;
-  background:rgba(255,255,255,0.6);
-  backdrop-filter:blur(3px);
-  padding:15px;
+  margin-top:50px;
+  padding:18px;
+  font-size:13px;
   color:#6fc9ff;
-  margin-top:40px;
 }
 </style>
 </head>
 
 <body>
 
-<div class="logo-bg"></div>
-
 <header>
-  <div class="header-logo">
-    <img src="assets/logo.png" alt="Dingin FM">
-  </div>
-  <h2>DJ Aylak · Yönetim Paneli — Sessizliğin Sesi Burada</h2>
+  <h1>DINGIN FM</h1>
+  <h2>Sessizliğin Sesi Burada</h2>
+  <nav>
+    <a href="index.html">Ana Sayfa</a>
+    <a href="live.html" class="active">Canlı Yayın</a>
+    <a href="dj.html">DJ Aylak</a>
+    <a href="podcast.html">Podcast</a>
+    <a href="blog.html">Blog</a>
+    <a href="connect.html">İletişim</a>
+  </nav>
 </header>
 
 <main>
 
-<section>
-  <h3>📡 Yayın Durumu: <span id="status-info" class="status off">Kontrol ediliyor...</span></h3>
-  <p>
-    Anlık Dinleyici: <span id="listener-count">0</span> |
-    Peak: <span id="peak-count">0</span> |
-    Bitrate: <span id="bitrate">—</span>
+  <div class="status">
+    <span id="led" class="led"></span>
+    <span id="statusText">Durum kontrol ediliyor…</span>
+  </div>
+
+  <p class="info">
+    Dinleyici: <b id="listeners">—</b> ·
+    Peak: <b id="peak">—</b> ·
+    Bitrate: <b id="bitrate">—</b>
   </p>
-  <button id="toggleBtn" class="btn" onclick="manualCheck()">🔄 Güncelle</button>
-</section>
 
-<section>
-  <h3>🎵 Medya Yükleme</h3>
-  <input type="text" id="spotify" placeholder="Spotify linkini yapıştır"><br>
-  <button class="btn" onclick="openSpotify()">Spotify Ekle</button><br><br>
-  <input type="text" id="youtube" placeholder="YouTube linkini yapıştır"><br>
-  <button class="btn" onclick="openYouTube()">YouTube Ekle</button><br><br>
-  <input type="file" id="podcastFile"><br>
-  <button class="btn" onclick="uploadPodcast()">Podcast Yükle</button>
-</section>
+  <br>
 
-<section>
-  <h3>📊 Yayın İstatistikleri</h3>
-  <table style="width:100%;color:#cfe0ea">
-    <tr><th>Parametre</th><th>Değer</th></tr>
-    <tr><td>Toplam Dinleyici</td><td id="totalListeners">0</td></tr>
-    <tr><td>Peak Dinleyici</td><td id="peakListeners">0</td></tr>
-    <tr><td>Toplam Yayın Süresi</td><td id="totalHours">0 saat</td></tr>
-    <tr><td>Son Güncelleme</td><td id="lastUpdate">—</td></tr>
-  </table>
-</section>
-
-<section>
-  <h3>💬 Dinleyici Mesajları</h3>
-  <ul id="messageList" style="list-style:none;padding:0"></ul>
-  <button class="btn" onclick="clearMessages()">🧹 Mesajları Temizle</button>
-</section>
+  <button id="playBtn" class="button">▶️ Yayını Dinle</button>
 
 </main>
 
 <footer>
-  © 2025 DinginFM — Tüm yayın ve içerik hakları saklıdır · Sessizliğin Sesi Burada
+  © 2025 Dingin FM — Sessizliğin Sesi Burada
 </footer>
 
-<!-- JS BLOĞU BİLİNÇLİ OLARAK DOKUNULMADI -->
 <script>
-/* mevcut JS aynen kalacak */
+/* ===== AYARLAR (GERÇEK) ===== */
+const STREAM_URL   = "https://dinginfm.com.tr/live.mp3";
+const STATUS_URL   = "https://dinginfm.com.tr/status-json.xsl";
+
+/* ===== AUDIO ===== */
+let audio = new Audio(STREAM_URL);
+audio.preload = "none";
+
+/* ===== ELEMENTLER ===== */
+const led        = document.getElementById("led");
+const statusText = document.getElementById("statusText");
+const playBtn    = document.getElementById("playBtn");
+const listeners  = document.getElementById("listeners");
+const peak       = document.getElementById("peak");
+const bitrate    = document.getElementById("bitrate");
+
+/* ===== YAYIN DURUMU (GERÇEK ICECAST) ===== */
+async function checkStatus(){
+  try{
+    const res = await fetch(STATUS_URL, { cache:"no-store" });
+    const data = await res.json();
+
+    let src = data.icestats.source;
+    if(Array.isArray(src)) src = src.find(s => s.listenurl?.includes("live"));
+
+    if(src){
+      led.style.background = "#2ecc71";
+      statusText.textContent = "🟢 Yayında";
+      listeners.textContent = src.listeners;
+      peak.textContent = src.listener_peak;
+      bitrate.textContent = src.bitrate + " kbps";
+    }else{
+      throw "Yayın yok";
+    }
+  }catch(e){
+    led.style.background = "#aaa";
+    statusText.textContent = "⚪ Yayında Değil";
+    listeners.textContent = "0";
+    peak.textContent = "0";
+    bitrate.textContent = "—";
+  }
+}
+
+/* ===== PLAY / STOP (GERÇEK) ===== */
+playBtn.addEventListener("click", async ()=>{
+  if(audio.paused){
+    try{
+      await audio.play();
+      playBtn.textContent = "⏸ Yayını Durdur";
+    }catch(e){
+      alert("Yayın başlatılamıyor. Sunucu veri göndermiyor olabilir.");
+    }
+  }else{
+    audio.pause();
+    playBtn.textContent = "▶️ Yayını Dinle";
+  }
+});
+
+/* ===== OTOMATİK GÜNCELLE ===== */
+checkStatus();
+setInterval(checkStatus, 5000);
 </script>
 
 </body>
