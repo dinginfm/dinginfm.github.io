@@ -1,93 +1,19 @@
-/* ===== DINGIN FM | TEK PARÇA STİL ===== */
-
 body{
   margin:0;
   padding:0;
   min-height:100vh;
   font-family:'Segoe UI',sans-serif;
+  text-align:center;
+  overflow-x:hidden;
 
-  /* ANA ZEMİN – gündüz + gece uyumlu */
+  /* SABİT ZEMİN – BUZ MAVİSİ */
   background:radial-gradient(
-    circle at top,
-    #eef6ff 0%,
-    #d9ecff 40%,
-    #c7e0ff 70%,
-    #b7d4ff 100%
+    circle at center,
+    #ffffff 0%,
+    #f1f8ff 35%,
+    #e3f0ff 65%,
+    #d6e9ff 100%
   );
 
   color:#1f3b4d;
-  text-align:center;
-  overflow-x:hidden;
-}
-
-/* ===== BAŞLIKLAR ===== */
-h1,h2,h3,h4,h5,h6{
-  color:#2a4f6e;
-  font-weight:500;
-  margin:0;
-}
-
-/* ===== LINKLER ===== */
-a{
-  color:#2a6fb0;
-  text-decoration:none;
-  font-weight:500;
-  transition:color .3s ease;
-}
-a:hover{
-  color:#1d4f85;
-}
-
-/* ===== BUTONLAR (FM DİLİ / SARI YOK) ===== */
-button,
-.btn,
-a.button{
-  background:transparent;
-  border:2px solid #5fa8e8;
-  color:#2a6fb0;
-  padding:10px 22px;
-  border-radius:30px;
-  cursor:pointer;
-  font-size:15px;
-  font-weight:600;
-  display:inline-block;
-  transition:all .3s ease;
-}
-
-button:hover,
-.btn:hover,
-a.button:hover{
-  background:#5fa8e8;
-  color:#ffffff;
-  transform:translateY(-1px);
-}
-
-/* ===== ORTAK İÇERİK ALANLARI ===== */
-main,
-section{
-  max-width:1000px;
-  margin:30px auto;
-  padding:25px;
-
-  background:rgba(255,255,255,0.55);
-  backdrop-filter:blur(6px);
-
-  border-radius:18px;
-  box-shadow:0 10px 25px rgba(0,0,0,0.08);
-}
-
-/* ===== FOOTER ===== */
-footer{
-  margin:40px 0 20px;
-  font-size:13px;
-  color:#5a7d99;
-}
-
-/* ===== MOBİL ===== */
-@media(max-width:768px){
-  main,
-  section{
-    margin:20px;
-    padding:20px;
-  }
 }
