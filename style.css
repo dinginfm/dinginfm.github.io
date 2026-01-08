@@ -10,8 +10,9 @@ body{
   font-family:'Segoe UI',sans-serif;
   text-align:center;
   overflow-x:hidden;
+  position:relative;
 
-  /* BUZ MAVİSİ ZEMİN — GÖRSELLE AYNI */
+  /* BUZ MAVİSİ ZEMİN — LOGO İLE AYNI */
   background:radial-gradient(
     circle at center,
     #ffffff 0%,
@@ -21,29 +22,38 @@ body{
   );
 
   color:#3aaeea; /* FM yazısı tonu */
-  position:relative;
 }
 
-/* ARKA PLAN LOGO — SABİT & SİLİK */
+/* ARKA PLAN LOGO — SABİT & TEK PARÇA */
 body::before{
   content:"";
   position:fixed;
   inset:0;
   background:url("assets/logo.png") center center no-repeat;
   background-size:70%;
+  background-attachment:fixed;
   opacity:0.18;
   z-index:-1;
   pointer-events:none;
 }
 
-/* BAŞLIKLAR — NEON FM RENGİ */
+/* GENEL LINKLER */
+a{
+  color:#5cc9ff;
+  text-decoration:none;
+}
+a:hover{
+  text-shadow:0 0 8px rgba(120,220,255,.8);
+}
+
+/* BAŞLIKLAR — NEON FM */
 h1,h2,h3,h4,h5,h6{
   color:#5cc9ff;
   font-weight:500;
   text-shadow:0 0 12px rgba(120,220,255,0.6);
 }
 
-/* ÜST LOGO YAZISI (DINGIN FM) */
+/* ÜST BAŞLIK */
 .site-title{
   font-size:30px;
   letter-spacing:1px;
@@ -55,11 +65,21 @@ h1,h2,h3,h4,h5,h6{
   color:#7fd7ff;
 }
 
+/* HEADER — ZEMİNLE BÜTÜN */
+header{
+  background:rgba(255,255,255,0.35);
+  backdrop-filter:blur(6px);
+  -webkit-backdrop-filter:blur(6px);
+  padding:20px 10px;
+}
+
 /* MENÜ */
+nav{
+  margin-top:8px;
+}
 nav a{
   color:#5cc9ff;
   margin:0 12px;
-  text-decoration:none;
   font-weight:500;
   transition:.3s;
 }
@@ -68,6 +88,7 @@ nav a.active{
   color:#ffffff;
   text-shadow:0 0 10px rgba(120,220,255,.9);
   border-bottom:2px solid #5cc9ff;
+  padding-bottom:3px;
 }
 
 /* BUTONLAR — FM TONU */
@@ -91,21 +112,24 @@ a.button:hover{
   box-shadow:0 0 18px rgba(120,220,255,.9);
 }
 
-/* ORTA İÇERİK */
+/* ORTA İÇERİK — CAM EFEKTİ */
 main,section{
   max-width:1000px;
   margin:40px auto;
   padding:30px;
   background:rgba(255,255,255,0.45);
   backdrop-filter:blur(6px);
+  -webkit-backdrop-filter:blur(6px);
   border-radius:20px;
 }
 
-/* FOOTER */
+/* FOOTER — AŞAĞIDA ve SADE */
 footer{
-  margin:40px 0 20px;
+  margin-top:80px;
+  padding:20px 10px;
   font-size:13px;
   color:#5cc9ff;
+  border-top:1px solid rgba(120,220,255,0.25);
 }
 
 /* MOBİL */
@@ -116,5 +140,9 @@ footer{
   }
   .site-title{
     font-size:24px;
+  }
+  nav a{
+    margin:0 8px;
+    font-size:14px;
   }
 }
