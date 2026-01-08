@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dingin FM — Canlı Yayın</title>
+
+  <!-- Kareografik font -->
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    html, body{
+      height:100%;
+      margin:0;
+    }
+
+    body{
+      display:flex;
+      flex-direction:column;
+      font-family:'Segoe UI', sans-serif;
+      text-align:center;
+      color:#4fb9ff;
+
+      background:radial-gradient(
+        circle at center,
+        #ffffff 0%,
+        #f1f8ff 35%,
+        #e3f0ff 65%,
+        #d6e9ff 100%
+      );
+    }
+
+    /* HEADER */
+    header{
+      padding:36px 10px 20px;
+    }
+
+    .logo-text{
+      font-family:'Orbitron', sans-serif;
+      font-size:34px;
+      font-weight:600;
+      letter-spacing:3px;
+      color:#4fb9ff;
+      text-shadow:
+        0 0 6px rgba(79,185,255,.35),
+        0 0 14px rgba(79,185,255,.25);
+      margin-bottom:6px;
+    }
+
+    .site-subtitle{
+      font-size:14px;
+      color:#6fc9ff;
+      margin-bottom:18px;
+    }
+
+    nav a{
+      margin:0 12px;
+      font-size:15px;
+      font-weight:500;
+      text-decoration:none;
+      color:#4fb9ff;
+    }
+
+    nav a.active,
+    nav a:hover{
+      text-decoration:underline;
+    }
+
+    /* MAIN */
+    main{
+      flex:1;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      padding:20px;
+    }
+
+    section{
+      width:90%;
+      max-width:600px;
+      background:rgba(255,255,255,0.65);
+      backdrop-filter:blur(6px);
+      padding:30px 20px;
+      border-radius:16px;
+      box-shadow:0 8px 20px rgba(0,0,0,.15);
+      color:#4fb9ff;
+    }
+
+    .status{
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      margin-bottom:18px;
+      font-size:15px;
+    }
+
+    .led{
+      width:14px;
+      height:14px;
+      border-radius:50%;
+      background:#bbb;
+      box-shadow:0 0 10px rgba(0,0,0,.2);
+      transition:.3s;
+    }
+
+    p{
+      font-size:16px;
+      color:#6fc9ff;
+      line-height:1.6;
+      margin-bottom:22px;
+    }
+
+    .button{
+      display:inline-block;
+      padding:12px 30px;
+      border-radius:30px;
+      border:2px solid #4fb9ff;
+      color:#4fb9ff;
+      text-decoration:none;
+      font-weight:600;
+      transition:.3s;
+      cursor:pointer;
+      background:transparent;
+    }
+
+    .button:hover{
+      background:#4fb9ff;
+      color:#ffffff;
+    }
+
+    footer{
+      padding:20px 10px;
+      font-size:13px;
+      color:#6fc9ff;
+    }
+
+    @media(max-width:600px){
+      .logo-text{font-size:26px}
+      nav a{margin:0 8px}
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <div class="logo-text">DINGIN&nbsp;FM</div>
+    <div class="site-subtitle">Sessizliğin Sesi Burada</div>
+
+    <nav>
+      <a href="index.html">Ana Sayfa</a>
+      <a href="live.html" class="active">Canlı Yayın</a>
+      <a href="dj.html">DJ Aylak</a>
+      <a href="podcast.html">Podcast</a>
+      <a href="blog.html">Blog</a>
+      <a href="tarihce.html">Tarihçe</a>
+      <a href="connect.html">İletişim</a>
+    </nav>
+  </header>
+
+  <main>
+    <section>
+      <div class="status">
+        <div id="led" class="led"></div>
+        <div id="statusText">⚪ Yayında Değil</div>
+      </div>
+
+      <p>📻 DJ Aylak birazdan mikrofona eğilir…  
+      Kahveni hazırla ☕🎶</p>
+
+      <a id="playBtn" class="button">▶️ Yayını Başlat</a>
+    </section>
+  </main>
+
+  <footer>
+    © 2025 Dingin FM — Tüm Hakları Saklıdır · Sessizliğin Sesi Burada
+  </footer>
+
+<script>
+  const STREAM_URL = "https://dinginfm.com.tr/live.mp3";
+
+  const led = document.getElementById("led");
+  const statusText = document.getElementById("statusText");
+  const playBtn = document.getElementById("playBtn");
+
+  let audio = new Audio(STREAM_URL);
+  audio.preload = "none";
+
+  playBtn.addEventListener("click", async (e) => {
+    e.preventDefault();
+
+    if (audio.paused) {
+      try {
+        await audio.play();
+        led.style.background = "#00e676";
+        led.style.boxShadow = "0 0 12px #00e676";
+        statusText.textContent = "🟢 Yayında · Dingin FM";
+        playBtn.textContent = "⏸ Yayını Durdur";
+      } catch {
+        led.style.background = "#bbb";
+        statusText.textContent = "⚪ Yayında Değil";
+        alert("Yayın başlatılamıyor. Sunucu kapalı olabilir.");
+      }
+    } else {
+      audio.pause();
+      led.style.background = "#bbb";
+      led.style.boxShadow = "0 0 10px rgba(0,0,0,.2)";
+      statusText.textContent = "⚪ Yayında Değil";
+      playBtn.textContent = "▶️ Yayını Başlat";
+    }
+  });
+</script>
+
+</body>
+</html>
