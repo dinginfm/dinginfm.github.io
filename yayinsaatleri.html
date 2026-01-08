@@ -1,143 +1,141 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>DinginFM — Yayın Saatleri</title>
-  <link rel="stylesheet" href="stil.css">
-  <style>
-    body {
-      margin: 0;
-      background: #001626;
-      color: #e6edf3;
-      font-family: 'Segoe UI', sans-serif;
-      text-align: center;
-      overflow-x: hidden;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dingin FM — Yayın Saatleri</title>
 
-    .logo {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      object-fit: cover;
-      opacity: 0.08;
-      z-index: 0;
-      pointer-events: none;
-    }
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600&display=swap" rel="stylesheet">
 
-    header {
-      background: rgba(0, 39, 67, 0.85);
-      padding: 25px 10px;
-      box-shadow: 0 3px 10px rgba(0, 0, 0, .5);
-      position: sticky;
-      top: 0;
-      z-index: 10;
-      backdrop-filter: blur(5px);
-    }
+<style>
+:root{
+  --fm-main:#6fc9ff;
+  --fm-soft:#9fdcff;
+}
 
-    h1 {
-      color: #ffd43b;
-      font-size: 30px;
-      margin-bottom: 5px;
-    }
+/* ZEMİN + LOGO GÖMÜLÜ */
+html,body{
+  height:100%;
+  margin:0;
+}
 
-    h2 {
-      color: #9fbdd3;
-      font-weight: normal;
-      font-size: 15px;
-      margin-top: 0;
-    }
+body{
+  display:flex;
+  flex-direction:column;
+  font-family:'Segoe UI',sans-serif;
+  text-align:center;
+  color:var(--fm-main);
 
-    nav {
-      background: rgba(0, 39, 67, 0.85);
-      padding: 10px 0;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, .4);
-    }
+  background:
+    url("assets/logo.png") center center / 55% no-repeat,
+    radial-gradient(
+      circle at center,
+      #ffffff 0%,
+      #f1f8ff 40%,
+      #e3f0ff 70%,
+      #d6e9ff 100%
+    );
+}
 
-    nav a {
-      color: #e6edf3;
-      margin: 0 12px;
-      text-decoration: none;
-      font-weight: 500;
-      font-size: 15px;
-      transition: .3s;
-    }
+/* HEADER */
+header{
+  padding:36px 10px 18px;
+}
 
-    nav a:hover, nav a.active {
-      color: #ffd43b;
-      border-bottom: 2px solid #ffd43b;
-      padding-bottom: 3px;
-    }
+.logo-text{
+  font-family:'Orbitron',sans-serif;
+  font-size:34px;
+  font-weight:600;
+  letter-spacing:3px;
+  color:var(--fm-main);
+  margin-bottom:6px;
+}
 
-    main {
-      margin-top: 60px;
-      position: relative;
-      z-index: 1;
-    }
+.site-subtitle{
+  font-size:14px;
+  color:var(--fm-soft);
+  margin-bottom:18px;
+}
 
-    table {
-      margin: 0 auto;
-      background: rgba(2, 43, 71, 0.75);
-      border-collapse: collapse;
-      border-radius: 12px;
-      overflow: hidden;
-      width: 90%;
-      max-width: 600px;
-      box-shadow: 0 0 12px rgba(0, 0, 0, 0.4);
-    }
+nav a{
+  margin:0 12px;
+  font-size:15px;
+  font-weight:500;
+  text-decoration:none;
+  color:var(--fm-main);
+}
 
-    th, td {
-      padding: 15px;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    }
+nav a.active,
+nav a:hover{
+  text-decoration:underline;
+}
 
-    th {
-      color: #ffd43b;
-      font-size: 18px;
-    }
+/* MAIN */
+main{
+  flex:1;
+  max-width:720px;
+  margin:60px auto;
+  padding:0 20px;
+  text-align:left;
+}
 
-    td {
-      color: #c4d7e3;
-      font-size: 16px;
-    }
+/* TABLO */
+table{
+  width:100%;
+  border-collapse:collapse;
+  margin-top:20px;
+}
 
-    tr:last-child td {
-      border-bottom: none;
-    }
+th{
+  text-align:left;
+  font-size:15px;
+  font-weight:600;
+  color:var(--fm-main);
+  padding:12px 6px;
+  border-bottom:1px solid rgba(0,0,0,.15);
+}
 
-    footer {
-      background: rgba(0, 39, 67, 0.85);
-      padding: 15px;
-      font-size: 13px;
-      color: #9fbdd3;
-      margin-top: 60px;
-      box-shadow: 0 -2px 10px rgba(0,0,0,.4);
-      position: relative;
-      z-index: 1;
-    }
+td{
+  font-size:15px;
+  color:var(--fm-soft);
+  padding:14px 6px;
+  border-bottom:1px solid rgba(0,0,0,.08);
+}
 
-    @media (max-width: 600px) {
-      th, td {
-        padding: 10px;
-        font-size: 15px;
-      }
-    }
-  </style>
+tr:last-child td{
+  border-bottom:none;
+}
+
+/* NOT */
+.note{
+  margin-top:30px;
+  font-size:14px;
+  color:var(--fm-soft);
+  line-height:1.6;
+}
+
+/* FOOTER */
+footer{
+  padding:20px 10px;
+  font-size:13px;
+  color:var(--fm-soft);
+}
+
+/* MOBİL */
+@media(max-width:600px){
+  .logo-text{font-size:26px}
+  nav a{margin:0 8px}
+  main{margin:40px auto}
+}
+</style>
 </head>
 
 <body>
-  <!-- Arka plan logosu -->
-  <img src="assets/logo.png" alt="DinginFM Logo" class="logo">
 
-  <!-- Üst kısım -->
-  <header>
-    <h1>📅 DinginFM — Yayın Saatleri</h1>
-    <h2>Sessizliğin Ritmi, Zamanında</h2>
-  </header>
+<header>
+  <div class="logo-text">DINGIN&nbsp;FM</div>
+  <div class="site-subtitle">Yayın Saatleri · Sessizliğin Sesi Burada</div>
 
-  <!-- Menü -->
   <nav>
     <a href="index.html">Ana Sayfa</a>
     <a href="live.html">Canlı Yayın</a>
@@ -148,33 +146,38 @@
     <a href="yayinsaatleri.html" class="active">Yayın Saatleri</a>
     <a href="connect.html">İletişim</a>
   </nav>
+</header>
 
-  <!-- İçerik -->
-  <main>
-    <table>
-      <tr>
-        <th>Gün</th>
-        <th>Yayın Saati</th>
-        <th>Program</th>
-      </tr>
-      <tr>
-        <td>Hafta içi (Pazartesi–Cuma)</td>
-        <td>14:00 – 16:00</td>
-        <td>🎧 Öğleden Sonra Yayını</td>
-      </tr>
-      <tr>
-        <td>Yakında</td>
-        <td>22:00 – 01:00</td>
-        <td>🌙 Gece Yayını (Hazırlanıyor)</td>
-      </tr>
-    </table>
-  </main>
+<main>
 
-  <!-- Alt kısım -->
-  <footer>
-    © 2025 Dingin FM — Yayın Saatleri<br>
-    Tüm yayın ve içerik hakları saklıdır.<br>
-    Yayın akışı değişiklik gösterebilir; güncel program DinginFM sosyal medya hesaplarında paylaşılır.
-  </footer>
+<table>
+  <tr>
+    <th>Gün</th>
+    <th>Saat</th>
+    <th>Yayın</th>
+  </tr>
+  <tr>
+    <td>Pazartesi – Cuma</td>
+    <td>14:00 – 16:00</td>
+    <td>Canlı Yayın</td>
+  </tr>
+  <tr>
+    <td>Gece Yayını</td>
+    <td>22:00 – 01:00</td>
+    <td>Planlanan Yayın</td>
+  </tr>
+</table>
+
+<p class="note">
+  Yayın saatleri dönemsel olarak güncellenebilir.  
+  Güncel akış ve duyurular Dingin FM kanallarında paylaşılır.
+</p>
+
+</main>
+
+<footer>
+  © 2025 Dingin FM — Yayın Saatleri · Sessizliğin Sesi Burada
+</footer>
+
 </body>
 </html>
