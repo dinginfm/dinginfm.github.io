@@ -1,186 +1,183 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>DinginFM — Podcast Yayınları</title>
-  <link rel="stylesheet" href="stil.css">
-  <style>
-    body {
-      margin: 0;
-      background: #001626;
-      color: #e6edf3;
-      font-family: 'Segoe UI', sans-serif;
-      text-align: center;
-      overflow-x: hidden;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dingin FM — Podcast Arşivi</title>
 
-    /* Arka plan logosu */
-    .logo {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      object-fit: cover;
-      opacity: 0.08;
-      z-index: 0;
-      pointer-events: none;
-    }
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700&display=swap" rel="stylesheet">
 
-    /* Header */
-    header {
-      background: rgba(0, 39, 67, 0.85);
-      padding: 20px 10px;
-      box-shadow: 0 3px 10px rgba(0, 0, 0, .5);
-      position: sticky;
-      top: 0;
-      z-index: 10;
-      backdrop-filter: blur(5px);
-    }
+<style>
+:root{
+  --fm-main:#6fc9ff;
+  --fm-soft:#9fdcff;
+}
 
-    .header-container {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 6px;
-    }
+/* ZEMİN + LOGO GÖMÜLÜ */
+html,body{
+  height:100%;
+  margin:0;
+}
 
-    h1.site-title {
-      color: #ffd43b;
-      font-size: 28px;
-      margin: 0;
-      letter-spacing: 1px;
-    }
+body{
+  display:flex;
+  flex-direction:column;
+  font-family:'Segoe UI',sans-serif;
+  text-align:center;
+  color:var(--fm-main);
 
-    h2.site-subtitle {
-      color: #9fbdd3;
-      font-weight: normal;
-      font-size: 14px;
-      margin: 0 0 10px 0;
-    }
+  background:
+    url("assets/logo.png") center center / 55% no-repeat,
+    radial-gradient(
+      circle at center,
+      #ffffff 0%,
+      #f1f8ff 40%,
+      #e3f0ff 70%,
+      #d6e9ff 100%
+    );
+}
 
-    nav a {
-      color: #e6edf3;
-      margin: 0 12px;
-      text-decoration: none;
-      font-weight: 500;
-      font-size: 15px;
-      transition: .3s;
-    }
+/* HEADER */
+header{
+  padding:36px 10px 18px;
+}
 
-    nav a:hover, nav a.active {
-      color: #ffd43b;
-      border-bottom: 2px solid #ffd43b;
-      padding-bottom: 3px;
-    }
+.logo-text{
+  font-family:'Orbitron',sans-serif;
+  font-size:34px;
+  font-weight:600;
+  letter-spacing:3px;
+  color:var(--fm-main);
+  margin-bottom:6px;
+}
 
-    /* İçerik */
-    main {
-      margin-top: 60px;
-      position: relative;
-      z-index: 1;
-    }
+.site-subtitle{
+  font-size:14px;
+  color:var(--fm-soft);
+  margin-bottom:18px;
+}
 
-    section {
-      background: rgba(2, 43, 71, 0.75);
-      margin: 20px auto;
-      padding: 30px 20px;
-      width: 90%;
-      max-width: 600px;
-      border-radius: 15px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
-    }
+nav a{
+  margin:0 12px;
+  font-size:15px;
+  font-weight:500;
+  text-decoration:none;
+  color:var(--fm-main);
+}
 
-    h3 {
-      color: #ffd43b;
-      font-size: 18px;
-      margin-bottom: 10px;
-    }
+nav a.active,
+nav a:hover{
+  text-decoration:underline;
+}
 
-    audio {
-      width: 90%;
-      max-width: 500px;
-      margin-bottom: 25px;
-      border-radius: 10px;
-      outline: none;
-    }
+/* MAIN */
+main{
+  flex:1;
+  padding:40px 20px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:44px;
+}
 
-    footer {
-      background: rgba(0, 39, 67, 0.85);
-      padding: 15px;
-      font-size: 13px;
-      color: #9fbdd3;
-      margin-top: 60px;
-      box-shadow: 0 -2px 10px rgba(0,0,0,.4);
-      position: relative;
-      z-index: 1;
-    }
+/* PODCAST KAYDI */
+.article{
+  max-width:720px;
+  width:100%;
+  text-align:left;
+}
 
-    @media (max-width: 600px) {
-      nav a {
-        display: inline-block;
-        margin: 6px;
-        font-size: 14px;
-      }
-      section {
-        width: 95%;
-        padding: 20px 10px;
-      }
-      h3 {
-        font-size: 16px;
-      }
-    }
-  </style>
+.article h3{
+  font-size:20px;
+  color:var(--fm-main);
+  margin-bottom:6px;
+}
+
+.article p{
+  font-size:15px;
+  color:var(--fm-soft);
+  line-height:1.6;
+  margin-bottom:14px;
+}
+
+audio{
+  width:100%;
+  outline:none;
+}
+
+/* FOOTER */
+footer{
+  padding:20px 10px;
+  font-size:13px;
+  color:var(--fm-soft);
+}
+
+/* MOBİL */
+@media(max-width:600px){
+  .logo-text{font-size:26px}
+  nav a{margin:0 8px}
+  .article h3{font-size:18px}
+}
+</style>
 </head>
 
 <body>
-  <!-- Logo -->
-  <img src="assets/logo.png" alt="DinginFM Logo" class="logo">
 
-  <!-- Üst kısım -->
-  <header>
-    <div class="header-container">
-      <h1 class="site-title">DINGIN FM</h1>
-      <h2 class="site-subtitle">Sessizliğin Sesi Burada</h2>
-      <nav>
-        <a href="index.html">Ana Sayfa</a>
-        <a href="live.html">Canlı Yayın</a>
-        <a href="dj.html">DJ Aylak</a>
-        <a href="podcast.html" class="active">Podcast</a>
-        <a href="blog.html">Blog</a>
-        <a href="tarihce.html">Tarihçe</a>
-        <a href="connect.html">İletişim</a>
-      </nav>
-    </div>
-  </header>
+<header>
+  <div class="logo-text">DINGIN&nbsp;FM</div>
+  <div class="site-subtitle">Podcast Arşivi · Sessizliğin Sesi Burada</div>
 
-  <!-- Ana içerik -->
-  <main>
-    <section>
-      <h3>Bölüm 1 — “Kahve Molasında Sessizlik”</h3>
-      <audio controls preload="none">
-        <source src="assets/podcast1.mp3" type="audio/mpeg">
-      </audio>
+  <nav>
+    <a href="index.html">Ana Sayfa</a>
+    <a href="live.html">Canlı Yayın</a>
+    <a href="dj.html">DJ Aylak</a>
+    <a href="podcast.html" class="active">Podcast</a>
+    <a href="blog.html">Blog</a>
+    <a href="tarihce.html">Tarihçe</a>
+    <a href="connect.html">İletişim</a>
+  </nav>
+</header>
 
-      <h3>Bölüm 2 — “Şaheser ve Şehla Yayında”</h3>
-      <audio controls preload="none">
-        <source src="assets/podcast2.mp3" type="audio/mpeg">
-      </audio>
+<main>
 
-      <h3>Bölüm 3 — “Dingin Akşamlar”</h3>
-      <audio controls preload="none">
-        <source src="assets/podcast3.mp3" type="audio/mpeg">
-      </audio>
-    </section>
-  </main>
+  <div class="article">
+    <h3>Kahve Molasında Sessizlik</h3>
+    <p>
+      Bazen konuşmamak, en doğru cümledir.  
+      Günün ortasında, ses biraz geri çekilir.
+    </p>
+    <audio controls preload="none">
+      <source src="assets/podcast1.mp3" type="audio/mpeg">
+    </audio>
+  </div>
 
-  <!-- Alt kısım -->
-  <footer>
-    © 2025 Dingin FM — Podcast Yayınları<br>
-    Tüm yayın ve içerik hakları saklıdır.<br>
-    Bu sayfada yer alan ses dosyaları, müzikler ve metin içerikleri DinginFM’e aittir.<br>
-    İzinsiz çoğaltılamaz, paylaşılamaz veya ticari amaçla kullanılamaz.
-  </footer>
+  <div class="article">
+    <h3>Masada İki Ses</h3>
+    <p>
+      Karşılıklı bir sohbet.  
+      Acele etmeden, yükseltmeden.
+    </p>
+    <audio controls preload="none">
+      <source src="assets/podcast2.mp3" type="audio/mpeg">
+    </audio>
+  </div>
+
+  <div class="article">
+    <h3>Dingin Akşamlar</h3>
+    <p>
+      Gün kapanırken kelimeler de yavaşlar.  
+      Akşamın sesi, susarak ilerler.
+    </p>
+    <audio controls preload="none">
+      <source src="assets/podcast3.mp3" type="audio/mpeg">
+    </audio>
+  </div>
+
+</main>
+
+<footer>
+  © 2025 Dingin FM — Podcast Arşivi · Sessizliğin Sesi Burada
+</footer>
+
 </body>
 </html>
