@@ -21,24 +21,34 @@ html,body{
   margin:0;
 }
 
+/* ZEMİN + LOGO SABİT VE KAPANMAZ */
 body{
-  display:flex;
-  flex-direction:column;
   font-family:'Segoe UI',sans-serif;
   text-align:center;
   color:var(--fm-text);
+  background:#eef4fb;
+}
 
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
   background:
     radial-gradient(
       circle at center,
-      rgba(255,255,255,.85) 0%,
-      rgba(225,235,245,.90) 45%,
-      rgba(200,215,230,.95) 100%
+      rgba(255,255,255,.92) 0%,
+      rgba(230,240,250,.96) 45%,
+      rgba(210,225,240,.98) 100%
     ),
     url("logo.png") center center no-repeat;
+  background-size:contain;
+  z-index:0;
+}
 
-  background-size:cover;
-  background-attachment:fixed;
+/* ÖN KATMAN */
+header, main, footer{
+  position:relative;
+  z-index:1;
 }
 
 /* HEADER */
@@ -75,7 +85,7 @@ nav a:hover{
 
 /* MAIN */
 main{
-  flex:1;
+  min-height:50vh;
   display:flex;
   flex-direction:column;
   justify-content:center;
@@ -148,17 +158,12 @@ footer{
 
 <main>
   <h1>Dingin FM’e Hoş Geldiniz</h1>
-  <p>
-    Kahvenizi alın, sessizliğin sesine kulak verin.<br>
-    Müzik, sohbet ve huzur burada.
-  </p>
-
-  <!-- GERÇEK CANLI YAYIN -->
+  <p>Sessizliğin sesi burada.</p>
   <a href="live.html" class="button">Canlı Yayına Git</a>
 </main>
 
 <footer>
-  © 2025 Dingin FM — Sessizliğin Sesi Burada · Tüm hakları saklıdır.
+  © 2025 Dingin FM — Sessizliğin Sesi Burada
 </footer>
 
 </body>
