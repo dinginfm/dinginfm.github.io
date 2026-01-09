@@ -1,15 +1,19 @@
 <?php
-/* ===== DINGIN FM — GERÇEK ADMIN PANEL =====
-   DEMO YOK
+/* =====================================================
+   DINGIN FM — GERÇEK ADMIN PANEL
+   DEMO YOK / MOCK YOK
    GERÇEK MESAJ + GERÇEK DİNLEYİCİ
-========================================== */
+===================================================== */
 
-/* === DB AYAR === */
+/* === DB BAĞLANTI === */
 $db = new PDO(
   "mysql:host=localhost;dbname=dinginfm;charset=utf8mb4",
   "dinginfm_user",
   "STRONG_PASSWORD",
-  [PDO::ATTR_ERRMODE=>PDO::ERRMODE_EXCEPTION]
+  [
+    PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
+  ]
 );
 
 /* === TABLO === */
@@ -17,41 +21,56 @@ $db->exec("
 CREATE TABLE IF NOT EXISTS messages(
   id INT AUTO_INCREMENT PRIMARY KEY,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  name VARCHAR(120),
+  name VARCHAR(120) NOT NULL,
   email VARCHAR(180),
-  message TEXT,
-  ip VARCHAR(45)
-)
+  message TEXT NOT NULL,
+  ip VARCHAR(45) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4
 ");
 
 /* === MESAJ KAYIT === */
-if($_SERVER["REQUEST_METHOD"]==="POST"){
-  $db->prepare("
-    INSERT INTO messages(name,email,message,ip)
-    VALUES(?,?,?,?)
-  ")->execute([
-    $_POST["name"],
-    $_POST["email"],
-    $_POST["message"],
+if($_SERVER["REQUEST_METHOD"] === "POST"){
+  $name    = trim($_POST["name"] ?? "");
+  $email   = trim($_POST["email"] ?? "");
+  $message = trim($_POST["message"] ?? "");
+
+  if($name === "" || $message === "" || mb_strlen($message) < 3){
+    http_response_code(400);
+    exit("INVALID");
+  }
+
+  $stmt = $db->prepare("
+    INSERT INTO messages (name,email,message,ip)
+    VALUES (?,?,?,?)
+  ");
+  $stmt->execute([
+    $name,
+    $email,
+    $message,
     $_SERVER["REMOTE_ADDR"]
   ]);
+
   exit("OK");
 }
 
 /* === MESAJLAR === */
 $messages = $db->query("
   SELECT * FROM messages ORDER BY id DESC
-")->fetchAll(PDO::FETCH_ASSOC);
+")->fetchAll();
 
-/* === GERÇEK DİNLEYİCİ (ICECAST) === */
+/* === ICECAST DİNLEYİCİ === */
 $listenerCount = 0;
-$icecast = @file_get_contents("https://dinginfm.com.tr:8000/status-json.xsl");
+$icecastJson = @file_get_contents("https://dinginfm.com.tr:8000/status-json.xsl");
 
-if($icecast){
-  $data = json_decode($icecast,true);
+if($icecastJson){
+  $data = json_decode($icecastJson, true);
   if(isset($data["icestats"]["source"])){
     $src = $data["icestats"]["source"];
-    $listenerCount = isset($src["listeners"]) ? $src["listeners"] : 0;
+    if(isset($src[0])){
+      $listenerCount = (int)$src[0]["listeners"];
+    }else{
+      $listenerCount = (int)($src["listeners"] ?? 0);
+    }
   }
 }
 ?>
@@ -59,40 +78,99 @@ if($icecast){
 <html lang="tr">
 <head>
 <meta charset="UTF-8">
-<title>Dingin FM — Admin</title>
+<title>DINGIN FM — ADMIN</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+
 <style>
-body{margin:0;font-family:Segoe UI;background:#eef6ff}
-header{padding:20px;background:#fff;box-shadow:0 2px 10px rgba(0,0,0,.15)}
-main{max-width:1100px;margin:40px auto;background:#fff;
-border-radius:16px;box-shadow:0 10px 26px rgba(0,0,0,.18);padding:24px}
-.stat{font-size:22px;margin-bottom:20px;color:#2b5}
-table{width:100%;border-collapse:collapse}
-th,td{padding:10px;border-bottom:1px solid #dde}
-th{background:#f4faff}
+body{
+  margin:0;
+  font-family:Segoe UI,Arial,sans-serif;
+  background:#eef6ff;
+  color:#123;
+}
+header{
+  background:#ffffff;
+  padding:20px 30px;
+  box-shadow:0 2px 10px rgba(0,0,0,.12);
+}
+header h1{
+  margin:0;
+  font-size:26px;
+}
+.stat{
+  margin-top:8px;
+  font-size:20px;
+  color:#2b7a4b;
+}
+main{
+  max-width:1200px;
+  margin:40px auto;
+  background:#ffffff;
+  border-radius:18px;
+  box-shadow:0 10px 30px rgba(0,0,0,.18);
+  padding:24px;
+}
+table{
+  width:100%;
+  border-collapse:collapse;
+}
+th,td{
+  padding:12px 10px;
+  border-bottom:1px solid #dde6f0;
+  text-align:left;
+  vertical-align:top;
+}
+th{
+  background:#f3f8ff;
+  font-weight:600;
+}
+tr:hover{
+  background:#f9fcff;
+}
+td.message{
+  white-space:pre-wrap;
+  max-width:520px;
+}
+small{
+  color:#789;
+}
 </style>
 </head>
 
 <body>
 
 <header>
-  <h1>DINGIN FM — ADMIN</h1>
-  <div class="stat">🎧 Anlık Dinleyici: <b><?= $listenerCount ?></b></div>
+  <h1>DINGIN FM — ADMIN PANEL</h1>
+  <div class="stat">🎧 Anlık Dinleyici: <strong><?= $listenerCount ?></strong></div>
 </header>
 
 <main>
 <table>
-<tr>
-  <th>Tarih</th><th>Ad</th><th>Email</th><th>Mesaj</th><th>IP</th>
-</tr>
+  <tr>
+    <th>Tarih</th>
+    <th>Ad</th>
+    <th>Email</th>
+    <th>Mesaj</th>
+    <th>IP</th>
+  </tr>
+
+<?php if(!$messages): ?>
+  <tr>
+    <td colspan="5"><small>Henüz mesaj yok.</small></td>
+  </tr>
+<?php endif; ?>
+
 <?php foreach($messages as $m): ?>
-<tr>
-<td><?=htmlspecialchars($m["created_at"])?></td>
-<td><?=htmlspecialchars($m["name"])?></td>
-<td><?=htmlspecialchars($m["email"])?></td>
-<td><?=nl2br(htmlspecialchars($m["message"]))?></td>
-<td><?=htmlspecialchars($m["ip"])?></td>
-</tr>
+  <tr>
+    <td><?= htmlspecialchars($m["created_at"]) ?></td>
+    <td><?= htmlspecialchars($m["name"]) ?></td>
+    <td><?= htmlspecialchars($m["email"]) ?></td>
+    <td class="message"><?= nl2br(htmlspecialchars($m["message"])) ?></td>
+    <td><?= htmlspecialchars($m["ip"]) ?></td>
+  </tr>
 <?php endforeach; ?>
+
 </table>
 </main>
 
