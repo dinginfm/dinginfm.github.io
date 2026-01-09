@@ -21,24 +21,36 @@ html,body{
   margin:0;
 }
 
+/* === SABİT LOGO + ZEMİN === */
 body{
-  display:flex;
-  flex-direction:column;
   font-family:'Segoe UI',sans-serif;
   text-align:center;
   color:var(--fm-text);
+  background:#eef4fb;
+}
 
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
   background:
     radial-gradient(
       circle at center,
-      rgba(255,255,255,.85) 0%,
-      rgba(225,235,245,.90) 45%,
-      rgba(200,215,230,.95) 100%
+      rgba(255,255,255,.88) 0%,
+      rgba(241,248,255,.92) 35%,
+      rgba(227,240,255,.96) 65%,
+      rgba(214,233,255,.98) 100%
     ),
     url("logo.png") center center no-repeat;
+  background-size:contain;
+  z-index:0;
+  pointer-events:none;
+}
 
-  background-size:cover;
-  background-attachment:fixed;
+/* ÖN KATMAN */
+header, main, footer{
+  position:relative;
+  z-index:1;
 }
 
 /* HEADER */
@@ -76,7 +88,6 @@ nav a:hover{
 
 /* MAIN */
 main{
-  flex:1;
   display:flex;
   justify-content:center;
   padding:60px 20px;
@@ -143,32 +154,12 @@ footer{
 
 <main>
   <div class="section">
-    <p>
-      Dingin FM, 2025 yılında Ankara’da, sessizliğin değerini bilen bir fikir olarak ortaya çıktı.
-    </p>
-
-    <p>
-      Büyük ekipler, sponsorlar ya da kalabalık planlar yoktu.  
-      Sadece bir mikrofon, bir bilgisayar ve acele etmeyen bir yaklaşım vardı.
-    </p>
-
-    <p>
-      “Sessizliğin de bir sesi vardır” fikri, Dingin FM’in temelini oluşturdu.
-    </p>
-
-    <p>
-      Kurulum sürecinde aksaklıklar yaşandı, denemeler yapıldı, geceler uzadı.  
-      Ancak her adım, daha sade ve daha net bir yayın anlayışına dönüştü.
-    </p>
-
-    <p>
-      Bugün Dingin FM, aynı çizgide devam ediyor:  
-      Yükseltmeden, bağırmadan, hızlanmadan.
-    </p>
-
-    <p class="signature">
-      Sessizliğin sesi burada.
-    </p>
+    <p>Dingin FM, 2025 yılında Ankara’da, sessizliğin değerini bilen bir fikir olarak ortaya çıktı.</p>
+    <p>Büyük ekipler, sponsorlar ya da kalabalık planlar yoktu. Sadece bir mikrofon, bir bilgisayar ve acele etmeyen bir yaklaşım vardı.</p>
+    <p>“Sessizliğin de bir sesi vardır” fikri, Dingin FM’in temelini oluşturdu.</p>
+    <p>Kurulum sürecinde aksaklıklar yaşandı, denemeler yapıldı, geceler uzadı. Ancak her adım, daha sade ve daha net bir yayın anlayışına dönüştü.</p>
+    <p>Bugün Dingin FM, aynı çizgide devam ediyor: Yükseltmeden, bağırmadan, hızlanmadan.</p>
+    <p class="signature">Sessizliğin sesi burada.</p>
   </div>
 </main>
 
