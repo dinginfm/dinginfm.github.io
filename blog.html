@@ -14,24 +14,40 @@
   --fm-text:#4a6f8a;
 }
 
-body{
+html,body{
   margin:0;
-  min-height:100vh;
+  height:100%;
+}
+
+/* SABİT TAM GÖRÜNÜR LOGO */
+body{
   font-family:'Segoe UI',sans-serif;
   text-align:center;
   color:var(--fm-text);
+  background:#eef4fb;
+  position:relative;
+}
 
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
   background:
     radial-gradient(
       circle at center,
-      rgba(255,255,255,.85) 0%,
-      rgba(225,235,245,.90) 45%,
-      rgba(200,215,230,.95) 100%
+      rgba(255,255,255,.92) 0%,
+      rgba(230,240,250,.96) 45%,
+      rgba(210,225,240,.98) 100%
     ),
     url("logo.png") center center no-repeat;
+  background-size:contain;
+  z-index:0;
+}
 
-  background-size:cover;
-  background-attachment:fixed;
+/* ÜST KATMAN */
+header,main,footer{
+  position:relative;
+  z-index:1;
 }
 
 /* HEADER */
@@ -71,14 +87,14 @@ nav a:hover{
 /* MAIN */
 main{
   max-width:680px;
-  margin:60px auto;
+  margin:80px auto;
   padding:20px;
 }
 
 /* BLOG ALANI */
 section{
-  background:rgba(255,255,255,0.78);
-  backdrop-filter:blur(6px);
+  background:rgba(255,255,255,.85);
+  backdrop-filter:blur(4px);
   padding:34px 26px;
   border-radius:18px;
   box-shadow:0 6px 18px rgba(0,0,0,.12);
@@ -109,7 +125,7 @@ a.btn:hover{
 
 /* FOOTER */
 footer{
-  margin-top:60px;
+  margin-top:80px;
   padding:18px;
   font-size:13px;
   color:var(--fm-soft);
@@ -128,7 +144,7 @@ footer{
 
 <header>
   <h1>DINGIN FM — Blog</h1>
-  <h2>Yazılar, kahve ve sessiz düşünceler</h2>
+  <h2>Yazılar</h2>
 
   <nav>
     <a href="index.html">Ana Sayfa</a>
@@ -143,20 +159,15 @@ footer{
 
 <main>
   <section>
-    <p>📖 Blog sayfamı ziyaret etmek için aşağıdaki bağlantıya tıklayabilirsin:</p>
-
+    <p>📖 Blog sayfası:</p>
     <a href="https://madamaylak0.wordpress.com/" target="_blank" class="btn">
       MadamAylak Blogu Aç
     </a>
-
-    <p style="margin-top:22px">
-      Kelimelerin kahveyle buluştuğu, sessiz ama derin bir köşe.
-    </p>
   </section>
 </main>
 
 <footer>
-  © 2025 Dingin FM — Sessizliğin Sesi Burada. Tüm hakları saklıdır.
+  © 2025 Dingin FM — Sessizliğin Sesi Burada.
 </footer>
 
 </body>
