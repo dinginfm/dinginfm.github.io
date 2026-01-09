@@ -71,25 +71,42 @@ if($icecast){
   --fm-text:#4a6f8a;
 }
 
-body{
+html,body{
   margin:0;
-  min-height:100vh;
+  height:100%;
+}
+
+body{
   font-family:Segoe UI,Arial,sans-serif;
   color:var(--fm-text);
+  background:#eef4fb;
+  position:relative;
+}
 
+/* TAM SAYFA SABİT LOGO */
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
   background:
     radial-gradient(
       circle at center,
-      rgba(255,255,255,.85) 0%,
-      rgba(225,235,245,.90) 45%,
-      rgba(200,215,230,.95) 100%
+      rgba(255,255,255,.92) 0%,
+      rgba(230,240,250,.96) 45%,
+      rgba(210,225,240,.98) 100%
     ),
     url("logo.png") center center no-repeat;
-
-  background-size:cover;
-  background-attachment:fixed;
+  background-size:contain;
+  z-index:0;
 }
 
+/* ÜST KATMAN */
+header,main{
+  position:relative;
+  z-index:1;
+}
+
+/* HEADER */
 header{
   padding:32px 20px 10px;
   text-align:center;
@@ -107,11 +124,12 @@ header h1{
   font-size:18px;
 }
 
+/* PANEL */
 main{
   max-width:1200px;
-  margin:40px auto 60px;
-  background:rgba(255,255,255,.78);
-  backdrop-filter:blur(6px);
+  margin:60px auto 80px;
+  background:rgba(255,255,255,.85);
+  backdrop-filter:blur(4px);
   border-radius:18px;
   box-shadow:0 10px 30px rgba(0,0,0,.18);
   padding:24px;
