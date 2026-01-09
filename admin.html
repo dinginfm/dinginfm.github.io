@@ -14,23 +14,20 @@ body{
   text-align:center;
   color:#3A5F7A;
 
-  /* LOGO ARTIK SAYFANIN RUHU */
-  background:
-    radial-gradient(
-      circle at center,
-      rgba(255,255,255,0.55) 0%,
-      rgba(255,255,255,0.75) 35%,
-      rgba(255,255,255,0.95) 65%,
-      #ffffff 100%
-    ),
-    url("assets/logo.png") center center / 80% no-repeat,
-    radial-gradient(
-      circle at center,
-      #ffffff 0%,
-      #f1f8ff 45%,
-      #e3f0ff 75%,
-      #d6e9ff 100%
-    );
+  background:radial-gradient(
+    circle at center,
+    #ffffff 0%,
+    #f1f8ff 45%,
+    #e3f0ff 75%,
+    #d6e9ff 100%
+  );
+}
+
+/* ================== SAYFA + LOGO ================== */
+.page{
+  min-height:100vh;
+  background:url("logo.png") center 35% no-repeat;
+  background-size:clamp(800px, 85vw, 1500px);
 }
 
 /* ================== HEADER ================== */
@@ -45,7 +42,6 @@ h1{
   margin:0;
   font-size:28px;
   letter-spacing:2px;
-  color:#3A5F7A;
 }
 
 h2{
@@ -71,7 +67,7 @@ nav a:hover{
 main{
   max-width:640px;
   margin:60px auto;
-  background:rgba(255,255,255,.68);
+  background:rgba(255,255,255,.70);
   backdrop-filter:blur(12px);
   padding:32px;
   border-radius:22px;
@@ -91,139 +87,4 @@ main{
   height:14px;
   border-radius:50%;
   background:#aaa;
-  box-shadow:0 0 12px currentColor;
-}
-
-/* ================== BUTTON ================== */
-.button{
-  display:inline-block;
-  padding:13px 30px;
-  border-radius:30px;
-  border:2px solid #4FB9FF;
-  color:#4FB9FF;
-  text-decoration:none;
-  font-weight:600;
-  cursor:pointer;
-  background:transparent;
-  transition:.25s;
-}
-.button:hover{
-  background:#4FB9FF;
-  color:#fff;
-}
-
-/* ================== INFO ================== */
-.info{
-  font-size:15px;
-  color:#5F86A3;
-  line-height:1.6;
-}
-
-/* ================== FOOTER ================== */
-footer{
-  margin-top:60px;
-  padding:18px;
-  font-size:13px;
-  color:#6F8FA8;
-}
-</style>
-</head>
-
-<body>
-
-<header>
-  <h1>DINGIN FM</h1>
-  <h2>Sessizliğin Sesi Burada</h2>
-  <nav>
-    <a href="index.html">Ana Sayfa</a>
-    <a href="live.html" class="active">Canlı Yayın</a>
-    <a href="dj.html">DJ Aylak</a>
-    <a href="podcast.html">Podcast</a>
-    <a href="blog.html">Blog</a>
-    <a href="connect.html">İletişim</a>
-  </nav>
-</header>
-
-<main>
-
-  <div class="status">
-    <span id="led" class="led"></span>
-    <span id="statusText">Durum kontrol ediliyor…</span>
-  </div>
-
-  <p class="info">
-    Dinleyici: <b id="listeners">—</b> ·
-    Peak: <b id="peak">—</b> ·
-    Bitrate: <b id="bitrate">—</b>
-  </p>
-
-  <br>
-
-  <button id="playBtn" class="button">▶️ Yayını Dinle</button>
-
-</main>
-
-<footer>
-  © 2025 Dingin FM — Sessizliğin Sesi Burada
-</footer>
-
-<script>
-const STREAM_URL = "https://dinginfm.com.tr/live.mp3";
-const STATUS_URL = "https://dinginfm.com.tr/status-json.xsl";
-
-let audio = new Audio(STREAM_URL);
-audio.preload = "none";
-
-const led        = document.getElementById("led");
-const statusText = document.getElementById("statusText");
-const playBtn    = document.getElementById("playBtn");
-const listeners  = document.getElementById("listeners");
-const peak       = document.getElementById("peak");
-const bitrate    = document.getElementById("bitrate");
-
-async function checkStatus(){
-  try{
-    const res = await fetch(STATUS_URL, { cache:"no-store" });
-    const data = await res.json();
-
-    let src = data.icestats.source;
-    if(Array.isArray(src)) src = src.find(s => s.listenurl?.includes("live"));
-
-    if(src){
-      led.style.background = "#2ecc71";
-      statusText.textContent = "🟢 Yayında";
-      listeners.textContent = src.listeners;
-      peak.textContent = src.listener_peak;
-      bitrate.textContent = src.bitrate + " kbps";
-    }else{
-      throw "Yayın yok";
-    }
-  }catch{
-    led.style.background = "#aaa";
-    statusText.textContent = "⚪ Yayında Değil";
-    listeners.textContent = "0";
-    peak.textContent = "0";
-    bitrate.textContent = "—";
-  }
-}
-
-playBtn.addEventListener("click", async ()=>{
-  if(audio.paused){
-    try{
-      await audio.play();
-      playBtn.textContent = "⏸ Yayını Durdur";
-    }catch{
-      alert("Yayın başlatılamıyor.");
-    }
-  }else{
-    audio.pause();
-    playBtn.textContent = "▶️ Yayını Dinle";
-  }
-});
-
-checkStatus();
-setInterval(checkStatus, 5000);
-</script>
-
-</body>
-</html>
+  b
