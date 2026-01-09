@@ -1,90 +1,130 @@
+<?php
+/* ========= DINGIN FM — GERÇEK ADMIN PANEL =========
+   DEMO YOK / localStorage YOK
+   GERÇEK VERİTABANI + GERÇEK KAYIT
+================================================== */
+
+/* === AYARLAR === */
+$db_host = "localhost";
+$db_name = "dinginfm";
+$db_user = "dinginfm_user";
+$db_pass = "STRONG_PASSWORD";
+
+/* === DB BAĞLANTI === */
+try{
+  $db = new PDO(
+    "mysql:host=$db_host;dbname=$db_name;charset=utf8mb4",
+    $db_user,
+    $db_pass,
+    [PDO::ATTR_ERRMODE=>PDO::ERRMODE_EXCEPTION]
+  );
+}catch(Exception $e){
+  die("DB bağlantı hatası");
+}
+
+/* === TABLO OLUŞTUR (YOKSA) === */
+$db->exec("
+CREATE TABLE IF NOT EXISTS messages (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  name VARCHAR(120) NOT NULL,
+  email VARCHAR(180) NOT NULL,
+  message TEXT NOT NULL,
+  ip VARCHAR(45)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4
+");
+
+/* === FORM KAYIT === */
+if($_SERVER["REQUEST_METHOD"]==="POST"){
+  $stmt=$db->prepare("
+    INSERT INTO messages (name,email,message,ip)
+    VALUES (?,?,?,?)
+  ");
+  $stmt->execute([
+    trim($_POST["name"]),
+    trim($_POST["email"]),
+    trim($_POST["message"]),
+    $_SERVER["REMOTE_ADDR"]
+  ]);
+  exit("OK");
+}
+
+/* === VERİ ÇEK === */
+$rows=$db->query("
+  SELECT * FROM messages
+  ORDER BY id DESC
+")->fetchAll(PDO::FETCH_ASSOC);
+?>
 <!DOCTYPE html>
 <html lang="tr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Dingin FM — Canlı Yayın</title>
-
+<title>Dingin FM — Admin</title>
 <style>
-/* ================== TEMEL ================== */
 body{
   margin:0;
-  min-height:100vh;
-  font-family:'Segoe UI',sans-serif;
-  text-align:center;
-  color:#3A5F7A;
-
-  background:radial-gradient(
-    circle at center,
-    #ffffff 0%,
-    #f1f8ff 45%,
-    #e3f0ff 75%,
-    #d6e9ff 100%
-  );
+  font-family:Segoe UI,sans-serif;
+  background:#eef6ff;
+  color:#345;
 }
-
-/* ================== SAYFA + LOGO ================== */
-.page{
-  min-height:100vh;
-  background:url("logo.png") center 35% no-repeat;
-  background-size:clamp(800px, 85vw, 1500px);
-}
-
-/* ================== HEADER ================== */
 header{
-  padding:30px 10px 20px;
-  background:rgba(255,255,255,.65);
-  backdrop-filter:blur(10px);
-  box-shadow:0 2px 10px rgba(0,0,0,.12);
+  padding:20px;
+  background:#fff;
+  box-shadow:0 2px 10px rgba(0,0,0,.15);
 }
-
-h1{
-  margin:0;
-  font-size:28px;
-  letter-spacing:2px;
-}
-
-h2{
-  margin:6px 0 0;
-  font-size:14px;
-  font-weight:400;
-  color:#6F8FA8;
-}
-
-nav a{
-  margin:0 12px;
-  font-size:15px;
-  text-decoration:none;
-  color:#4A6B84;
-}
-nav a.active,
-nav a:hover{
-  color:#4FB9FF;
-  text-decoration:underline;
-}
-
-/* ================== MAIN ================== */
 main{
-  max-width:640px;
-  margin:60px auto;
-  background:rgba(255,255,255,.70);
-  backdrop-filter:blur(12px);
-  padding:32px;
-  border-radius:22px;
+  max-width:900px;
+  margin:40px auto;
+  background:#fff;
+  border-radius:16px;
   box-shadow:0 10px 26px rgba(0,0,0,.18);
+  padding:24px;
 }
+table{
+  width:100%;
+  border-collapse:collapse;
+}
+th,td{
+  padding:12px;
+  border-bottom:1px solid #e2ecf7;
+  font-size:14px;
+  text-align:left;
+}
+th{
+  background:#f5fbff;
+}
+small{color:#888}
+</style>
+</head>
 
-/* ================== STATUS ================== */
-.status{
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  gap:10px;
-  margin-bottom:18px;
-}
-.led{
-  width:14px;
-  height:14px;
-  border-radius:50%;
-  background:#aaa;
-  b
+<body>
+
+<header>
+  <h1>DINGIN FM — ADMIN PANEL</h1>
+  <small>Gerçek kayıt / gerçek veri</small>
+</header>
+
+<main>
+<table>
+<tr>
+  <th>Tarih</th>
+  <th>Ad</th>
+  <th>E-posta</th>
+  <th>Mesaj</th>
+  <th>IP</th>
+</tr>
+<?php foreach($rows as $r): ?>
+<tr>
+  <td><?=htmlspecialchars($r["created_at"])?></td>
+  <td><?=htmlspecialchars($r["name"])?></td>
+  <td><?=htmlspecialchars($r["email"])?></td>
+  <td><?=nl2br(htmlspecialchars($r["message"]))?></td>
+  <td><?=htmlspecialchars($r["ip"])?></td>
+</tr>
+<?php endforeach; ?>
+</table>
+</main>
+
+</body>
+</html>
