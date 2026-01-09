@@ -1,126 +1,96 @@
 <?php
-/* ========= DINGIN FM — GERÇEK ADMIN PANEL =========
-   DEMO YOK / localStorage YOK
-   GERÇEK VERİTABANI + GERÇEK KAYIT
-================================================== */
+/* ===== DINGIN FM — GERÇEK ADMIN PANEL =====
+   DEMO YOK
+   GERÇEK MESAJ + GERÇEK DİNLEYİCİ
+========================================== */
 
-/* === AYARLAR === */
-$db_host = "localhost";
-$db_name = "dinginfm";
-$db_user = "dinginfm_user";
-$db_pass = "STRONG_PASSWORD";
+/* === DB AYAR === */
+$db = new PDO(
+  "mysql:host=localhost;dbname=dinginfm;charset=utf8mb4",
+  "dinginfm_user",
+  "STRONG_PASSWORD",
+  [PDO::ATTR_ERRMODE=>PDO::ERRMODE_EXCEPTION]
+);
 
-/* === DB BAĞLANTI === */
-try{
-  $db = new PDO(
-    "mysql:host=$db_host;dbname=$db_name;charset=utf8mb4",
-    $db_user,
-    $db_pass,
-    [PDO::ATTR_ERRMODE=>PDO::ERRMODE_EXCEPTION]
-  );
-}catch(Exception $e){
-  die("DB bağlantı hatası");
-}
-
-/* === TABLO OLUŞTUR (YOKSA) === */
+/* === TABLO === */
 $db->exec("
-CREATE TABLE IF NOT EXISTS messages (
+CREATE TABLE IF NOT EXISTS messages(
   id INT AUTO_INCREMENT PRIMARY KEY,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  name VARCHAR(120) NOT NULL,
-  email VARCHAR(180) NOT NULL,
-  message TEXT NOT NULL,
+  name VARCHAR(120),
+  email VARCHAR(180),
+  message TEXT,
   ip VARCHAR(45)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4
+)
 ");
 
-/* === FORM KAYIT === */
+/* === MESAJ KAYIT === */
 if($_SERVER["REQUEST_METHOD"]==="POST"){
-  $stmt=$db->prepare("
-    INSERT INTO messages (name,email,message,ip)
-    VALUES (?,?,?,?)
-  ");
-  $stmt->execute([
-    trim($_POST["name"]),
-    trim($_POST["email"]),
-    trim($_POST["message"]),
+  $db->prepare("
+    INSERT INTO messages(name,email,message,ip)
+    VALUES(?,?,?,?)
+  ")->execute([
+    $_POST["name"],
+    $_POST["email"],
+    $_POST["message"],
     $_SERVER["REMOTE_ADDR"]
   ]);
   exit("OK");
 }
 
-/* === VERİ ÇEK === */
-$rows=$db->query("
-  SELECT * FROM messages
-  ORDER BY id DESC
+/* === MESAJLAR === */
+$messages = $db->query("
+  SELECT * FROM messages ORDER BY id DESC
 ")->fetchAll(PDO::FETCH_ASSOC);
+
+/* === GERÇEK DİNLEYİCİ (ICECAST) === */
+$listenerCount = 0;
+$icecast = @file_get_contents("https://dinginfm.com.tr:8000/status-json.xsl");
+
+if($icecast){
+  $data = json_decode($icecast,true);
+  if(isset($data["icestats"]["source"])){
+    $src = $data["icestats"]["source"];
+    $listenerCount = isset($src["listeners"]) ? $src["listeners"] : 0;
+  }
+}
 ?>
 <!DOCTYPE html>
 <html lang="tr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Dingin FM — Admin</title>
 <style>
-body{
-  margin:0;
-  font-family:Segoe UI,sans-serif;
-  background:#eef6ff;
-  color:#345;
-}
-header{
-  padding:20px;
-  background:#fff;
-  box-shadow:0 2px 10px rgba(0,0,0,.15);
-}
-main{
-  max-width:900px;
-  margin:40px auto;
-  background:#fff;
-  border-radius:16px;
-  box-shadow:0 10px 26px rgba(0,0,0,.18);
-  padding:24px;
-}
-table{
-  width:100%;
-  border-collapse:collapse;
-}
-th,td{
-  padding:12px;
-  border-bottom:1px solid #e2ecf7;
-  font-size:14px;
-  text-align:left;
-}
-th{
-  background:#f5fbff;
-}
-small{color:#888}
+body{margin:0;font-family:Segoe UI;background:#eef6ff}
+header{padding:20px;background:#fff;box-shadow:0 2px 10px rgba(0,0,0,.15)}
+main{max-width:1100px;margin:40px auto;background:#fff;
+border-radius:16px;box-shadow:0 10px 26px rgba(0,0,0,.18);padding:24px}
+.stat{font-size:22px;margin-bottom:20px;color:#2b5}
+table{width:100%;border-collapse:collapse}
+th,td{padding:10px;border-bottom:1px solid #dde}
+th{background:#f4faff}
 </style>
 </head>
 
 <body>
 
 <header>
-  <h1>DINGIN FM — ADMIN PANEL</h1>
-  <small>Gerçek kayıt / gerçek veri</small>
+  <h1>DINGIN FM — ADMIN</h1>
+  <div class="stat">🎧 Anlık Dinleyici: <b><?= $listenerCount ?></b></div>
 </header>
 
 <main>
 <table>
 <tr>
-  <th>Tarih</th>
-  <th>Ad</th>
-  <th>E-posta</th>
-  <th>Mesaj</th>
-  <th>IP</th>
+  <th>Tarih</th><th>Ad</th><th>Email</th><th>Mesaj</th><th>IP</th>
 </tr>
-<?php foreach($rows as $r): ?>
+<?php foreach($messages as $m): ?>
 <tr>
-  <td><?=htmlspecialchars($r["created_at"])?></td>
-  <td><?=htmlspecialchars($r["name"])?></td>
-  <td><?=htmlspecialchars($r["email"])?></td>
-  <td><?=nl2br(htmlspecialchars($r["message"]))?></td>
-  <td><?=htmlspecialchars($r["ip"])?></td>
+<td><?=htmlspecialchars($m["created_at"])?></td>
+<td><?=htmlspecialchars($m["name"])?></td>
+<td><?=htmlspecialchars($m["email"])?></td>
+<td><?=nl2br(htmlspecialchars($m["message"]))?></td>
+<td><?=htmlspecialchars($m["ip"])?></td>
 </tr>
 <?php endforeach; ?>
 </table>
