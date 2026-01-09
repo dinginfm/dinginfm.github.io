@@ -6,65 +6,79 @@
 <title>Dingin FM — Canlı Yayın</title>
 
 <style>
+/* ================== TEMEL ================== */
 body{
   margin:0;
   min-height:100vh;
   font-family:'Segoe UI',sans-serif;
   text-align:center;
-  color:#4fb9ff;
+  color:#3A5F7A;
 
+  /* LOGO ARTIK SAYFANIN RUHU */
   background:
-    url("assets/logo.png") center center / 60% no-repeat,
+    radial-gradient(
+      circle at center,
+      rgba(255,255,255,0.55) 0%,
+      rgba(255,255,255,0.75) 35%,
+      rgba(255,255,255,0.95) 65%,
+      #ffffff 100%
+    ),
+    url("assets/logo.png") center center / 80% no-repeat,
     radial-gradient(
       circle at center,
       #ffffff 0%,
-      #f1f8ff 40%,
-      #e3f0ff 70%,
+      #f1f8ff 45%,
+      #e3f0ff 75%,
       #d6e9ff 100%
     );
 }
 
-/* HEADER */
+/* ================== HEADER ================== */
 header{
-  padding:28px 10px 18px;
-  background:rgba(255,255,255,.75);
-  backdrop-filter:blur(6px);
-  box-shadow:0 2px 8px rgba(0,0,0,.15);
+  padding:30px 10px 20px;
+  background:rgba(255,255,255,.65);
+  backdrop-filter:blur(10px);
+  box-shadow:0 2px 10px rgba(0,0,0,.12);
 }
 
 h1{
   margin:0;
   font-size:28px;
   letter-spacing:2px;
+  color:#3A5F7A;
 }
 
 h2{
   margin:6px 0 0;
   font-size:14px;
   font-weight:400;
-  color:#6fc9ff;
+  color:#6F8FA8;
 }
 
 nav a{
   margin:0 12px;
   font-size:15px;
   text-decoration:none;
-  color:#4fb9ff;
+  color:#4A6B84;
 }
-nav a.active, nav a:hover{ text-decoration:underline; }
+nav a.active,
+nav a:hover{
+  color:#4FB9FF;
+  text-decoration:underline;
+}
 
-/* MAIN */
+/* ================== MAIN ================== */
 main{
   max-width:640px;
-  margin:50px auto;
-  background:rgba(255,255,255,.78);
-  backdrop-filter:blur(6px);
-  padding:28px;
-  border-radius:18px;
-  box-shadow:0 6px 18px rgba(0,0,0,.15);
+  margin:60px auto;
+  background:rgba(255,255,255,.68);
+  backdrop-filter:blur(12px);
+  padding:32px;
+  border-radius:22px;
+  box-shadow:0 10px 26px rgba(0,0,0,.18);
 }
 
-/* STATUS */
+/* ================== STATUS ================== */
 .status{
   display:flex;
   justify-content:center;
@@ -77,16 +91,16 @@ main{
   height:14px;
   border-radius:50%;
   background:#aaa;
-  box-shadow:0 0 10px currentColor;
+  box-shadow:0 0 12px currentColor;
 }
 
-/* BUTTON */
+/* ================== BUTTON ================== */
 .button{
   display:inline-block;
-  padding:12px 28px;
+  padding:13px 30px;
   border-radius:30px;
-  border:2px solid #4fb9ff;
-  color:#4fb9ff;
+  border:2px solid #4FB9FF;
+  color:#4FB9FF;
   text-decoration:none;
   font-weight:600;
   cursor:pointer;
@@ -94,23 +108,23 @@ main{
   transition:.25s;
 }
 .button:hover{
-  background:#4fb9ff;
+  background:#4FB9FF;
   color:#fff;
 }
 
-/* INFO */
+/* ================== INFO ================== */
 .info{
   font-size:15px;
-  color:#5f86a3;
+  color:#5F86A3;
   line-height:1.6;
 }
 
-/* FOOTER */
+/* ================== FOOTER ================== */
 footer{
-  margin-top:50px;
+  margin-top:60px;
   padding:18px;
   font-size:13px;
-  color:#6fc9ff;
+  color:#6F8FA8;
 }
 </style>
 </head>
@@ -154,15 +168,12 @@ footer{
 </footer>
 
 <script>
-/* ===== AYARLAR (GERÇEK) ===== */
-const STREAM_URL   = "https://dinginfm.com.tr/live.mp3";
-const STATUS_URL   = "https://dinginfm.com.tr/status-json.xsl";
+const STREAM_URL = "https://dinginfm.com.tr/live.mp3";
+const STATUS_URL = "https://dinginfm.com.tr/status-json.xsl";
 
-/* ===== AUDIO ===== */
 let audio = new Audio(STREAM_URL);
 audio.preload = "none";
 
-/* ===== ELEMENTLER ===== */
 const led        = document.getElementById("led");
 const statusText = document.getElementById("statusText");
 const playBtn    = document.getElementById("playBtn");
@@ -170,7 +181,6 @@ const listeners  = document.getElementById("listeners");
 const peak       = document.getElementById("peak");
 const bitrate    = document.getElementById("bitrate");
 
-/* ===== YAYIN DURUMU (GERÇEK ICECAST) ===== */
 async function checkStatus(){
   try{
     const res = await fetch(STATUS_URL, { cache:"no-store" });
@@ -188,7 +198,7 @@ async function checkStatus(){
     }else{
       throw "Yayın yok";
     }
-  }catch(e){
+  }catch{
     led.style.background = "#aaa";
     statusText.textContent = "⚪ Yayında Değil";
     listeners.textContent = "0";
@@ -197,14 +207,13 @@ async function checkStatus(){
   }
 }
 
-/* ===== PLAY / STOP (GERÇEK) ===== */
 playBtn.addEventListener("click", async ()=>{
   if(audio.paused){
     try{
       await audio.play();
       playBtn.textContent = "⏸ Yayını Durdur";
-    }catch(e){
-      alert("Yayın başlatılamıyor. Sunucu veri göndermiyor olabilir.");
+    }catch{
+      alert("Yayın başlatılamıyor.");
     }
   }else{
     audio.pause();
@@ -212,7 +221,6 @@ playBtn.addEventListener("click", async ()=>{
   }
 });
 
-/* ===== OTOMATİK GÜNCELLE ===== */
 checkStatus();
 setInterval(checkStatus, 5000);
 </script>
