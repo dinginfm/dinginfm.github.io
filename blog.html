@@ -6,30 +6,29 @@
 <title>Dingin FM — Blog</title>
 
 <style>
-/* === GENEL === */
 *{box-sizing:border-box}
+
+:root{
+  --fm-title:#6fc9ff;
+  --fm-soft:#9fdcff;
+  --fm-text:#4a6f8a;
+}
 
 body{
   margin:0;
   min-height:100vh;
-  font-family:'Segoe UI', sans-serif;
+  font-family:'Segoe UI',sans-serif;
   text-align:center;
+  color:var(--fm-text);
 
-  --fm-blue:#6fc9ff;
-  --fm-blue-soft:#9fdcff;
-
-  color:var(--fm-blue);
-
-  /* === TAM SAYFA LOGO === */
   background:
     radial-gradient(
       circle at center,
-      rgba(255,255,255,.88) 0%,
-      rgba(241,248,255,.92) 40%,
-      rgba(227,240,255,.96) 70%,
-      rgba(214,233,255,.98) 100%
+      rgba(255,255,255,.85) 0%,
+      rgba(225,235,245,.90) 45%,
+      rgba(200,215,230,.95) 100%
     ),
-    url("assets/logo.png") center center no-repeat;
+    url("logo.png") center center no-repeat;
 
   background-size:cover;
   background-attachment:fixed;
@@ -44,13 +43,14 @@ h1{
   margin:0;
   font-size:28px;
   letter-spacing:1px;
+  color:var(--fm-title);
 }
 
 h2{
   margin:6px 0 0;
   font-size:14px;
   font-weight:400;
-  color:var(--fm-blue-soft);
+  color:var(--fm-soft);
 }
 
 /* NAV */
@@ -61,7 +61,7 @@ nav a{
   margin:0 12px;
   font-size:15px;
   text-decoration:none;
-  color:var(--fm-blue);
+  color:var(--fm-title);
 }
 nav a.active,
 nav a:hover{
@@ -82,7 +82,7 @@ section{
   padding:34px 26px;
   border-radius:18px;
   box-shadow:0 6px 18px rgba(0,0,0,.12);
-  color:#4a6f8a;
+  color:var(--fm-text);
 }
 
 p{
@@ -96,14 +96,14 @@ a.btn{
   display:inline-block;
   padding:12px 28px;
   border-radius:30px;
-  border:2px solid var(--fm-blue);
-  color:var(--fm-blue);
+  border:2px solid var(--fm-title);
+  color:var(--fm-title);
   text-decoration:none;
   font-weight:600;
   transition:.25s;
 }
 a.btn:hover{
-  background:var(--fm-blue);
+  background:var(--fm-title);
   color:#fff;
 }
 
@@ -112,7 +112,7 @@ footer{
   margin-top:60px;
   padding:18px;
   font-size:13px;
-  color:var(--fm-blue-soft);
+  color:var(--fm-soft);
   text-align:center;
 }
 
