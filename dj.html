@@ -6,46 +6,50 @@
 <title>Dingin FM — DJ Aylak</title>
 
 <style>
+*{box-sizing:border-box}
+
+:root{
+  --fm-title:#6fc9ff;
+  --fm-soft:#9fdcff;
+  --fm-text:#4a6f8a;
+}
+
 body{
   margin:0;
   min-height:100vh;
   font-family:'Segoe UI',sans-serif;
   text-align:center;
   overflow-x:hidden;
-
-  --fm-blue:#6fc9ff;
-  --fm-blue-soft:#9fdcff;
-  --text-soft:#4a6f8a;
-
-  color:var(--fm-blue);
+  color:var(--fm-text);
 
   background:
-    url("assets/logo.png") center center / 60% no-repeat,
     radial-gradient(
       circle at center,
-      #ffffff 0%,
-      #f1f8ff 40%,
-      #e3f0ff 70%,
-      #d6e9ff 100%
-    );
+      rgba(255,255,255,.85) 0%,
+      rgba(225,235,245,.90) 45%,
+      rgba(200,215,230,.95) 100%
+    ),
+    url("logo.png") center center no-repeat;
+
+  background-size:cover;
+  background-attachment:fixed;
 }
 
 /* HEADER */
 header{
   padding:36px 10px 20px;
 }
-
 header h1{
   margin:0;
   font-size:26px;
   letter-spacing:1px;
+  color:var(--fm-title);
 }
-
 header h2{
   margin:8px 0 0;
   font-size:14px;
   font-weight:400;
-  color:var(--fm-blue-soft);
+  color:var(--fm-soft);
 }
 
 /* NAV */
@@ -56,7 +60,7 @@ nav a{
   margin:0 12px;
   font-size:15px;
   text-decoration:none;
-  color:var(--fm-blue);
+  color:var(--fm-title);
 }
 nav a.active,
 nav a:hover{
@@ -78,7 +82,7 @@ section{
   padding:36px 30px;
   border-radius:20px;
   box-shadow:0 6px 18px rgba(0,0,0,.12);
-  color:var(--text-soft);
+  color:var(--fm-text);
 }
 
 /* BAŞLIKLAR */
@@ -86,15 +90,14 @@ section h1{
   text-align:center;
   font-size:34px;
   margin-bottom:8px;
-  color:var(--fm-blue);
+  color:var(--fm-title);
 }
-
 section h2{
   text-align:center;
   font-size:18px;
   font-weight:400;
   margin-bottom:26px;
-  color:var(--fm-blue-soft);
+  color:var(--fm-soft);
 }
 
 /* PARAGRAF */
@@ -109,7 +112,7 @@ footer{
   margin-top:80px;
   padding:18px;
   font-size:13px;
-  color:var(--fm-blue-soft);
+  color:var(--fm-soft);
   text-align:center;
 }
 
@@ -169,7 +172,7 @@ footer{
       bazen bir cümle susturur şarkıyı, bazen bir nota anlatır her şeyi.  
       DJ Aylak, işte o anın bekçisidir — kahvesini yudumlarken sesini ayarlar,  
       sonra bir gülümsemeyle mikrofona döner:  
-      <em>“Hazırsak, Dingin FM başlıyor.”em>
+      <em>“Hazırsak, Dingin FM başlıyor.”</em>
     </p>
   </section>
 </main>
