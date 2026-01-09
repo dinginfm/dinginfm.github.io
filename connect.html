@@ -70,7 +70,7 @@ main{
   padding:20px;
 }
 
-/* AÇIK CAM ALAN (KOYU MAVİ YOK) */
+/* CAM ALAN */
 section{
   background:rgba(255,255,255,0.78);
   backdrop-filter:blur(6px);
@@ -155,48 +155,23 @@ footer{
   <h3>💌 İstek & Öneri Formu</h3>
 
   <form id="contactForm">
-    <input type="text" id="name" placeholder="Adınız Soyadınız" required>
-    <input type="email" id="email" placeholder="E-posta Adresiniz" required>
-    <textarea id="message" rows="4" placeholder="Mesajınız…" required></textarea>
+    <input type="text" placeholder="Adınız Soyadınız" required>
+    <input type="email" placeholder="E-posta Adresiniz" required>
+    <textarea rows="4" placeholder="Mesajınız…" required></textarea>
     <button type="submit" class="btn">Gönder</button>
   </form>
 
-  <p id="formStatus" style="margin-top:12px;"></p>
+  <p style="margin-top:14px; font-size:13px; opacity:.75">
+    Bu form yayın öncesi iletişim ve geri bildirim amaçlıdır.
+    Mesajlar kayıt altına alınır, otomatik yayın veya anlık yanıt içermez.
+  </p>
 </section>
 
 </main>
 
 <footer>
-  © 2025 Dingin FM — Sessizliğin Sesi Burada
+  © 2025 Dingin FM — Tüm hakları saklıdır.
 </footer>
-
-<script>
-const form = document.getElementById("contactForm");
-const statusText = document.getElementById("formStatus");
-
-form.addEventListener("submit",(e)=>{
-  e.preventDefault();
-
-  const name = document.getElementById("name").value.trim();
-  const email = document.getElementById("email").value.trim();
-  const message = document.getElementById("message").value.trim();
-
-  if(!name || !email || !message){
-    statusText.textContent = "⚠️ Lütfen tüm alanları doldurun.";
-    return;
-  }
-
-  const messages = JSON.parse(localStorage.getItem("dinginfm_messages") || "[]");
-  messages.unshift({
-    ts:new Date().toLocaleString("tr-TR"),
-    name,email,message
-  });
-  localStorage.setItem("dinginfm_messages",JSON.stringify(messages));
-
-  form.reset();
-  statusText.textContent = "📨 Mesajın alındı. Teşekkür ederiz.";
-});
-</script>
 
 </body>
 </html>
