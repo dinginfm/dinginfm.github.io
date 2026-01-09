@@ -1,12 +1,22 @@
 /* ================== TEMEL ================== */
-body {
-  margin: 0;
-  min-height: 100vh;
-  font-family: 'Segoe UI', sans-serif;
-  text-align: center;
-  overflow-x: hidden;
-  color: #4fb9ff;
+html,body{
+  height:100%;
+  margin:0;
+}
 
+body{
+  font-family:'Segoe UI',sans-serif;
+  text-align:center;
+  overflow-x:hidden;
+  color:#4fb9ff;
+  background:#eef4fb;
+}
+
+/* === SABİT LOGO KATMANI === */
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
   background:
     radial-gradient(
       circle at center,
@@ -16,107 +26,104 @@ body {
       rgba(214,233,255,0.98) 100%
     ),
     url("assets/logo.png") center center no-repeat;
+  background-size:contain;
+  z-index:0;
+  pointer-events:none;
+}
 
-  background-size: cover;
-  background-attachment: fixed;
+/* ================== ÖN KATMAN ================== */
+header, main, footer{
+  position:relative;
+  z-index:1;
 }
 
 /* ================== HEADER ================== */
-header {
-  position: relative;
-  z-index: 1;
-  padding: 25px 10px 10px;
-  background: transparent;
+header{
+  padding:25px 10px 10px;
 }
 
 /* LOGO YAZISI */
-.logo-text {
-  margin: 0;
-  font-family: 'Orbitron', sans-serif;
-  font-size: 32px;
-  font-weight: 600;
-  letter-spacing: 3px;
-  color: #4fb9ff;
+.logo-text{
+  margin:0;
+  font-family:'Orbitron',sans-serif;
+  font-size:32px;
+  font-weight:600;
+  letter-spacing:3px;
+  color:#4fb9ff;
   text-shadow:
     0 0 8px rgba(79,185,255,0.45),
     0 0 16px rgba(79,185,255,0.25);
 }
 
 /* SLOGAN */
-.site-subtitle {
-  margin: 6px 0 14px;
-  font-size: 14px;
-  font-weight: 400;
-  color: #6fc9ff;
+.site-subtitle{
+  margin:6px 0 14px;
+  font-size:14px;
+  font-weight:400;
+  color:#6fc9ff;
 }
 
 /* NAV */
-nav a {
-  margin: 0 12px;
-  font-size: 15px;
-  font-weight: 500;
-  text-decoration: none;
-  color: #4fb9ff;
+nav a{
+  margin:0 12px;
+  font-size:15px;
+  font-weight:500;
+  text-decoration:none;
+  color:#4fb9ff;
 }
-
 nav a.active,
-nav a:hover {
-  text-decoration: underline;
+nav a:hover{
+  text-decoration:underline;
 }
 
 /* ================== MAIN ================== */
-main {
-  position: relative;
-  z-index: 1;
-  margin-top: 160px;
+main{
+  margin-top:160px;
 }
 
-main h1 {
-  font-size: 30px;
-  font-weight: 500;
-  color: #4fb9ff;
-  text-shadow: 0 0 12px rgba(79,185,255,0.5);
+main h1{
+  font-size:30px;
+  font-weight:500;
+  color:#4fb9ff;
+  text-shadow:0 0 12px rgba(79,185,255,0.5);
 }
 
-main p {
-  font-size: 16px;
-  color: #6fc9ff;
-  line-height: 1.6;
-  margin-top: 10px;
+main p{
+  font-size:16px;
+  color:#6fc9ff;
+  line-height:1.6;
+  margin-top:10px;
 }
 
 /* BUTON */
-.button {
-  display: inline-block;
-  margin-top: 28px;
-  padding: 12px 30px;
-  border-radius: 30px;
-  border: 2px solid #4fb9ff;
-  color: #4fb9ff;
-  text-decoration: none;
-  font-weight: 500;
-  transition: 0.3s;
+.button{
+  display:inline-block;
+  margin-top:28px;
+  padding:12px 30px;
+  border-radius:30px;
+  border:2px solid #4fb9ff;
+  color:#4fb9ff;
+  text-decoration:none;
+  font-weight:500;
+  transition:0.3s;
 }
-
-.button:hover {
-  background: #4fb9ff;
-  color: #ffffff;
+.button:hover{
+  background:#4fb9ff;
+  color:#ffffff;
 }
 
 /* ================== FOOTER ================== */
-footer {
-  position: relative;
-  z-index: 1;
-  margin-top: 140px;
-  padding: 20px 10px;
-  font-size: 13px;
-  color: #6fc9ff;
+footer{
+  margin-top:140px;
+  padding:20px 10px;
+  font-size:13px;
+  color:#6fc9ff;
 }
 
 /* ================== MOBİL ================== */
-@media (max-width: 600px) {
-  .logo-text { font-size: 26px; }
-  main h1 { font-size: 24px; }
-  nav a { margin: 0 8px; }
-  main { margin-top: 120px; }
+@media(max-width:600px){
+  .logo-text{font-size:26px;}
+  main h1{font-size:24px;}
+  nav a{margin:0 8px;}
+  main{margin-top:120px;}
 }
