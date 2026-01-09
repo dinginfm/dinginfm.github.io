@@ -3,14 +3,17 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Dingin FM — Podcast Arşivi</title>
+<title>Dingin FM — Podcast</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700&display=swap" rel="stylesheet">
 
 <style>
+*{box-sizing:border-box}
+
 :root{
-  --fm-main:#6fc9ff;
+  --fm-title:#6fc9ff;
   --fm-soft:#9fdcff;
+  --fm-text:#4a6f8a;
 }
 
 html,body{
@@ -23,13 +26,22 @@ body{
   flex-direction:column;
   font-family:'Segoe UI',sans-serif;
   text-align:center;
-  color:var(--fm-main);
+  color:var(--fm-text);
 
   background:
-    url("assets/logo.png") center center / 55% no-repeat,
-    radial-gradient(circle at center,#ffffff 0%,#f1f8ff 40%,#e3f0ff 70%,#d6e9ff 100%);
+    radial-gradient(
+      circle at center,
+      rgba(255,255,255,.85) 0%,
+      rgba(225,235,245,.90) 45%,
+      rgba(200,215,230,.95) 100%
+    ),
+    url("logo.png") center center no-repeat;
+
+  background-size:cover;
+  background-attachment:fixed;
 }
 
+/* HEADER */
 header{
   padding:36px 10px 18px;
 }
@@ -39,7 +51,7 @@ header{
   font-size:34px;
   font-weight:600;
   letter-spacing:3px;
-  color:var(--fm-main);
+  color:var(--fm-title);
   margin-bottom:6px;
 }
 
@@ -49,45 +61,52 @@ header{
   margin-bottom:18px;
 }
 
+/* NAV */
 nav a{
   margin:0 12px;
   font-size:15px;
-  font-weight:500;
   text-decoration:none;
-  color:var(--fm-main);
+  color:var(--fm-title);
 }
-
 nav a.active,
 nav a:hover{
   text-decoration:underline;
 }
 
+/* MAIN */
 main{
   flex:1;
-  padding:40px 20px;
+  padding:60px 20px;
   display:flex;
-  flex-direction:column;
-  align-items:center;
-  gap:40px;
+  justify-content:center;
 }
 
-.article{
-  max-width:720px;
+.section{
+  max-width:760px;
   width:100%;
+  background:rgba(255,255,255,.78);
+  backdrop-filter:blur(6px);
+  padding:40px 32px;
+  border-radius:20px;
+  box-shadow:0 6px 18px rgba(0,0,0,.12);
   text-align:left;
 }
 
-.article h3{
-  font-size:20px;
-  color:var(--fm-main);
-  margin-bottom:6px;
+/* PODCAST ITEM */
+.podcast{
+  margin-bottom:36px;
 }
 
-.article p{
+.podcast h3{
+  font-size:20px;
+  margin:0 0 6px;
+  color:var(--fm-title);
+}
+
+.podcast p{
   font-size:15px;
-  color:var(--fm-soft);
-  line-height:1.6;
-  margin-bottom:14px;
+  margin:0 0 14px;
+  color:var(--fm-text);
 }
 
 audio{
@@ -95,17 +114,18 @@ audio{
   outline:none;
 }
 
+/* FOOTER */
 footer{
   padding:20px 10px;
   font-size:13px;
   color:var(--fm-soft);
 }
 
-/* MOBİL */
+/* MOBILE */
 @media(max-width:600px){
   .logo-text{font-size:26px}
   nav a{margin:0 8px}
-  .article h3{font-size:18px}
+  .section{padding:28px 20px}
 }
 </style>
 </head>
@@ -113,8 +133,8 @@ footer{
 <body>
 
 <header>
-  <div class="logo-text">DINGIN FM</div>
-  <div class="site-subtitle">Podcast Arşivi · Sessizliğin Sesi Burada</div>
+  <div class="logo-text">DINGIN&nbsp;FM</div>
+  <div class="site-subtitle">Podcast</div>
 
   <nav>
     <a href="index.html">Ana Sayfa</a>
@@ -128,27 +148,22 @@ footer{
 </header>
 
 <main>
-  <!-- GERÇEK PODCASTLER BURAYA EKLENECEK -->
-  <div class="article">
-    <h3>Podcast Başlık 1</h3>
-    <p>Podcast açıklaması 1 (gerçek içerik eklenecek).</p>
-    <audio controls preload="none">
-      <source src="assets/podcast1.mp3" type="audio/mpeg">
-    </audio>
-  </div>
+  <div class="section">
 
-  <div class="article">
-    <h3>Podcast Başlık 2</h3>
-    <p>Podcast açıklaması 2 (gerçek içerik eklenecek).</p>
-    <audio controls preload="none">
-      <source src="assets/podcast2.mp3" type="audio/mpeg">
-    </audio>
-  </div>
+    <!-- GERÇEK PODCAST EKLE -->
+    <div class="podcast">
+      <h3>Podcast Başlığı</h3>
+      <p>Açıklama</p>
+      <audio controls preload="none">
+        <source src="assets/podcast.mp3" type="audio/mpeg">
+      </audio>
+    </div>
 
+  </div>
 </main>
 
 <footer>
-  © 2025 Dingin FM — Sessizliğin Sesi Burada · Tüm hakları saklıdır.
+  © 2025 Dingin FM · Tüm hakları saklıdır.
 </footer>
 
 </body>
