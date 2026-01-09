@@ -8,10 +8,12 @@
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700&display=swap" rel="stylesheet">
 
 <style>
+*{box-sizing:border-box}
+
 :root{
-  --fm-main:#6fc9ff;
+  --fm-title:#6fc9ff;
   --fm-soft:#9fdcff;
-  --text-soft:#4a6f8a;
+  --fm-text:#4a6f8a;
 }
 
 html,body{
@@ -24,17 +26,19 @@ body{
   flex-direction:column;
   font-family:'Segoe UI',sans-serif;
   text-align:center;
-  color:var(--fm-main);
+  color:var(--fm-text);
 
   background:
-    url("assets/logo.png") center center / 55% no-repeat,
     radial-gradient(
       circle at center,
-      #ffffff 0%,
-      #f1f8ff 40%,
-      #e3f0ff 70%,
-      #d6e9ff 100%
-    );
+      rgba(255,255,255,.85) 0%,
+      rgba(225,235,245,.90) 45%,
+      rgba(200,215,230,.95) 100%
+    ),
+    url("logo.png") center center no-repeat;
+
+  background-size:cover;
+  background-attachment:fixed;
 }
 
 /* HEADER */
@@ -48,6 +52,7 @@ header{
   font-weight:600;
   letter-spacing:3px;
   margin-bottom:6px;
+  color:var(--fm-title);
 }
 
 .site-subtitle{
@@ -61,9 +66,8 @@ nav a{
   margin:0 12px;
   font-size:15px;
   text-decoration:none;
-  color:var(--fm-main);
+  color:var(--fm-title);
 }
-
 nav a.active,
 nav a:hover{
   text-decoration:underline;
@@ -82,6 +86,7 @@ main{
 main h1{
   font-size:30px;
   margin:0;
+  color:var(--fm-title);
 }
 
 main p{
@@ -94,17 +99,16 @@ main p{
 /* BUTTON */
 .button{
   display:inline-block;
-  padding:12px 32px;
+  padding:14px 36px;
   border-radius:30px;
-  border:2px solid var(--fm-main);
-  color:var(--fm-main);
+  border:2px solid var(--fm-title);
+  color:var(--fm-title);
   text-decoration:none;
-  font-weight:500;
+  font-weight:600;
   transition:.3s;
 }
-
 .button:hover{
-  background:var(--fm-main);
+  background:var(--fm-title);
   color:#fff;
 }
 
@@ -149,6 +153,7 @@ footer{
     Müzik, sohbet ve huzur burada.
   </p>
 
+  <!-- GERÇEK CANLI YAYIN -->
   <a href="live.html" class="button">Canlı Yayına Git</a>
 </main>
 
