@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Dingin FM — Canlı Yayın</title>
+<title>Dingin FM — Sessizliğin Sesi Burada</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700&display=swap" rel="stylesheet">
 
@@ -11,9 +11,9 @@
 :root{
   --fm-main:#6fc9ff;
   --fm-soft:#9fdcff;
+  --text-soft:#4a6f8a;
 }
 
-/* ZEMİN + LOGO GÖMÜLÜ */
 html,body{
   height:100%;
   margin:0;
@@ -47,7 +47,6 @@ header{
   font-size:34px;
   font-weight:600;
   letter-spacing:3px;
-  color:var(--fm-main);
   margin-bottom:6px;
 }
 
@@ -57,10 +56,10 @@ header{
   margin-bottom:18px;
 }
 
+/* NAV */
 nav a{
   margin:0 12px;
   font-size:15px;
-  font-weight:500;
   text-decoration:none;
   color:var(--fm-main);
 }
@@ -74,58 +73,39 @@ nav a:hover{
 main{
   flex:1;
   display:flex;
+  flex-direction:column;
   justify-content:center;
   align-items:center;
   padding:20px;
 }
 
-section{
-  text-align:center;
+main h1{
+  font-size:30px;
+  margin:0;
 }
 
-/* STATUS */
-.status{
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  gap:10px;
-  margin-bottom:18px;
-  font-size:15px;
-}
-
-.led{
-  width:14px;
-  height:14px;
-  border-radius:50%;
-  background:#bbb;
-  box-shadow:0 0 8px rgba(0,0,0,.2);
-  transition:.3s;
-}
-
-/* TEXT */
-p{
+main p{
   font-size:16px;
   color:var(--fm-soft);
+  margin:12px 0 26px;
   line-height:1.6;
-  margin-bottom:26px;
 }
 
 /* BUTTON */
 .button{
   display:inline-block;
-  padding:12px 34px;
+  padding:12px 32px;
   border-radius:30px;
   border:2px solid var(--fm-main);
   color:var(--fm-main);
-  background:transparent;
-  font-weight:600;
-  cursor:pointer;
+  text-decoration:none;
+  font-weight:500;
   transition:.3s;
 }
 
 .button:hover{
   background:var(--fm-main);
-  color:#ffffff;
+  color:#fff;
 }
 
 /* FOOTER */
@@ -135,9 +115,10 @@ footer{
   color:var(--fm-soft);
 }
 
-/* MOBİL */
+/* MOBILE */
 @media(max-width:600px){
   .logo-text{font-size:26px}
+  main h1{font-size:24px}
   nav a{margin:0 8px}
 }
 </style>
@@ -150,66 +131,30 @@ footer{
   <div class="site-subtitle">Sessizliğin Sesi Burada</div>
 
   <nav>
-    <a href="index.html">Ana Sayfa</a>
-    <a href="live.html" class="active">Canlı Yayın</a>
+    <a href="index.html" class="active">Ana Sayfa</a>
+    <a href="live.html">Canlı Yayın</a>
     <a href="dj.html">DJ Aylak</a>
     <a href="podcast.html">Podcast</a>
     <a href="blog.html">Blog</a>
     <a href="tarihce.html">Tarihçe</a>
+    <a href="yayinsaatleri.html">Yayın Saatleri</a>
     <a href="connect.html">İletişim</a>
   </nav>
 </header>
 
 <main>
-  <section>
-    <div class="status">
-      <div id="led" class="led"></div>
-      <div id="statusText">⚪ Yayında Değil</div>
-    </div>
+  <h1>Dingin FM’e Hoş Geldiniz</h1>
+  <p>
+    Kahvenizi alın, sessizliğin sesine kulak verin.<br>
+    Müzik, sohbet ve huzur burada.
+  </p>
 
-    <p>
-      📻 DJ Aylak mikrofonda.<br>
-      Sessizlik bozulmak üzere…
-    </p>
-
-    <button id="playBtn" class="button">▶️ Yayını Başlat</button>
-  </section>
+  <a href="live.html" class="button">Canlı Yayına Git</a>
 </main>
 
 <footer>
-  © 2025 Dingin FM — Sessizliğin Sesi Burada
+  © 2025 Dingin FM — Sessizliğin Sesi Burada · Tüm hakları saklıdır.
 </footer>
-
-<script>
-const STREAM_URL = "https://dinginfm.com.tr/live.mp3";
-
-const led = document.getElementById("led");
-const statusText = document.getElementById("statusText");
-const playBtn = document.getElementById("playBtn");
-
-const audio = new Audio(STREAM_URL);
-audio.preload = "none";
-
-playBtn.addEventListener("click", async ()=>{
-  if(audio.paused){
-    try{
-      await audio.play();
-      led.style.background = "#00e676";
-      led.style.boxShadow = "0 0 12px #00e676";
-      statusText.textContent = "🟢 Yayında · Dingin FM";
-      playBtn.textContent = "⏸ Yayını Durdur";
-    }catch{
-      alert("Yayın başlatılamıyor. Sunucu kapalı olabilir.");
-    }
-  }else{
-    audio.pause();
-    led.style.background = "#bbb";
-    led.style.boxShadow = "0 0 8px rgba(0,0,0,.2)";
-    statusText.textContent = "⚪ Yayında Değil";
-    playBtn.textContent = "▶️ Yayını Başlat";
-  }
-});
-</script>
 
 </body>
 </html>
