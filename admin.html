@@ -20,23 +20,24 @@ CREATE TABLE IF NOT EXISTS messages(
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4
 ");
 
-if($_SERVER["REQUEST_METHOD"]==="POST"){
-  $name=trim($_POST["name"]??"");
-  $email=trim($_POST["email"]??"");
-  $message=trim($_POST["message"]??"");
+if($_SERVER['REQUEST_METHOD']==='POST'){
+  $name=trim($_POST['name']??'');
+  $email=trim($_POST['email']??'');
+  $message=trim($_POST['message']??'');
 
-  if($name===""||$message===""||mb_strlen($message)<3){
+  if($name===''||$message===''||mb_strlen($message)<3){
     http_response_code(400);
-    exit("INVALID");
+    exit('INVALID');
   }
 
   $db->prepare("
     INSERT INTO messages(name,email,message,ip)
     VALUES(?,?,?,?)
   ")->execute([
-    $name,$email,$message,$_SERVER["REMOTE_ADDR"]
+    $name,$email,$message,$_SERVER['REMOTE_ADDR']
   ]);
-  exit("OK");
+
+  exit('OK');
 }
 
 $messages=$db->query("
@@ -47,9 +48,9 @@ $listenerCount=0;
 $icecast=@file_get_contents("https://dinginfm.com.tr:8000/status-json.xsl");
 if($icecast){
   $data=json_decode($icecast,true);
-  if(isset($data["icestats"]["source"])){
-    $s=$data["icestats"]["source"];
-    $listenerCount=isset($s[0])?(int)$s[0]["listeners"]:(int)($s["listeners"]??0);
+  if(isset($data['icestats']['source'])){
+    $s=$data['icestats']['source'];
+    $listenerCount=isset($s[0])?(int)$s[0]['listeners']:(int)($s['listeners']??0);
   }
 }
 ?>
@@ -63,40 +64,54 @@ if($icecast){
 
 <style>
 *{box-sizing:border-box}
+
+:root{
+  --fm-title:#6fc9ff;
+  --fm-soft:#9fdcff;
+  --fm-text:#4a6f8a;
+}
+
 body{
   margin:0;
-  font-family:Segoe UI,Arial,sans-serif;
-  background:#eef6ff;
-  color:#123;
-}
-
-/* === TAM SAYFA LOGO === */
-.hero{
   min-height:100vh;
+  font-family:Segoe UI,Arial,sans-serif;
+  color:var(--fm-text);
+
   background:
-    radial-gradient(circle at center, rgba(255,255,255,.85), rgba(238,246,255,.95)),
-    url("/assets/dinginfm-logo.png") center center no-repeat;
-  background-size:contain;
-  display:flex;
-  align-items:flex-end;
-  padding:40px;
+    radial-gradient(
+      circle at center,
+      rgba(255,255,255,.85) 0%,
+      rgba(225,235,245,.90) 45%,
+      rgba(200,215,230,.95) 100%
+    ),
+    url("logo.png") center center no-repeat;
+
+  background-size:cover;
+  background-attachment:fixed;
 }
 
-/* === STAT BAR === */
-.statbar{
-  background:#ffffffee;
-  padding:18px 28px;
-  border-radius:14px;
-  box-shadow:0 10px 30px rgba(0,0,0,.18);
-  font-size:22px;
-  color:#2b7a4b;
+header{
+  padding:32px 20px 10px;
+  text-align:center;
 }
 
-/* === PANEL === */
+header h1{
+  margin:0;
+  color:var(--fm-title);
+  font-size:26px;
+}
+
+.stat{
+  margin-top:8px;
+  color:var(--fm-soft);
+  font-size:18px;
+}
+
 main{
   max-width:1200px;
-  margin:60px auto;
-  background:#fff;
+  margin:40px auto 60px;
+  background:rgba(255,255,255,.78);
+  backdrop-filter:blur(6px);
   border-radius:18px;
   box-shadow:0 10px 30px rgba(0,0,0,.18);
   padding:24px;
@@ -106,34 +121,43 @@ table{
   width:100%;
   border-collapse:collapse;
 }
+
 th,td{
   padding:12px 10px;
   border-bottom:1px solid #dde6f0;
   text-align:left;
   vertical-align:top;
 }
+
 th{
   background:#f3f8ff;
   font-weight:600;
+  color:var(--fm-title);
 }
+
 tr:hover{
   background:#f9fcff;
 }
+
+td{
+  color:var(--fm-text);
+}
+
 td.message{
   white-space:pre-wrap;
   max-width:520px;
 }
+
 small{color:#789}
 </style>
 </head>
 
 <body>
 
-<section class="hero">
-  <div class="statbar">
-    🎧 Anlık Dinleyici: <strong><?= $listenerCount ?></strong>
-  </div>
-</section>
+<header>
+  <h1>DINGIN FM — ADMIN</h1>
+  <div class="stat">🎧 Anlık Dinleyici: <strong><?= $listenerCount ?></strong></div>
+</header>
 
 <main>
 <table>
@@ -151,13 +175,14 @@ small{color:#789}
 
 <?php foreach($messages as $m): ?>
 <tr>
-  <td><?=htmlspecialchars($m["created_at"])?></td>
-  <td><?=htmlspecialchars($m["name"])?></td>
-  <td><?=htmlspecialchars($m["email"])?></td>
-  <td class="message"><?=nl2br(htmlspecialchars($m["message"]))?></td>
-  <td><?=htmlspecialchars($m["ip"])?></td>
+  <td><?=htmlspecialchars($m['created_at'])?></td>
+  <td><?=htmlspecialchars($m['name'])?></td>
+  <td><?=htmlspecialchars($m['email'])?></td>
+  <td class="message"><?=nl2br(htmlspecialchars($m['message']))?></td>
+  <td><?=htmlspecialchars($m['ip'])?></td>
 </tr>
 <?php endforeach; ?>
+
 </table>
 </main>
 
