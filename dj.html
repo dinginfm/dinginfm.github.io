@@ -14,25 +14,39 @@
   --fm-text:#4a6f8a;
 }
 
-body{
+html,body{
   margin:0;
-  min-height:100vh;
+  height:100%;
+}
+
+/* LOGO HER ZAMAN TAM GÖRÜNÜR */
+body{
   font-family:'Segoe UI',sans-serif;
   text-align:center;
-  overflow-x:hidden;
   color:var(--fm-text);
+  background:#eef4fb;
+}
 
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
   background:
     radial-gradient(
       circle at center,
-      rgba(255,255,255,.85) 0%,
-      rgba(225,235,245,.90) 45%,
-      rgba(200,215,230,.95) 100%
+      rgba(255,255,255,.92) 0%,
+      rgba(230,240,250,.96) 45%,
+      rgba(210,225,240,.98) 100%
     ),
     url("logo.png") center center no-repeat;
+  background-size:contain;
+  z-index:0;
+}
 
-  background-size:cover;
-  background-attachment:fixed;
+/* ÜST KATMAN */
+header,main,footer{
+  position:relative;
+  z-index:1;
 }
 
 /* HEADER */
@@ -70,19 +84,18 @@ nav a:hover{
 /* MAIN */
 main{
   max-width:760px;
-  margin:70px auto;
+  margin:90px auto;
   padding:20px;
   text-align:left;
 }
 
-/* METİN ALANI */
+/* METİN */
 section{
-  background:rgba(255,255,255,0.78);
-  backdrop-filter:blur(6px);
+  background:rgba(255,255,255,.85);
+  backdrop-filter:blur(4px);
   padding:36px 30px;
   border-radius:20px;
   box-shadow:0 6px 18px rgba(0,0,0,.12);
-  color:var(--fm-text);
 }
 
 /* BAŞLIKLAR */
@@ -109,7 +122,7 @@ section p{
 
 /* FOOTER */
 footer{
-  margin-top:80px;
+  margin-top:90px;
   padding:18px;
   font-size:13px;
   color:var(--fm-soft);
@@ -118,17 +131,9 @@ footer{
 
 /* MOBİL */
 @media(max-width:600px){
-  nav a{
-    display:inline-block;
-    margin:6px;
-    font-size:14px;
-  }
-  section{
-    padding:28px 20px;
-  }
-  section h1{
-    font-size:28px;
-  }
+  nav a{margin:0 8px;font-size:14px}
+  section{padding:28px 20px}
+  section h1{font-size:28px}
 }
 </style>
 </head>
@@ -156,29 +161,21 @@ footer{
     <h2>Dingin FM’in Ses Perdesi</h2>
 
     <p>
-      DJ Aylak, sessizliğin içinden geçen bir ses…  
-      Mikrofonun ucunda kahvesini karıştıran bir düşünür.  
-      Ne bir saate bağlı, ne bir kalıba; çünkü onun yayını da kendisi gibi — özgür, içten ve biraz aylak.
+      DJ Aylak, sessizliğin içinden geçen bir ses…
     </p>
 
     <p>
-      Dingin FM’de her yayın, bir hikâyenin yankısıdır.  
-      Müzik, kelimelerin nefes aldığı bir arka plan; sohbetlerse hayatın kısa molalarıdır.  
-      Dinleyiciyle arasında cam değil, samimiyet vardır.
+      Dingin FM’de her yayın, bir hikâyenin yankısıdır.
     </p>
 
     <p>
-      “Sessizliğin Sesi Burada” derken kastı budur aslında:  
-      bazen bir cümle susturur şarkıyı, bazen bir nota anlatır her şeyi.  
-      DJ Aylak, işte o anın bekçisidir — kahvesini yudumlarken sesini ayarlar,  
-      sonra bir gülümsemeyle mikrofona döner:  
       <em>“Hazırsak, Dingin FM başlıyor.”</em>
     </p>
   </section>
 </main>
 
 <footer>
-  © 2025 Dingin FM — Sessizliğin Sesi Burada · Tüm hakları saklıdır.
+  © 2025 Dingin FM — Sessizliğin Sesi Burada
 </footer>
 
 </body>
