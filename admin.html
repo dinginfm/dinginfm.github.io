@@ -1,208 +1,113 @@
 <?php
-$db = new PDO(
+/* =========================
+   DINGIN FM — TEK PARÇA
+   Admin + İstatistik
+   ========================= */
+
+header('X-Frame-Options: DENY');
+header('X-Content-Type-Options: nosniff');
+
+$db=new PDO(
   "mysql:host=localhost;dbname=dinginfm;charset=utf8mb4",
   "dinginfm_user",
   "STRONG_PASSWORD",
   [
-    PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
+    PDO::ATTR_ERRMODE=>PDO::ERRMODE_EXCEPTION,
+    PDO::ATTR_DEFAULT_FETCH_MODE=>PDO::FETCH_ASSOC
   ]
 );
 
+/* TABLO */
 $db->exec("
-CREATE TABLE IF NOT EXISTS messages(
+CREATE TABLE IF NOT EXISTS listener_stats(
   id INT AUTO_INCREMENT PRIMARY KEY,
-  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  name VARCHAR(120) NOT NULL,
-  email VARCHAR(180),
-  message TEXT NOT NULL,
-  ip VARCHAR(45) NOT NULL
+  recorded_at DATETIME NOT NULL,
+  listeners INT NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4
 ");
 
-if($_SERVER['REQUEST_METHOD']==='POST'){
-  $name=trim($_POST['name']??'');
-  $email=trim($_POST['email']??'');
-  $message=trim($_POST['message']??'');
-
-  if($name===''||$message===''||mb_strlen($message)<3){
-    http_response_code(400);
-    exit('INVALID');
-  }
-
-  $db->prepare("
-    INSERT INTO messages(name,email,message,ip)
-    VALUES(?,?,?,?)
-  ")->execute([
-    $name,$email,$message,$_SERVER['REMOTE_ADDR']
-  ]);
-
-  exit('OK');
+/* ICECAST OKUMA */
+function getListeners(){
+  $j=@file_get_contents("https://dinginfm.com.tr:8000/status-json.xsl");
+  if(!$j) return null;
+  $d=json_decode($j,true);
+  if(!isset($d['icestats']['source'])) return 0;
+  $s=$d['icestats']['source'];
+  return isset($s[0])?(int)$s[0]['listeners']:(int)($s['listeners']??0);
 }
 
-$messages=$db->query("
-  SELECT * FROM messages ORDER BY id DESC
-")->fetchAll();
-
-$listenerCount=0;
-$icecast=@file_get_contents("https://dinginfm.com.tr:8000/status-json.xsl");
-if($icecast){
-  $data=json_decode($icecast,true);
-  if(isset($data['icestats']['source'])){
-    $s=$data['icestats']['source'];
-    $listenerCount=isset($s[0])?(int)$s[0]['listeners']:(int)($s['listeners']??0);
+/* CRON TETİK (CLI) */
+if(PHP_SAPI==='cli'){
+  $l=getListeners();
+  if($l!==null){
+    $db->prepare("
+      INSERT INTO listener_stats(recorded_at,listeners)
+      VALUES(NOW(),?)
+    ")->execute([$l]);
   }
+  exit;
 }
+
+/* İSTATİSTİK */
+$today=$db->query("
+  SELECT AVG(listeners) avg_l, MAX(listeners) max_l
+  FROM listener_stats
+  WHERE DATE(recorded_at)=CURDATE()
+")->fetch();
+
+$week=$db->query("
+  SELECT AVG(listeners) avg_l, MAX(listeners) max_l
+  FROM listener_stats
+  WHERE recorded_at>=NOW()-INTERVAL 7 DAY
+")->fetch();
+
+$month=$db->query("
+  SELECT AVG(listeners) avg_l, MAX(listeners) max_l
+  FROM listener_stats
+  WHERE recorded_at>=NOW()-INTERVAL 30 DAY
+")->fetch();
+
+$now=getListeners();
 ?>
-<!DOCTYPE html>
+<!doctype html>
 <html lang="tr">
 <head>
-<meta charset="UTF-8">
-<title>DINGIN FM — ADMIN</title>
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta charset="utf-8">
 <meta name="robots" content="noindex,nofollow">
-
+<title>Yönetim Paneli</title>
 <style>
-*{box-sizing:border-box}
-
-:root{
-  --fm-title:#6fc9ff;
-  --fm-soft:#9fdcff;
-  --fm-text:#4a6f8a;
-}
-
-html,body{
-  margin:0;
-  height:100%;
-}
-
-body{
-  font-family:Segoe UI,Arial,sans-serif;
-  color:var(--fm-text);
-  background:#eef4fb;
-  position:relative;
-}
-
-/* TAM SAYFA SABİT LOGO */
-body::before{
-  content:"";
-  position:fixed;
-  inset:0;
-  background:
-    radial-gradient(
-      circle at center,
-      rgba(255,255,255,.92) 0%,
-      rgba(230,240,250,.96) 45%,
-      rgba(210,225,240,.98) 100%
-    ),
-    url("logo.png") center center no-repeat;
-  background-size:contain;
-  z-index:0;
-}
-
-/* ÜST KATMAN */
-header,main{
-  position:relative;
-  z-index:1;
-}
-
-/* HEADER */
-header{
-  padding:32px 20px 10px;
-  text-align:center;
-}
-
-header h1{
-  margin:0;
-  color:var(--fm-title);
-  font-size:26px;
-}
-
-.stat{
-  margin-top:8px;
-  color:var(--fm-soft);
-  font-size:18px;
-}
-
-/* PANEL */
-main{
-  max-width:1200px;
-  margin:60px auto 80px;
-  background:rgba(255,255,255,.85);
-  backdrop-filter:blur(4px);
-  border-radius:18px;
-  box-shadow:0 10px 30px rgba(0,0,0,.18);
-  padding:24px;
-}
-
-table{
-  width:100%;
-  border-collapse:collapse;
-}
-
-th,td{
-  padding:12px 10px;
-  border-bottom:1px solid #dde6f0;
-  text-align:left;
-  vertical-align:top;
-}
-
-th{
-  background:#f3f8ff;
-  font-weight:600;
-  color:var(--fm-title);
-}
-
-tr:hover{
-  background:#f9fcff;
-}
-
-td{
-  color:var(--fm-text);
-}
-
-td.message{
-  white-space:pre-wrap;
-  max-width:520px;
-}
-
+body{font-family:Segoe UI,Arial;background:#eef4fb;color:#355}
+.box{max-width:720px;margin:40px auto;background:#fff;
+     padding:24px;border-radius:14px;box-shadow:0 10px 30px rgba(0,0,0,.12)}
+h1{margin:0 0 10px}
+.stat{font-size:18px;margin:6px 0}
 small{color:#789}
 </style>
 </head>
-
 <body>
+<div class="box">
+  <h1>Yönetim Paneli</h1>
 
-<header>
-  <h1>DINGIN FM — ADMIN</h1>
-  <div class="stat">🎧 Anlık Dinleyici: <strong><?= $listenerCount ?></strong></div>
-</header>
+  <div class="stat">🎧 Anlık Dinleyici: <strong><?= (int)$now ?></strong></div>
 
-<main>
-<table>
-<tr>
-  <th>Tarih</th>
-  <th>Ad</th>
-  <th>Email</th>
-  <th>Mesaj</th>
-  <th>IP</th>
-</tr>
+  <hr>
 
-<?php if(!$messages): ?>
-<tr><td colspan="5"><small>Henüz mesaj yok.</small></td></tr>
-<?php endif; ?>
+  <div class="stat">
+    Bugün — Ort: <strong><?=round($today['avg_l']??0,1)?></strong>
+    | Max: <strong><?= (int)($today['max_l']??0) ?></strong>
+  </div>
 
-<?php foreach($messages as $m): ?>
-<tr>
-  <td><?=htmlspecialchars($m['created_at'])?></td>
-  <td><?=htmlspecialchars($m['name'])?></td>
-  <td><?=htmlspecialchars($m['email'])?></td>
-  <td class="message"><?=nl2br(htmlspecialchars($m['message']))?></td>
-  <td><?=htmlspecialchars($m['ip'])?></td>
-</tr>
-<?php endforeach; ?>
+  <div class="stat">
+    Son 7 Gün — Ort: <strong><?=round($week['avg_l']??0,1)?></strong>
+    | Max: <strong><?= (int)($week['max_l']??0) ?></strong>
+  </div>
 
-</table>
-</main>
+  <div class="stat">
+    Son 30 Gün — Ort: <strong><?=round($month['avg_l']??0,1)?></strong>
+    | Max: <strong><?= (int)($month['max_l']??0) ?></strong>
+  </div>
 
+  <small>Bu veriler sadece admin içindir.</small>
+</div>
 </body>
 </html>
