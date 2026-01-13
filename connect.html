@@ -13,13 +13,13 @@
   --fm-soft:#9fdcff;
   --fm-text:#4a6f8a;
 
-  --headerH:96px;   /* LOGO BARI */
-  --logoH:62px;     /* LOGO BOYU */
+  --headerH:96px;
+  --logoH:62px;
 }
 
 html,body{margin:0;height:100%}
 
-/* ✅ ARKA PLAN (LOGO ARTIK BACKGROUND DEĞİL!) */
+/* ARKA PLAN */
 body{
   font-family:'Segoe UI',sans-serif;
   text-align:center;
@@ -41,10 +41,10 @@ body::before{
     );
 }
 
-/* ✅ ÜST KATMAN */
+/* ÜST KATMAN */
 header,main,footer{position:relative;z-index:1}
 
-/* ✅ LOGO SABİT ÜSTTE */
+/* LOGO SABİT ÜSTTE */
 .fm-header{
   position:fixed;
   top:0; left:0;
@@ -66,7 +66,7 @@ header,main,footer{position:relative;z-index:1}
   filter: drop-shadow(0 6px 16px rgba(0,0,0,.18));
 }
 
-/* ✅ SAYFA LOGOYA GÖMÜLMESİN */
+/* SAYFA LOGOYA GÖMÜLMESİN */
 .page{
   padding-top: var(--headerH);
 }
@@ -104,14 +104,12 @@ main{
   padding:20px;
 }
 
-/* SECTION */
+/* ✅ BEYAZ KARE YOK */
 section{
-  background:rgba(255,255,255,.85);
-  backdrop-filter:blur(6px);
-  -webkit-backdrop-filter:blur(6px);
-  padding:34px 26px;
-  border-radius:18px;
-  box-shadow:0 10px 30px rgba(0,0,0,.12);
+  background: transparent;
+  padding: 0;
+  border-radius: 0;
+  box-shadow: none;
   color:var(--fm-text);
   margin-bottom:28px;
 }
@@ -161,7 +159,6 @@ footer{
     --logoH:56px;
   }
   header h1{font-size:22px}
-  section{padding:26px 18px}
   nav a{margin:0 8px}
 }
 </style>
@@ -169,7 +166,6 @@ footer{
 
 <body>
 
-<!-- ✅ SABİT LOGO -->
 <div class="fm-header">
   <a href="index.html" aria-label="Dingin FM Ana Sayfa">
     <img class="fm-logo" src="logo.png" alt="Dingin FM Logo">
@@ -212,7 +208,7 @@ footer{
 </main>
 
 <footer>
-  © 2025 Dingin FM — Sessizliğin Sesi Burada.
+  © 2025 Dingin FM — Sessizliğin Sesi Burada. Tüm hakları saklıdır.
 </footer>
 
 </div>
