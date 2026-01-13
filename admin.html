@@ -1,9 +1,5 @@
+```php
 <?php
-/* =========================
-   DINGIN FM — TEK PARÇA
-   Admin + İstatistik
-   ========================= */
-
 header('X-Frame-Options: DENY');
 header('X-Content-Type-Options: nosniff');
 
@@ -17,7 +13,6 @@ $db=new PDO(
   ]
 );
 
-/* TABLO */
 $db->exec("
 CREATE TABLE IF NOT EXISTS listener_stats(
   id INT AUTO_INCREMENT PRIMARY KEY,
@@ -26,9 +21,10 @@ CREATE TABLE IF NOT EXISTS listener_stats(
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4
 ");
 
-/* ICECAST OKUMA */
 function getListeners(){
-  $j=@file_get_contents("https://dinginfm.com.tr:8000/status-json.xsl");
+  $url="http://127.0.0.1:8000/status-json.xsl";
+  $ctx=stream_context_create(['http'=>['timeout'=>3]]);
+  $j=@file_get_contents($url,false,$ctx);
   if(!$j) return null;
   $d=json_decode($j,true);
   if(!isset($d['icestats']['source'])) return 0;
@@ -36,7 +32,6 @@ function getListeners(){
   return isset($s[0]) ? (int)$s[0]['listeners'] : (int)($s['listeners'] ?? 0);
 }
 
-/* CRON TETİK (CLI) */
 if(PHP_SAPI==='cli'){
   $l=getListeners();
   if($l!==null){
@@ -48,7 +43,6 @@ if(PHP_SAPI==='cli'){
   exit;
 }
 
-/* İSTATİSTİK */
 $today=$db->query("
   SELECT AVG(listeners) avg_l, MAX(listeners) max_l
   FROM listener_stats
@@ -85,7 +79,6 @@ $now=getListeners();
   --fm-soft:#9fdcff;
   --fm-text:#4a6f8a;
 }
-
 *{box-sizing:border-box}
 html,body{height:100%;margin:0}
 
@@ -95,7 +88,6 @@ body{
   background:#eef4fb;
 }
 
-/* ✅ YUMUŞAK SAYDAM ZEMİN */
 body::before{
   content:"";
   position:fixed;
@@ -108,7 +100,6 @@ body::before{
   );
 }
 
-/* ✅ LOGO ÜST KATMAN (SABİT) */
 .fm-header{
   position: fixed;
   top: 0;
@@ -116,16 +107,13 @@ body::before{
   width: 100%;
   height: var(--headerH);
   z-index: 9999;
-
   display:flex;
   align-items:center;
   justify-content:center;
   padding: 10px 18px;
-
   background: transparent;
 }
 
-/* Logo */
 .fm-header .brand{
   display:flex;
   align-items:center;
@@ -139,14 +127,12 @@ body::before{
   filter: drop-shadow(0 6px 16px rgba(0,0,0,.18));
 }
 
-/* ✅ SAYFA LOGOYA GÖMÜLMESİN */
 .fm-main{
   position:relative;
   z-index:1;
   padding-top: var(--headerH);
 }
 
-/* ✅ BEYAZ KARE YOK */
 .box{
   max-width: var(--cardMax);
   margin: 24px auto;
@@ -175,7 +161,6 @@ hr{
   margin: 16px 0;
 }
 
-/* ✅ FOOTER STANDART */
 footer{
   margin-top: 60px;
   padding: 18px 10px;
@@ -198,7 +183,10 @@ footer{
   <div class="box">
     <h1>Yönetim Paneli</h1>
 
-    <div class="stat">🎧 Anlık Dinleyici: <strong><?= (int)$now ?></strong></div>
+    <div class="stat">
+      🎧 Anlık Dinleyici:
+      <strong><?= ($now===null ? "Bağlanamadı" : (int)$now) ?></strong>
+    </div>
 
     <hr>
 
@@ -227,3 +215,4 @@ footer{
 
 </body>
 </html>
+```
