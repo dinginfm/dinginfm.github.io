@@ -12,14 +12,11 @@
   --fm-title:#6fc9ff;
   --fm-soft:#9fdcff;
   --fm-text:#4a6f8a;
-
-  --headerH:96px;
-  --logoH:62px;
 }
 
 html,body{margin:0;height:100%}
 
-/* ARKA PLAN */
+/* ✅ FULL EKRAN LOGO */
 body{
   font-family:'Segoe UI',sans-serif;
   text-align:center;
@@ -33,45 +30,16 @@ body::before{
   inset:0;
   z-index:0;
   background:
-    radial-gradient(circle at center,
-      rgba(255,255,255,.92) 0%,
-      rgba(230,240,250,.96) 45%,
-      rgba(210,225,240,.98) 100%
-    );
+    url("logo.png") center center no-repeat;
+  background-size:cover; /* ✅ FULL EKRAN */
 }
 
 /* ÜST KATMAN */
 header,main,footer{position:relative;z-index:1}
 
-/* LOGO SABİT */
-.fm-header{
-  position:fixed;
-  top:0;left:0;
-  width:100%;
-  height:var(--headerH);
-  z-index:9999;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  padding:10px 16px;
-  background:transparent;
-}
-
-.fm-logo{
-  height:var(--logoH);
-  width:auto;
-  display:block;
-  filter: drop-shadow(0 6px 16px rgba(0,0,0,.18));
-}
-
-/* SAYFA LOGO ALTINDAN BAŞLAR */
-.page{
-  padding-top: var(--headerH);
-}
-
 /* HEADER */
 header{
-  padding:22px 10px 16px;
+  padding:36px 10px 20px;
 }
 
 h1{
@@ -101,24 +69,18 @@ nav a:hover{text-decoration:underline}
 
 /* MAIN */
 main{
-  max-width:680px;
-  margin:50px auto;
+  min-height:50vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
   padding:20px;
 }
 
-/* ✅ BEYAZ KARE YOK */
 section{
-  background: transparent;
-  padding: 0;
-  border-radius: 0;
-  box-shadow: none;
-  color:var(--fm-text);
-}
-
-p{
-  font-size:16px;
-  line-height:1.7;
-  margin-bottom:18px;
+  background:transparent;
+  padding:0;
+  border-radius:0;
+  box-shadow:none;
 }
 
 /* BUTON */
@@ -139,7 +101,6 @@ a.btn:hover{
 
 /* FOOTER */
 footer{
-  margin-top:70px;
   padding:18px;
   font-size:13px;
   color:var(--fm-soft);
@@ -148,10 +109,6 @@ footer{
 
 /* MOBİL */
 @media(max-width:600px){
-  :root{
-    --headerH:86px;
-    --logoH:56px;
-  }
   h1{font-size:24px}
   nav a{margin:0 8px}
 }
@@ -160,43 +117,32 @@ footer{
 
 <body>
 
-<div class="fm-header">
-  <a href="index.html" aria-label="Dingin FM Ana Sayfa">
-    <img class="fm-logo" src="logo.png" alt="Dingin FM Logo">
-  </a>
-</div>
+<header>
+  <h1>DINGIN FM — Blog</h1>
+  <h2>Yazılar</h2>
 
-<div class="page">
+  <nav>
+    <a href="index.html">Ana Sayfa</a>
+    <a href="live.html">Canlı Yayın</a>
+    <a href="dj.html">DJ Aylak</a>
+    <a href="podcast.html">Podcast</a>
+    <a href="blog.html" class="active">Blog</a>
+    <a href="tarihce.html">Tarihçe</a>
+    <a href="connect.html">İletişim</a>
+  </nav>
+</header>
 
-  <header>
-    <h1>DINGIN FM — Blog</h1>
-    <h2>Yazılar</h2>
+<main>
+  <section>
+    <a href="https://madamaylak0.wordpress.com/" target="_blank" class="btn">
+      MadamAylak Blogu Aç
+    </a>
+  </section>
+</main>
 
-    <nav>
-      <a href="index.html">Ana Sayfa</a>
-      <a href="live.html">Canlı Yayın</a>
-      <a href="dj.html">DJ Aylak</a>
-      <a href="podcast.html">Podcast</a>
-      <a href="blog.html" class="active">Blog</a>
-      <a href="tarihce.html">Tarihçe</a>
-      <a href="connect.html">İletişim</a>
-    </nav>
-  </header>
-
-  <main>
-    <section>
-      <p>📖 Blog sayfası:</p>
-      <a href="https://madamaylak0.wordpress.com/" target="_blank" class="btn">
-        MadamAylak Blogu Aç
-      </a>
-    </section>
-  </main>
-
-  <footer>
-    © 2025 Dingin FM — Sessizliğin Sesi Burada. Tüm hakları saklıdır.
-  </footer>
-
-</div>
+<footer>
+  © 2025 Dingin FM — Sessizliğin Sesi Burada. Tüm hakları saklıdır.
+</footer>
 
 </body>
 </html>
