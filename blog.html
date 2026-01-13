@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Dingin FM — Blog</title>
 
 <style>
@@ -21,6 +21,7 @@ body{
   font-family:'Segoe UI',sans-serif;
   text-align:center;
   color:var(--fm-text);
+  overflow-x:hidden;
 }
 
 body::before{
@@ -35,75 +36,99 @@ body::before{
 /* ÜST KATMAN */
 header,main,footer{position:relative;z-index:1}
 
-/* HEADER */
+/* ✅ HEADER: sadece menü */
 header{
-  padding:28px 10px 12px;
+  padding:22px 10px 0;
 }
 
 /* ✅ BAŞLIK YOK */
-h1{display:none}
-h2{display:none}
+h1,h2{display:none}
 
-/* NAV */
-nav{margin-top:10px}
+/* ✅ MENÜ: DAHA BELİRGİN */
+nav{
+  margin-top:0;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:22px;
+  flex-wrap:wrap;
+}
+
 nav a{
-  margin:0 12px;
   font-size:15px;
   text-decoration:none;
-  color:var(--fm-title);
-  text-shadow:0 2px 10px rgba(0,0,0,.25);
+  color:#ffffff;                 /* ✅ daha belirgin */
+  font-weight:700;               /* ✅ daha belirgin */
+  padding:6px 10px;
+  border-radius:999px;
+  text-shadow:0 2px 10px rgba(0,0,0,.55);
+  transition:.2s;
 }
-nav a.active,
-nav a:hover{text-decoration:underline}
+
+nav a:hover{
+  background:rgba(255,255,255,.18);
+  text-decoration:none;
+}
+
+nav a.active{
+  background:rgba(255,255,255,.24);
+  text-decoration:none;
+  outline:1px solid rgba(255,255,255,.28);
+}
 
 /* MAIN */
 main{
-  min-height:60vh;
+  min-height:70vh;
   display:flex;
   align-items:center;
   justify-content:center;
   padding:20px;
 }
 
-/* ✅ BUTON LOGOYU KAPATMASIN: ALTTA DURSUN */
+/* ✅ BUTON LOGOYU KAPATMASIN: aşağıda kalsın */
 section{
-  margin-top:22vh;
+  margin-top:24vh;
   background:transparent;
   padding:0;
 }
 
-/* BUTON */
+/* ✅ BUTON: ok gibi net ama logo boğulmasın */
 a.btn{
   display:inline-block;
-  padding:12px 28px;
-  border-radius:30px;
-  border:2px solid var(--fm-title);
-  color:var(--fm-title);
+  padding:14px 32px;
+  border-radius:999px;
+  border:2px solid rgba(255,255,255,.75);
+  color:#ffffff;
   text-decoration:none;
-  font-weight:600;
+  font-weight:800;
+  letter-spacing:.2px;
   transition:.25s;
-  background:rgba(255,255,255,.25);
+  background:rgba(0,0,0,.18);
   backdrop-filter:blur(6px);
   -webkit-backdrop-filter:blur(6px);
+  text-shadow:0 2px 10px rgba(0,0,0,.45);
 }
+
 a.btn:hover{
-  background:var(--fm-title);
-  color:#fff;
+  background:rgba(0,0,0,.35);
+  transform:translateY(-1px);
 }
 
 /* FOOTER */
 footer{
   padding:18px;
   font-size:13px;
-  color:var(--fm-soft);
+  color:#ffffff;
   text-align:center;
-  text-shadow:0 2px 10px rgba(0,0,0,.25);
+  text-shadow:0 2px 10px rgba(0,0,0,.55);
 }
 
 /* MOBİL */
 @media(max-width:600px){
-  nav a{margin:0 8px}
-  section{margin-top:26vh}
+  header{padding:18px 10px 0}
+  nav{gap:14px}
+  nav a{font-size:14px; padding:6px 8px}
+  section{margin-top:28vh}
 }
 </style>
 </head>
