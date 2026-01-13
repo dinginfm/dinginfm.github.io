@@ -75,39 +75,118 @@ $now=getListeners();
 <meta charset="utf-8">
 <meta name="robots" content="noindex,nofollow">
 <title>Yönetim Paneli</title>
+
 <style>
-body{font-family:Segoe UI,Arial;background:#eef4fb;color:#355}
-.box{max-width:720px;margin:40px auto;background:#fff;
-     padding:24px;border-radius:14px;box-shadow:0 10px 30px rgba(0,0,0,.12)}
+/* ======================
+   DINGIN FM — ADMIN UI
+   (Logo fixed + içerik aşağı)
+   ====================== */
+
+:root{
+  --headerH: 86px; /* logo alanı yüksekliği */
+  --cardMax: 720px;
+}
+
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+
+body{
+  font-family: "Segoe UI", Arial, sans-serif;
+  background:#eef4fb;
+  color:#355;
+}
+
+/* ✅ LOGO ÜST KATMAN (SABİT) */
+.fm-header{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: var(--headerH);
+  z-index: 9999;
+  display:flex;
+  align-items:center;
+  padding: 10px 18px;
+  background: transparent; /* admin sayfası sade kalsın */
+}
+
+/* Logo */
+.fm-header .brand{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  text-decoration:none;
+}
+
+.fm-header img{
+  height: 54px;
+  width: auto;
+  display:block;
+}
+
+/* ✅ SAYFA LOGOYA GÖMÜLMESİN */
+.fm-main{
+  padding-top: var(--headerH);
+}
+
+/* Kart */
+.box{
+  max-width: var(--cardMax);
+  margin: 24px auto;
+  background:#fff;
+  padding:24px;
+  border-radius:14px;
+  box-shadow:0 10px 30px rgba(0,0,0,.12);
+}
+
 h1{margin:0 0 10px}
 .stat{font-size:18px;margin:6px 0}
 small{color:#789}
+
+hr{
+  border:0;
+  height:1px;
+  background: rgba(0,0,0,.08);
+  margin: 16px 0;
+}
 </style>
+
 </head>
 <body>
-<div class="box">
-  <h1>Yönetim Paneli</h1>
 
-  <div class="stat">🎧 Anlık Dinleyici: <strong><?= (int)$now ?></strong></div>
+<!-- ✅ SABİT LOGO -->
+<header class="fm-header">
+  <a class="brand" href="/" title="Dingin FM">
+    <img src="logo.png" alt="Dingin FM">
+  </a>
+</header>
 
-  <hr>
+<main class="fm-main">
+  <div class="box">
+    <h1>Yönetim Paneli</h1>
 
-  <div class="stat">
-    Bugün — Ort: <strong><?=round($today['avg_l']??0,1)?></strong>
-    | Max: <strong><?= (int)($today['max_l']??0) ?></strong>
+    <div class="stat">🎧 Anlık Dinleyici: <strong><?= (int)$now ?></strong></div>
+
+    <hr>
+
+    <div class="stat">
+      Bugün — Ort: <strong><?=round($today['avg_l']??0,1)?></strong>
+      | Max: <strong><?= (int)($today['max_l']??0) ?></strong>
+    </div>
+
+    <div class="stat">
+      Son 7 Gün — Ort: <strong><?=round($week['avg_l']??0,1)?></strong>
+      | Max: <strong><?= (int)($week['max_l']??0) ?></strong>
+    </div>
+
+    <div class="stat">
+      Son 30 Gün — Ort: <strong><?=round($month['avg_l']??0,1)?></strong>
+      | Max: <strong><?= (int)($month['max_l']??0) ?></strong>
+    </div>
+
+    <small>Bu veriler sadece admin içindir.</small>
   </div>
+</main>
 
-  <div class="stat">
-    Son 7 Gün — Ort: <strong><?=round($week['avg_l']??0,1)?></strong>
-    | Max: <strong><?= (int)($week['max_l']??0) ?></strong>
-  </div>
-
-  <div class="stat">
-    Son 30 Gün — Ort: <strong><?=round($month['avg_l']??0,1)?></strong>
-    | Max: <strong><?= (int)($month['max_l']??0) ?></strong>
-  </div>
-
-  <small>Bu veriler sadece admin içindir.</small>
-</div>
 </body>
 </html>
