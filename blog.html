@@ -21,7 +21,6 @@ body{
   font-family:'Segoe UI',sans-serif;
   text-align:center;
   color:var(--fm-text);
-  background:#eef4fb;
 }
 
 body::before{
@@ -29,9 +28,8 @@ body::before{
   position:fixed;
   inset:0;
   z-index:0;
-  background:
-    url("logo.png") center center no-repeat;
-  background-size:cover; /* ✅ FULL EKRAN */
+  background:url("logo.png") center center no-repeat;
+  background-size:cover;
 }
 
 /* ÜST KATMAN */
@@ -39,7 +37,7 @@ header,main,footer{position:relative;z-index:1}
 
 /* HEADER */
 header{
-  padding:36px 10px 20px;
+  padding:36px 10px 12px;
 }
 
 h1{
@@ -47,40 +45,38 @@ h1{
   font-size:28px;
   letter-spacing:1px;
   color:var(--fm-title);
+  text-shadow:0 2px 10px rgba(0,0,0,.25);
 }
 
-h2{
-  margin:6px 0 0;
-  font-size:14px;
-  font-weight:400;
-  color:var(--fm-soft);
-}
+/* ✅ "Yazılar" KALDIRILDI */
+h2{display:none}
 
 /* NAV */
-nav{margin-top:18px}
+nav{margin-top:16px}
 nav a{
   margin:0 12px;
   font-size:15px;
   text-decoration:none;
   color:var(--fm-title);
+  text-shadow:0 2px 10px rgba(0,0,0,.25);
 }
 nav a.active,
 nav a:hover{text-decoration:underline}
 
 /* MAIN */
 main{
-  min-height:50vh;
+  min-height:60vh;
   display:flex;
   align-items:center;
   justify-content:center;
   padding:20px;
 }
 
+/* ✅ BUTON LOGOYU KAPATMASIN: ALTTA DURSUN */
 section{
+  margin-top:22vh;          /* butonu aşağı indirir */
   background:transparent;
   padding:0;
-  border-radius:0;
-  box-shadow:none;
 }
 
 /* BUTON */
@@ -93,6 +89,9 @@ a.btn{
   text-decoration:none;
   font-weight:600;
   transition:.25s;
+  background:rgba(255,255,255,.25); /* buton görünür ama logo boğulmaz */
+  backdrop-filter:blur(6px);
+  -webkit-backdrop-filter:blur(6px);
 }
 a.btn:hover{
   background:var(--fm-title);
@@ -105,12 +104,14 @@ footer{
   font-size:13px;
   color:var(--fm-soft);
   text-align:center;
+  text-shadow:0 2px 10px rgba(0,0,0,.25);
 }
 
 /* MOBİL */
 @media(max-width:600px){
   h1{font-size:24px}
   nav a{margin:0 8px}
+  section{margin-top:26vh}
 }
 </style>
 </head>
@@ -119,7 +120,6 @@ footer{
 
 <header>
   <h1>DINGIN FM — Blog</h1>
-  <h2>Yazılar</h2>
 
   <nav>
     <a href="index.html">Ana Sayfa</a>
