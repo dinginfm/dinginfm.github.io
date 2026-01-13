@@ -80,11 +80,11 @@ html,body{height:100%;margin:0}
 }
 
 body{
-  font-family: "Segoe UI", Arial, sans-serif;
-  color: var(--fm-text);
+  font-family:"Segoe UI",Arial,sans-serif;
+  color:var(--fm-text);
 }
 
-/* ✅ FULL EKRAN LOGO */
+/* FULL EKRAN LOGO */
 body::before{
   content:"";
   position:fixed;
@@ -98,46 +98,53 @@ body::before{
 main{
   position:relative;
   z-index:1;
-  padding:30px 20px;
+  padding:40px 20px;
+  max-width:760px;
+  margin:0 auto;
 }
 
-h1{
-  margin:0 0 10px;
-  color: var(--fm-title);
-}
+/* ✅ BAŞLIK KALKTI (DINGIN FM YAZISI YOK) */
+h1{display:none}
 
 .stat{
   font-size:18px;
-  margin:6px 0;
+  margin:10px 0;
+  text-shadow:0 2px 10px rgba(0,0,0,.25);
 }
 
-small{color:var(--fm-soft)}
+strong{
+  color:var(--fm-title);
+}
 
 hr{
   border:0;
   height:1px;
-  background: rgba(0,0,0,.20);
-  margin: 16px 0;
+  background:rgba(255,255,255,.35);
+  margin:18px 0;
+}
+
+small{
+  color:var(--fm-soft);
+  text-shadow:0 2px 10px rgba(0,0,0,.25);
 }
 
 footer{
-  margin-top: 60px;
-  padding: 18px 10px;
-  font-size: 13px;
-  color: var(--fm-soft);
-  text-align: center;
+  margin-top:60px;
+  padding:18px 10px;
+  font-size:13px;
+  color:var(--fm-soft);
+  text-align:center;
+  text-shadow:0 2px 10px rgba(0,0,0,.25);
 }
 </style>
-
 </head>
+
 <body>
 
 <main>
-  <h1>Yönetim Paneli</h1>
 
   <div class="stat">
-    🎧 Anlık Dinleyici:
-    <strong><?= ($now===null ? "Bağlanamadı" : (int)$now) ?></strong>
+    🎧 Anlık Dinleyici: <strong><?= ($now===null ? "Bağlanamadı" : (int)$now) ?></strong>
   </div>
 
   <hr>
@@ -162,6 +169,7 @@ footer{
   <footer>
     © 2025 Dingin FM — Sessizliğin Sesi Burada. Tüm hakları saklıdır.
   </footer>
+
 </main>
 
 </body>
