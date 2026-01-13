@@ -12,19 +12,15 @@
   --fm-title:#6fc9ff;
   --fm-soft:#9fdcff;
   --fm-text:#4a6f8a;
-
-  --headerH:96px;
-  --logoH:62px;
 }
 
 html,body{margin:0;height:100%}
 
-/* ARKA PLAN */
+/* ✅ LOGO FULL EKRAN */
 body{
   font-family:'Segoe UI',sans-serif;
   text-align:center;
   color:var(--fm-text);
-  background:#eef4fb;
 }
 
 body::before{
@@ -32,47 +28,15 @@ body::before{
   position:fixed;
   inset:0;
   z-index:0;
-  background:
-    radial-gradient(
-      circle at center,
-      rgba(255,255,255,.92) 0%,
-      rgba(230,240,250,.96) 45%,
-      rgba(210,225,240,.98) 100%
-    );
+  background:url("logo.png") center center no-repeat;
+  background-size:cover;
 }
 
 /* ÜST KATMAN */
 header,main,footer{position:relative;z-index:1}
 
-/* LOGO SABİT ÜSTTE */
-.fm-header{
-  position:fixed;
-  top:0; left:0;
-  width:100%;
-  height:var(--headerH);
-  z-index:9999;
-
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  padding:10px 16px;
-  background:transparent;
-}
-
-.fm-logo{
-  height:var(--logoH);
-  width:auto;
-  display:block;
-  filter: drop-shadow(0 6px 16px rgba(0,0,0,.18));
-}
-
-/* SAYFA LOGOYA GÖMÜLMESİN */
-.page{
-  padding-top: var(--headerH);
-}
-
 /* HEADER */
-header{padding:24px 10px 20px}
+header{padding:36px 10px 20px}
 header h1{
   margin:0;
   font-size:26px;
@@ -104,12 +68,12 @@ main{
   padding:20px;
 }
 
-/* ✅ BEYAZ KARE YOK */
+/* BEYAZ KARE YOK */
 section{
-  background: transparent;
-  padding: 0;
-  border-radius: 0;
-  box-shadow: none;
+  background:transparent;
+  padding:0;
+  border-radius:0;
+  box-shadow:none;
   color:var(--fm-text);
   margin-bottom:28px;
 }
@@ -154,10 +118,6 @@ footer{
 
 /* MOBİL */
 @media(max-width:600px){
-  :root{
-    --headerH:86px;
-    --logoH:56px;
-  }
   header h1{font-size:22px}
   nav a{margin:0 8px}
 }
@@ -165,14 +125,6 @@ footer{
 </head>
 
 <body>
-
-<div class="fm-header">
-  <a href="index.html" aria-label="Dingin FM Ana Sayfa">
-    <img class="fm-logo" src="logo.png" alt="Dingin FM Logo">
-  </a>
-</div>
-
-<div class="page">
 
 <header>
   <h1>DINGIN FM — İletişim</h1>
@@ -211,6 +163,5 @@ footer{
   © 2025 Dingin FM — Sessizliğin Sesi Burada. Tüm hakları saklıdır.
 </footer>
 
-</div>
 </body>
 </html>
