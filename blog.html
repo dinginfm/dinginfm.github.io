@@ -13,13 +13,13 @@
   --fm-soft:#9fdcff;
   --fm-text:#4a6f8a;
 
-  --headerH:96px;   /* LOGO ALANI YÜKSEKLİĞİ */
-  --logoH:62px;     /* LOGO BOYU */
+  --headerH:96px;
+  --logoH:62px;
 }
 
 html,body{margin:0;height:100%}
 
-/* ✅ ARKA PLAN (TAM EKRAN + SAYDAM HİSSİ) */
+/* ARKA PLAN */
 body{
   font-family:'Segoe UI',sans-serif;
   text-align:center;
@@ -32,8 +32,6 @@ body::before{
   position:fixed;
   inset:0;
   z-index:0;
-
-  /* burada logo gömmüyoruz, arka plan sadece soft olsun */
   background:
     radial-gradient(circle at center,
       rgba(255,255,255,.92) 0%,
@@ -42,22 +40,20 @@ body::before{
     );
 }
 
-/* ✅ ÜST KATMANLAR */
+/* ÜST KATMAN */
 header,main,footer{position:relative;z-index:1}
 
-/* ✅ LOGO SABİT (EN ÜST KATMAN) */
+/* LOGO SABİT */
 .fm-header{
   position:fixed;
   top:0;left:0;
   width:100%;
   height:var(--headerH);
   z-index:9999;
-
   display:flex;
   align-items:center;
   justify-content:center;
   padding:10px 16px;
-
   background:transparent;
 }
 
@@ -68,12 +64,12 @@ header,main,footer{position:relative;z-index:1}
   filter: drop-shadow(0 6px 16px rgba(0,0,0,.18));
 }
 
-/* ✅ SAYFA LOGOYA GÖMÜLMESİN */
+/* SAYFA LOGO ALTINDAN BAŞLAR */
 .page{
   padding-top: var(--headerH);
 }
 
-/* HEADER (yazılar + menü) */
+/* HEADER */
 header{
   padding:22px 10px 16px;
 }
@@ -110,14 +106,12 @@ main{
   padding:20px;
 }
 
-/* BLOG ALANI */
+/* ✅ BEYAZ KARE YOK */
 section{
-  background:rgba(255,255,255,.85);
-  backdrop-filter:blur(6px);
-  -webkit-backdrop-filter:blur(6px);
-  padding:34px 26px;
-  border-radius:18px;
-  box-shadow:0 10px 30px rgba(0,0,0,.12);
+  background: transparent;
+  padding: 0;
+  border-radius: 0;
+  box-shadow: none;
   color:var(--fm-text);
 }
 
@@ -159,7 +153,6 @@ footer{
     --logoH:56px;
   }
   h1{font-size:24px}
-  section{padding:26px 18px}
   nav a{margin:0 8px}
 }
 </style>
@@ -167,14 +160,12 @@ footer{
 
 <body>
 
-<!-- ✅ SABİT LOGO (ÜST KATMAN) -->
 <div class="fm-header">
   <a href="index.html" aria-label="Dingin FM Ana Sayfa">
     <img class="fm-logo" src="logo.png" alt="Dingin FM Logo">
   </a>
 </div>
 
-<!-- ✅ SAYFA LOGO ALTINDAN BAŞLAR -->
 <div class="page">
 
   <header>
