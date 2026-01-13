@@ -75,14 +75,13 @@ html,body{height:100%;margin:0}
 
 :root{
   --fm-title:#6fc9ff;
-  --fm-soft:#9fdcff;
+}
+
+body{
+  font-family:"Segoe UI",Arial,sans-serif;
 }
 
 /* ✅ FULL EKRAN LOGO */
-body{
-  font-family:"Segoe UI",Arial,sans-serif;
-  overflow-x:hidden;
-}
 body::before{
   content:"";
   position:fixed;
@@ -92,7 +91,7 @@ body::before{
   background-size:cover;
 }
 
-/* ✅ ÜST ŞERİT (OKUNURLUK GARANTİ) */
+/* ✅ ÜST BAR (yazı garanti okunur ama logo boğulmaz) */
 .topbar{
   position:fixed;
   top:0; left:0;
@@ -105,23 +104,21 @@ body::before{
   -webkit-backdrop-filter:blur(8px);
 
   border-bottom:1px solid rgba(255,255,255,.14);
-  text-align:center;
-
   color:#fff;
   font-weight:700;
-  text-shadow:0 2px 12px rgba(0,0,0,.65);
+  text-shadow:0 2px 10px rgba(0,0,0,.65);
+  text-align:center;
 }
 
-/* ✅ SAYFA MENÜ ALTINDAN BAŞLASIN */
+/* ✅ içerik (logo kapanmasın diye küçük panel) */
 main{
   position:relative;
   z-index:1;
-  max-width:760px;
+  padding:80px 20px 20px;
+  max-width:720px;
   margin:0 auto;
-  padding:90px 20px 30px;
 }
 
-/* ✅ SADECE SAYDAM PANEL (BEYAZ KARE YOK) */
 .panel{
   background:rgba(0,0,0,.22);
   backdrop-filter:blur(10px);
@@ -135,13 +132,11 @@ main{
 .stat{
   font-size:18px;
   margin:10px 0;
-  color:#ffffff;
+  color:#fff;
   text-shadow:0 2px 12px rgba(0,0,0,.65);
 }
 
-strong{
-  color:var(--fm-title);
-}
+strong{color:var(--fm-title)}
 
 hr{
   border:0;
@@ -153,17 +148,22 @@ hr{
 small{
   display:block;
   margin-top:14px;
-  color:rgba(255,255,255,.78);
+  color:rgba(255,255,255,.75);
   text-shadow:0 2px 12px rgba(0,0,0,.65);
 }
 
+/* ✅ footer sabit, logo bozulmaz */
 footer{
-  margin-top:18px;
-  padding-top:6px;
+  position:fixed;
+  left:0;
+  bottom:0;
+  width:100%;
+  padding:14px 10px;
   font-size:13px;
-  color:rgba(255,255,255,.62);
+  color:rgba(255,255,255,.70);
   text-align:center;
   text-shadow:0 2px 12px rgba(0,0,0,.65);
+  z-index:9;
 }
 </style>
 </head>
@@ -176,7 +176,8 @@ footer{
   <div class="panel">
 
     <div class="stat">
-      🎧 Anlık Dinleyici: <strong><?= ($now===null ? "Bağlanamadı" : (int)$now) ?></strong>
+      🎧 Anlık Dinleyici:
+      <strong><?= ($now===null ? "Bağlanamadı" : (int)$now) ?></strong>
     </div>
 
     <hr>
@@ -198,12 +199,12 @@ footer{
 
     <small>Bu veriler sadece admin içindir.</small>
 
-    <footer>
-      © 2025 Dingin FM — Sessizliğin Sesi Burada. Tüm hakları saklıdır.
-    </footer>
-
   </div>
 </main>
+
+<footer>
+  © 2025 Dingin FM — Sessizliğin Sesi Burada. Tüm hakları saklıdır.
+</footer>
 
 </body>
 </html>
