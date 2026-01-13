@@ -11,12 +11,13 @@
 :root{
   --fm-title:#6fc9ff;
   --fm-soft:#9fdcff;
-  --fm-text:#4a6f8a;
+  --fm-text:#eaf7ff;  /* ✅ yazılar açık */
+  --fm-dark:#073a56;  /* ✅ koyu okunurluk */
 }
 
 html,body{margin:0;height:100%}
 
-/* ✅ LOGO FULL EKRAN */
+/* ✅ FULL EKRAN LOGO */
 body{
   font-family:'Segoe UI',sans-serif;
   text-align:center;
@@ -32,111 +33,139 @@ body::before{
   background-size:cover;
 }
 
-/* ÜST KATMAN */
+/* ✅ ÜST KATMAN */
 header,main,footer{position:relative;z-index:1}
 
-/* HEADER */
-header{padding:36px 10px 20px}
+/* ✅ HEADER: yazılar daha net */
+header{
+  padding:30px 10px 14px;
+}
+
 header h1{
   margin:0;
   font-size:26px;
   letter-spacing:1px;
-  color:var(--fm-title);
-  text-shadow:0 2px 10px rgba(0,0,0,.25);
+  color:#bfeaff;
+  text-shadow:0 3px 14px rgba(0,0,0,.55);
 }
+
 header h2{
   margin:8px 0 0;
   font-size:14px;
-  font-weight:400;
-  color:var(--fm-soft);
-  text-shadow:0 2px 10px rgba(0,0,0,.25);
+  font-weight:500;
+  color:#dbf4ff;
+  text-shadow:0 3px 14px rgba(0,0,0,.55);
 }
 
-/* NAV */
-nav{margin-top:18px}
+/* ✅ NAV: üst yazılar belirgin */
+nav{
+  margin-top:14px;
+}
+
 nav a{
   margin:0 12px;
   font-size:15px;
   text-decoration:none;
-  color:var(--fm-title);
-  text-shadow:0 2px 10px rgba(0,0,0,.25);
+  color:#cfefff;
+  font-weight:600;
+  text-shadow:0 3px 14px rgba(0,0,0,.65);
 }
+
 nav a.active,
-nav a:hover{text-decoration:underline}
-
-/* MAIN */
-main{
-  max-width:640px;
-  margin:40px auto;
-  padding:20px;
+nav a:hover{
+  text-decoration:underline;
 }
 
-/* ✅ LOGO KAPANMASIN: BLOKLAR SAYDAM */
+/* ✅ MAIN */
+main{
+  width:min(680px, 92vw);
+  margin:34px auto 0;
+  padding:0 12px;
+}
+
+/* ✅ EXTRA KATMAN YOK: SADECE ÇOK HAFİF SAYDAM */
 section{
-  background:rgba(255,255,255,.18);
-  backdrop-filter:blur(6px);
-  -webkit-backdrop-filter:blur(6px);
-  padding:18px 18px;
+  background:rgba(0, 70, 110, .12); /* ✅ beyaz değil */
+  border:1px solid rgba(255,255,255,.14);
   border-radius:16px;
-  box-shadow:0 10px 30px rgba(0,0,0,.12);
-  color:var(--fm-text);
-  margin-bottom:18px;
+  padding:16px 16px;
+  margin-bottom:16px;
+
+  /* ✅ gölge yok, kart hissi yok */
+  box-shadow:none;
 }
 
 /* ✅ ADRESLER BELLİRGİN */
 .contact-line{
   font-size:18px;
-  font-weight:700;
-  color:#1f4f72;
-  text-shadow:0 2px 10px rgba(0,0,0,.18);
+  font-weight:800;
+  color:#eaf7ff;
+  text-shadow:0 3px 14px rgba(0,0,0,.65);
   margin:10px 0;
 }
 
-/* FORM */
+/* ✅ FORM */
 input, textarea{
   width:100%;
   margin-top:10px;
-  padding:10px 12px;
+  padding:12px 12px;
   font-size:15px;
-  border-radius:10px;
-  border:1px solid rgba(214,233,245,.9);
-  background:rgba(255,255,255,.92);
-  color:var(--fm-text);
+  border-radius:12px;
+
+  border:1px solid rgba(255,255,255,.18);
+
+  /* ✅ beyaz değil */
+  background:rgba(0, 30, 55, .18);
+
+  color:#eaf7ff;
+  outline:none;
+
+  text-shadow:0 2px 10px rgba(0,0,0,.55);
 }
+
+input::placeholder,
+textarea::placeholder{
+  color:rgba(234,247,255,.75);
+}
+
 textarea{resize:none}
 
+/* ✅ BUTON */
 button.btn{
   margin-top:14px;
   padding:12px 30px;
   border-radius:30px;
-  border:2px solid var(--fm-title);
-  background:rgba(255,255,255,.20);
-  color:var(--fm-title);
-  font-weight:700;
+  border:2px solid #bfeaff;
+
+  background:rgba(0, 30, 55, .18); /* ✅ beyaz değil */
+  color:#eaf7ff;
+
+  font-weight:800;
   cursor:pointer;
   transition:.25s;
-  backdrop-filter:blur(6px);
-  -webkit-backdrop-filter:blur(6px);
-}
-button.btn:hover{
-  background:var(--fm-title);
-  color:#fff;
+
+  text-shadow:0 2px 10px rgba(0,0,0,.55);
 }
 
-/* FOOTER */
+button.btn:hover{
+  background:#6fc9ff;
+  color:#05324a;
+}
+
+/* ✅ FOOTER */
 footer{
-  margin-top:50px;
+  margin-top:40px;
   padding:18px;
   font-size:13px;
-  color:var(--fm-soft);
+  color:#dbf4ff;
   text-align:center;
-  text-shadow:0 2px 10px rgba(0,0,0,.25);
+  text-shadow:0 3px 14px rgba(0,0,0,.65);
 }
 
 /* MOBİL */
 @media(max-width:600px){
   header h1{font-size:22px}
-  nav a{margin:0 8px}
+  nav a{margin:0 8px;font-size:14px}
   .contact-line{font-size:16px}
 }
 </style>
