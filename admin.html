@@ -33,7 +33,7 @@ function getListeners(){
   $d=json_decode($j,true);
   if(!isset($d['icestats']['source'])) return 0;
   $s=$d['icestats']['source'];
-  return isset($s[0])?(int)$s[0]['listeners']:(int)($s['listeners']??0);
+  return isset($s[0]) ? (int)$s[0]['listeners'] : (int)($s['listeners'] ?? 0);
 }
 
 /* CRON TETİK (CLI) */
@@ -77,14 +77,13 @@ $now=getListeners();
 <title>Yönetim Paneli</title>
 
 <style>
-/* ======================
-   DINGIN FM — ADMIN UI
-   (Logo fixed + içerik aşağı)
-   ====================== */
-
 :root{
-  --headerH: 86px; /* logo alanı yüksekliği */
+  --headerH: 86px;
   --cardMax: 720px;
+
+  --fm-title:#6fc9ff;
+  --fm-soft:#9fdcff;
+  --fm-text:#4a6f8a;
 }
 
 *{box-sizing:border-box}
@@ -92,8 +91,21 @@ html,body{height:100%;margin:0}
 
 body{
   font-family: "Segoe UI", Arial, sans-serif;
+  color: var(--fm-text);
   background:#eef4fb;
-  color:#355;
+}
+
+/* ✅ YUMUŞAK SAYDAM ZEMİN */
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  z-index:0;
+  background: radial-gradient(circle at center,
+    rgba(255,255,255,.92) 0%,
+    rgba(230,240,250,.96) 45%,
+    rgba(210,225,240,.98) 100%
+  );
 }
 
 /* ✅ LOGO ÜST KATMAN (SABİT) */
@@ -104,17 +116,19 @@ body{
   width: 100%;
   height: var(--headerH);
   z-index: 9999;
+
   display:flex;
   align-items:center;
+  justify-content:center;
   padding: 10px 18px;
-  background: transparent; /* admin sayfası sade kalsın */
+
+  background: transparent;
 }
 
 /* Logo */
 .fm-header .brand{
   display:flex;
   align-items:center;
-  gap:12px;
   text-decoration:none;
 }
 
@@ -122,26 +136,37 @@ body{
   height: 54px;
   width: auto;
   display:block;
+  filter: drop-shadow(0 6px 16px rgba(0,0,0,.18));
 }
 
 /* ✅ SAYFA LOGOYA GÖMÜLMESİN */
 .fm-main{
+  position:relative;
+  z-index:1;
   padding-top: var(--headerH);
 }
 
-/* Kart */
+/* ✅ BEYAZ KARE YOK */
 .box{
   max-width: var(--cardMax);
   margin: 24px auto;
-  background:#fff;
-  padding:24px;
-  border-radius:14px;
-  box-shadow:0 10px 30px rgba(0,0,0,.12);
+  background: transparent;
+  padding: 24px;
+  border-radius: 0;
+  box-shadow: none;
 }
 
-h1{margin:0 0 10px}
-.stat{font-size:18px;margin:6px 0}
-small{color:#789}
+h1{
+  margin:0 0 10px;
+  color: var(--fm-title);
+}
+
+.stat{
+  font-size:18px;
+  margin:6px 0;
+}
+
+small{color:var(--fm-soft)}
 
 hr{
   border:0;
@@ -154,7 +179,6 @@ hr{
 </head>
 <body>
 
-<!-- ✅ SABİT LOGO -->
 <header class="fm-header">
   <a class="brand" href="/" title="Dingin FM">
     <img src="logo.png" alt="Dingin FM">
