@@ -77,32 +77,36 @@ html,body{height:100%;margin:0}
   --fm-title:#6fc9ff;
 }
 
+/* ✅ Arka plan SAYDAM */
 body{
   font-family:"Segoe UI",Arial,sans-serif;
+  background:transparent;
 }
 
-/* ✅ FULL EKRAN LOGO */
-body::before{
-  content:"";
+/* ✅ LOGO AŞAĞIDA SABİT (KAPANMA YOK) */
+.logo-bg{
   position:fixed;
-  inset:0;
+  left:0;
+  right:0;
+  bottom:-40px;          /* 👈 LOGO AŞAĞI İNDİ */
+  height:92vh;           /* 👈 ekranın çoğunu kaplasın ama aşağıda başlasın */
   z-index:0;
-  background:url("logo.png") center center no-repeat;
+  background:url("logo.png") center bottom no-repeat;
   background-size:cover;
+  opacity:.95;
+  pointer-events:none;
 }
 
-/* ✅ ÜST BAR (yazı garanti okunur ama logo boğulmaz) */
+/* ✅ ÜST BAR */
 .topbar{
   position:fixed;
   top:0; left:0;
   width:100%;
   z-index:9999;
   padding:12px 10px;
-
   background:rgba(0,0,0,.28);
   backdrop-filter:blur(8px);
   -webkit-backdrop-filter:blur(8px);
-
   border-bottom:1px solid rgba(255,255,255,.14);
   color:#fff;
   font-weight:700;
@@ -110,11 +114,11 @@ body::before{
   text-align:center;
 }
 
-/* ✅ içerik (logo kapanmasın diye küçük panel) */
+/* ✅ içerik */
 main{
   position:relative;
-  z-index:1;
-  padding:80px 20px 20px;
+  z-index:2;
+  padding:85px 20px 90px;
   max-width:720px;
   margin:0 auto;
 }
@@ -152,7 +156,7 @@ small{
   text-shadow:0 2px 12px rgba(0,0,0,.65);
 }
 
-/* ✅ footer sabit, logo bozulmaz */
+/* ✅ footer sabit */
 footer{
   position:fixed;
   left:0;
@@ -164,11 +168,16 @@ footer{
   text-align:center;
   text-shadow:0 2px 12px rgba(0,0,0,.65);
   z-index:9;
+  background:rgba(0,0,0,.08);
+  backdrop-filter:blur(6px);
+  -webkit-backdrop-filter:blur(6px);
 }
 </style>
 </head>
 
 <body>
+
+<div class="logo-bg"></div>
 
 <div class="topbar">Admin Panel</div>
 
@@ -194,7 +203,7 @@ footer{
 
     <div class="stat">
       Son 30 Gün — Ort: <strong><?=round($month['avg_l']??0,1)?></strong>
-      | Max: <strong><?= (int)($month['max_l']??0) ?></strong>
+      | Max: <strong><?=round($month['max_l']??0) ?></strong>
     </div>
 
     <small>Bu veriler sadece admin içindir.</small>
