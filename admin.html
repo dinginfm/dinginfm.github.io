@@ -1,5 +1,5 @@
 <?php
-// ... (Senin PHP kodların aynen kalıyor, veritabanı ve getListeners fonksiyonu dahil) ...
+// ... (PHP kodların aynen kalıyor)
 ?>
 <!doctype html>
 <html lang="tr">
@@ -9,125 +9,142 @@
 <title>Dingin FM | Yönetim Paneli</title>
 
 <style>
-:root {
-    --fm-blue: #6fc9ff;
-    --glass-bg: rgba(0, 0, 0, 0.35);
-    --glass-border: rgba(255, 255, 255, 0.15);
+:root{
+    --fm-blue:#6fc9ff;
+    --glass-bg:rgba(0,0,0,.35);
+    --glass-border:rgba(255,255,255,.15);
 }
 
-* { box-sizing: border-box; }
+*{box-sizing:border-box}
 
-body {
-    margin: 0;
-    font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    background-color: #0a1118; /* Logonun mavi tonuna uygun koyu zemin */
-    color: #fff;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
+html,body{
+    margin:0;
+    height:100%;
 }
 
-/* LOGO ARKA PLAN AYARI */
-.background-wrapper {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    /* Logonun merkezi ekranın ortasında kalacak şekilde yayıyoruz */
-    background: url("logo.jpg") no-repeat center center; 
-    background-size: cover;
-    z-index: -1;
+body{
+    font-family:"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    color:#fff;
+    background:#0a1118;
+    overflow-x:hidden;
 }
 
-/* Üst Karartma (Logonun üst kısmındaki açık renklerin yazıları boğmaması için) */
-.overlay {
-    position: fixed;
-    inset: 0;
-    background: radial-gradient(circle, rgba(0,0,0,0) 0%, rgba(0,0,0,0.5) 100%);
-    z-index: 0;
+/* ✅ LOGO ARKA PLAN – KAPATMAYAN VERSİYON */
+.background-wrapper{
+    position:fixed;
+    inset:0;
+    background:
+        linear-gradient(
+            to top,
+            rgba(10,17,24,.85) 0%,
+            rgba(10,17,24,.55) 40%,
+            rgba(10,17,24,.25) 70%,
+            rgba(10,17,24,.15) 100%
+        ),
+        url("logo.jpg") no-repeat center bottom;
+    background-size:contain;   /* ❗ cover DEĞİL */
+    z-index:-2;
 }
 
-.topbar {
-    position: relative;
-    z-index: 10;
-    background: rgba(0, 0, 0, 0.4);
-    backdrop-filter: blur(15px);
-    -webkit-backdrop-filter: blur(15px);
-    padding: 15px;
-    text-align: center;
-    font-weight: bold;
-    letter-spacing: 2px;
-    border-bottom: 1px solid var(--glass-border);
+/* Ek yumuşatma */
+.overlay{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.25);
+    z-index:-1;
 }
 
-main {
-    position: relative;
-    z-index: 5;
-    flex: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
+/* ÜST BAR */
+.topbar{
+    position:relative;
+    z-index:10;
+    background:rgba(0,0,0,.45);
+    backdrop-filter:blur(14px);
+    padding:15px;
+    text-align:center;
+    font-weight:600;
+    letter-spacing:2px;
+    border-bottom:1px solid var(--glass-border);
 }
 
-.panel {
-    background: var(--glass-bg);
-    backdrop-filter: blur(20px); /* Cam efekti */
-    -webkit-backdrop-filter: blur(20px);
-    border: 1px solid var(--glass-border);
-    border-radius: 24px;
-    padding: 30px;
-    width: 100%;
-    max-width: 500px;
-    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+/* ANA ALAN */
+main{
+    position:relative;
+    z-index:5;
+    min-height:calc(100vh - 120px);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
 }
 
-.stat {
-    font-size: 1.1rem;
-    margin: 15px 0;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+.panel{
+    background:var(--glass-bg);
+    backdrop-filter:blur(22px);
+    -webkit-backdrop-filter:blur(22px);
+    border:1px solid var(--glass-border);
+    border-radius:26px;
+    padding:32px;
+    width:100%;
+    max-width:520px;
+    box-shadow:0 30px 60px rgba(0,0,0,.55);
 }
 
-.stat strong {
-    color: var(--fm-blue);
-    font-size: 1.3rem;
-    text-shadow: 0 0 15px rgba(111, 201, 255, 0.4);
+/* CANLI */
+.now-playing{
+    text-align:center;
+    border-bottom:1px solid var(--glass-border);
+    padding-bottom:22px;
+    margin-bottom:22px;
 }
 
-.now-playing {
-    text-align: center;
-    border-bottom: 1px solid var(--glass-border);
-    padding-bottom: 20px;
-    margin-bottom: 20px;
+.now-playing span{
+    display:block;
+    font-size:.85rem;
+    opacity:.7;
+    margin-bottom:6px;
 }
 
-.now-playing span {
-    display: block;
-    font-size: 0.9rem;
-    opacity: 0.7;
-    margin-bottom: 5px;
+.now-playing strong{
+    font-size:1.6rem;
+    color:var(--fm-blue);
+    text-shadow:0 0 18px rgba(111,201,255,.45);
 }
 
-hr {
-    border: 0;
-    border-top: 1px solid var(--glass-border);
-    margin: 20px 0;
+/* İSTATİSTİK */
+.stat{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin:14px 0;
+    font-size:1.05rem;
 }
 
-footer {
-    position: relative;
-    z-index: 10;
-    padding: 15px;
-    text-align: center;
-    font-size: 0.8rem;
-    background: rgba(0,0,0,0.2);
-    backdrop-filter: blur(5px);
+.stat strong{
+    color:var(--fm-blue);
+    font-size:1.25rem;
+    text-shadow:0 0 14px rgba(111,201,255,.35);
+}
+
+hr{
+    border:0;
+    border-top:1px solid var(--glass-border);
+    margin:22px 0;
+}
+
+/* FOOTER */
+footer{
+    position:relative;
+    z-index:10;
+    padding:14px;
+    text-align:center;
+    font-size:.8rem;
+    background:rgba(0,0,0,.35);
+    backdrop-filter:blur(6px);
 }
 </style>
 </head>
+
 <body>
 
 <div class="background-wrapper"></div>
@@ -144,8 +161,9 @@ footer {
 
         <div class="stat">
             <span>Bugün Ortalaması:</span>
-            <strong><?= round($today['avg_l'] ?? 0, 1) ?></strong>
+            <strong><?= round($today['avg_l'] ?? 0,1) ?></strong>
         </div>
+
         <div class="stat">
             <span>Bugün Zirve:</span>
             <strong><?= (int)($today['max_l'] ?? 0) ?></strong>
@@ -157,6 +175,7 @@ footer {
             <span>Haftalık Max:</span>
             <strong><?= (int)($week['max_l'] ?? 0) ?></strong>
         </div>
+
         <div class="stat">
             <span>Aylık Max:</span>
             <strong><?= (int)($month['max_l'] ?? 0) ?></strong>
@@ -165,7 +184,7 @@ footer {
 </main>
 
 <footer>
-    © 2025 Dingin FM — Sessizliğin Sesi.
+    © 2025 Dingin FM — Sessizliğin Sesi. Tüm hakları saklıdır.
 </footer>
 
 </body>
