@@ -77,24 +77,25 @@ html,body{height:100%;margin:0}
   --fm-title:#6fc9ff;
 }
 
-/* ✅ Arka plan SAYDAM */
+/* ✅ Arka plan */
 body{
   font-family:"Segoe UI",Arial,sans-serif;
   background:transparent;
+  overflow-x:hidden;
 }
 
-/* ✅ LOGO AŞAĞIDA SABİT (KAPANMA YOK) */
+/* ✅ LOGO AŞAĞIDA SABİT (GERÇEK AŞAĞI İNMİŞ HALİ) */
 .logo-bg{
   position:fixed;
-  left:0;
-  right:0;
-  bottom:-40px;          /* 👈 LOGO AŞAĞI İNDİ */
-  height:92vh;           /* 👈 ekranın çoğunu kaplasın ama aşağıda başlasın */
+  inset:0;
   z-index:0;
+
   background:url("logo.png") center bottom no-repeat;
   background-size:cover;
-  opacity:.95;
+
+  transform:translateY(140px); /* ✅ aşağı indi */
   pointer-events:none;
+  opacity:.98;
 }
 
 /* ✅ ÜST BAR */
@@ -104,9 +105,11 @@ body{
   width:100%;
   z-index:9999;
   padding:12px 10px;
+
   background:rgba(0,0,0,.28);
   backdrop-filter:blur(8px);
   -webkit-backdrop-filter:blur(8px);
+
   border-bottom:1px solid rgba(255,255,255,.14);
   color:#fff;
   font-weight:700;
@@ -118,9 +121,9 @@ body{
 main{
   position:relative;
   z-index:2;
-  padding:85px 20px 90px;
   max-width:720px;
   margin:0 auto;
+  padding:85px 20px 120px; /* ✅ footer boşluğu */
 }
 
 .panel{
@@ -168,6 +171,7 @@ footer{
   text-align:center;
   text-shadow:0 2px 12px rgba(0,0,0,.65);
   z-index:9;
+
   background:rgba(0,0,0,.08);
   backdrop-filter:blur(6px);
   -webkit-backdrop-filter:blur(6px);
