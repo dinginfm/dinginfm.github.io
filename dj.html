@@ -1,167 +1,180 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Dingin FM — DJ Aylak</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dingin FM — DJ Aylak</title>
 
-<style>
-*{box-sizing:border-box}
+    <style>
+        /* GENEL AYARLAR */
+        *{box-sizing:border-box}
+        :root{
+            --fm-title: #6fc9ff;
+            --fm-soft: #9fdcff;
+            --white-glass: rgba(255, 255, 255, 0.12);
+            --dark-glass: rgba(0, 0, 0, 0.3);
+        }
 
-:root{
-  --fm-title:#6fc9ff;
-  --fm-soft:#9fdcff;
-  --fm-text:#4a6f8a;
-}
+        html, body {
+            margin: 0;
+            height: 100%;
+            width: 100%;
+            overflow-x: hidden;
+            background-color: #0a1118; /* Logo yüklenene kadar uyumlu koyu renk */
+        }
 
-html,body{margin:0;height:100%}
+        /* ✅ FULL EKRAN SABİT LOGO - Kesinlikle Kapanmaz */
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            background: url("logo.png") center center no-repeat;
+            background-size: cover;
+            opacity: 0.9;
+        }
 
-/* ✅ FULL EKRAN LOGO */
-body{
-  font-family:'Segoe UI',sans-serif;
-  text-align:center;
-  color:var(--fm-text);
-}
+        /* ÜST KATMAN (Yazıların önde kalmasını sağlar) */
+        header, main, footer { position: relative; z-index: 2; }
 
-body::before{
-  content:"";
-  position:fixed;
-  inset:0;
-  z-index:0;
-  background:url("logo.png") center center no-repeat;
-  background-size:cover;
-}
+        /* HEADER & NAV */
+        header {
+            padding: 20px 10px;
+            background: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            position: fixed;
+            top: 0; width: 100%;
+        }
 
-/* ÜST KATMAN */
-header,main,footer{position:relative;z-index:1}
+        nav {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
 
-/* HEADER */
-header{
-  padding:36px 10px 20px;
-}
+        nav a {
+            font-size: 14px;
+            text-decoration: none;
+            color: #fff;
+            font-weight: 700;
+            padding: 8px 12px;
+            border-radius: 20px;
+            transition: 0.3s;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.5);
+        }
 
-header h1{
-  margin:0;
-  font-size:26px;
-  letter-spacing:1px;
-  color:var(--fm-title);
-  text-shadow:0 2px 10px rgba(0,0,0,.25);
-}
+        nav a:hover, nav a.active {
+            background: var(--fm-title);
+            color: #05324a;
+            text-shadow: none;
+        }
 
-header h2{
-  margin:8px 0 0;
-  font-size:14px;
-  font-weight:400;
-  color:var(--fm-soft);
-  text-shadow:0 2px 10px rgba(0,0,0,.25);
-}
+        /* ANA İÇERİK ALANI */
+        main {
+            max-width: 800px;
+            margin: 120px auto 100px; /* Header ve footer payı */
+            padding: 20px;
+        }
 
-/* NAV */
-nav{margin-top:18px}
-nav a{
-  margin:0 12px;
-  font-size:15px;
-  text-decoration:none;
-  color:var(--fm-title);
-  text-shadow:0 2px 10px rgba(0,0,0,.25);
-}
-nav a.active,
-nav a:hover{text-decoration:underline}
+        /* ✅ ŞEFFAF PANEL (LOGO GÖRÜNÜR) */
+        section {
+            background: var(--dark-glass);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            padding: 40px;
+            border-radius: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+            text-align: center;
+        }
 
-/* MAIN */
-main{
-  max-width:760px;
-  margin:60px auto;
-  padding:20px;
-  text-align:left;
-}
+        section h1 {
+            font-size: 42px;
+            margin: 0;
+            color: var(--fm-title);
+            text-shadow: 0 2px 15px rgba(111, 201, 255, 0.4);
+            letter-spacing: -1px;
+        }
 
-/* ✅ BEYAZ KARE YOK (LOGO KAPANMASIN) */
-section{
-  background:rgba(255,255,255,.18);
-  backdrop-filter:blur(6px);
-  -webkit-backdrop-filter:blur(6px);
-  padding:28px 22px;
-  border-radius:18px;
-  box-shadow:0 10px 30px rgba(0,0,0,.12);
-}
+        section h2 {
+            font-size: 18px;
+            font-weight: 400;
+            margin: 10px 0 30px;
+            color: var(--fm-soft);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
 
-/* BAŞLIKLAR */
-section h1{
-  text-align:center;
-  font-size:34px;
-  margin:0 0 8px;
-  color:var(--fm-title);
-  text-shadow:0 2px 10px rgba(0,0,0,.25);
-}
+        /* PARAGRAFLAR */
+        section p {
+            font-size: 18px;
+            line-height: 1.8;
+            margin-bottom: 20px;
+            color: #f0f0f0;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
 
-section h2{
-  text-align:center;
-  font-size:18px;
-  font-weight:400;
-  margin:0 0 22px;
-  color:var(--fm-soft);
-  text-shadow:0 2px 10px rgba(0,0,0,.25);
-}
+        section em {
+            display: block;
+            margin-top: 30px;
+            font-size: 22px;
+            color: var(--fm-title);
+            font-style: italic;
+        }
 
-/* PARAGRAF */
-section p{
-  font-size:16px;
-  line-height:1.75;
-  margin:0 0 14px;
-  color:#1f4f72;
-  text-shadow:0 2px 10px rgba(0,0,0,.18);
-}
+        /* FOOTER */
+        footer {
+            position: fixed;
+            bottom: 0; width: 100%;
+            padding: 15px;
+            font-size: 13px;
+            color: rgba(255,255,255,0.6);
+            text-align: center;
+            background: rgba(0,0,0,0.3);
+            backdrop-filter: blur(5px);
+        }
 
-/* FOOTER */
-footer{
-  margin-top:70px;
-  padding:18px;
-  font-size:13px;
-  color:var(--fm-soft);
-  text-align:center;
-  text-shadow:0 2px 10px rgba(0,0,0,.25);
-}
-
-/* MOBİL */
-@media(max-width:600px){
-  nav a{margin:0 8px;font-size:14px}
-  section{padding:22px 18px}
-  section h1{font-size:28px}
-}
-</style>
+        /* MOBİL UYUMLULUK */
+        @media(max-width:600px){
+            main { margin-top: 140px; padding: 15px; }
+            section { padding: 30px 20px; }
+            section h1 { font-size: 32px; }
+            nav a { font-size: 12px; padding: 6px 10px; }
+        }
+    </style>
 </head>
 
 <body>
 
 <header>
-  <h1>DINGIN FM — DJ Aylak</h1>
-  <h2>Sessizliğin Sesi Burada</h2>
-
-  <nav>
-    <a href="index.html">Ana Sayfa</a>
-    <a href="live.html">Canlı Yayın</a>
-    <a href="dj.html" class="active">DJ Aylak</a>
-    <a href="podcast.html">Podcast</a>
-    <a href="blog.html">Blog</a>
-    <a href="tarihce.html">Tarihçe</a>
-    <a href="connect.html">İletişim</a>
-  </nav>
+    <nav>
+        <a href="index.html">Ana Sayfa</a>
+        <a href="live.html">Canlı Yayın</a>
+        <a href="dj.html" class="active">DJ Aylak</a>
+        <a href="podcast.html">Podcast</a>
+        <a href="blog.html">Blog</a>
+        <a href="tarihce.html">Tarihçe</a>
+        <a href="connect.html">İletişim</a>
+    </nav>
 </header>
 
 <main>
-  <section>
-    <h1>DJ Aylak</h1>
-    <h2>Dingin FM’in Ses Perdesi</h2>
+    <section>
+        <h1>DJ Aylak</h1>
+        <h2>Dingin FM’in Ses Perdesi</h2>
 
-    <p>DJ Aylak, sessizliğin içinden geçen bir ses…</p>
-    <p>Dingin FM’de her yayın, bir hikâyenin yankısıdır.</p>
-    <p><em>“Hazırsak, Dingin FM başlıyor.”</em></p>
-  </section>
+        <p>DJ Aylak, sessizliğin içinden geçen bir ses… Şehrin gürültüsünden uzaklaşmak isteyenler için notaları birer sığınak haline getiriyor.</p>
+        <p>Dingin FM’de her yayın, bir hikâyenin yankısıdır. DJ Aylak, sadece müzik çalmaz; sizinle birlikte sessizliği dinler.</p>
+        
+        <em>“Hazırsak, Dingin FM başlıyor.”</em>
+    </section>
 </main>
 
 <footer>
-  © 2025 Dingin FM — Sessizliğin Sesi Burada. Tüm hakları saklıdır.
+    © 2025 Dingin FM — Sessizliğin Sesi Burada. Tüm hakları saklıdır.
 </footer>
 
 </body>
