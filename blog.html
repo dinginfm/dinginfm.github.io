@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Dingin FM — Blog</title>
+<title>Dingin FM</title>
 
 <style>
 *{box-sizing:border-box}
@@ -18,28 +18,32 @@ body{
   font-family:'Segoe UI',sans-serif;
   text-align:center;
   overflow-x:hidden;
+  background:transparent;
 }
 
-/* ✅ FULL EKRAN LOGO */
-body::before{
-  content:"";
+/* ✅ LOGO AŞAĞIDA SABİT (KAPANMA YOK) */
+.logo-bg{
   position:fixed;
-  inset:0;
+  left:0;
+  right:0;
+  bottom:-60px;         /* 👈 LOGO AŞAĞI İNDİ */
+  height:95vh;          /* 👈 ekranı doldurur ama aşağıdan başlar */
   z-index:0;
-  background:url("logo.png") center center no-repeat;
+  background:url("logo.png") center bottom no-repeat;
   background-size:cover;
+  opacity:.98;
+  pointer-events:none;
 }
 
 /* ÜST KATMAN */
-header,main,footer{position:relative;z-index:1}
+header,main,footer{position:relative;z-index:2}
 
-/* ✅ MENÜ ŞERİT (okunurluk garanti) */
+/* ✅ MENÜ ŞERİT */
 header{
   position:fixed;
   top:0; left:0;
   width:100%;
   z-index:9999;
-
   padding:12px 10px;
   background:rgba(0,0,0,.28);
   backdrop-filter:blur(8px);
@@ -72,22 +76,39 @@ nav a.active{
   outline:1px solid rgba(255,255,255,.18);
 }
 
-/* ✅ ANA ALAN: buton ortada değil */
+/* ✅ ANA ALAN (MENÜ BOŞLUK) */
 main{
   min-height:100vh;
-  padding-top:70px; /* menü boşluğu */
+  padding-top:78px;
+  padding-bottom:120px; /* footer + buton boşluğu */
+  position:relative;
+  z-index:3;
 }
 
-/* ✅ BUTON: dingin fm yazısına bulaşmadan en alta */
-.blog-btn{
+/* ✅ SAYFA PANELİ (istersen kullan) */
+.panel{
+  max-width:720px;
+  margin:0 auto;
+  padding:22px 18px;
+  border-radius:18px;
+  background:rgba(0,0,0,.22);
+  border:1px solid rgba(255,255,255,.14);
+  box-shadow:0 14px 40px rgba(0,0,0,.18);
+  backdrop-filter:blur(10px);
+  -webkit-backdrop-filter:blur(10px);
+  color:#fff;
+  text-shadow:0 2px 10px rgba(0,0,0,.65);
+}
+
+/* ✅ ALT BUTON ALANI (LOGOYA BULAŞMAZ) */
+.bottom-action{
   position:fixed;
   left:50%;
   bottom:74px;              /* footer üstü */
   transform:translateX(-50%);
-  z-index:5;
+  z-index:6;
 }
 
-/* ✅ BUTON */
 a.btn{
   display:inline-block;
   padding:14px 32px;
@@ -108,7 +129,7 @@ a.btn:hover{
   color:#05324a;
 }
 
-/* FOOTER */
+/* ✅ FOOTER */
 footer{
   position:fixed;
   left:0;
@@ -118,19 +139,25 @@ footer{
   font-size:13px;
   color:#fff;
   text-shadow:0 2px 10px rgba(0,0,0,.65);
-  z-index:4;
+  z-index:5;
+  background:rgba(0,0,0,.08);
+  backdrop-filter:blur(6px);
+  -webkit-backdrop-filter:blur(6px);
 }
 
 /* MOBİL */
 @media(max-width:600px){
   nav{gap:12px}
   nav a{font-size:14px;padding:6px 8px}
-  .blog-btn{bottom:78px;}
+  .bottom-action{bottom:78px;}
+  .logo-bg{bottom:-75px;}
 }
 </style>
 </head>
 
 <body>
+
+<div class="logo-bg"></div>
 
 <header>
   <nav>
@@ -144,10 +171,21 @@ footer{
   </nav>
 </header>
 
-<main></main>
+<main>
 
-<!-- ✅ buton artık logo yazısını kapatmaz -->
-<div class="blog-btn">
+  <!-- ✅ SAYFA İÇERİĞİ BURAYA -->
+  <!-- İstersen panel ile yazıları okunur yap -->
+  <!--
+  <div class="panel">
+    <h1>Blog</h1>
+    <p>Buraya içerik gelecek.</p>
+  </div>
+  -->
+
+</main>
+
+<!-- ✅ ALT BUTON (isteğe bağlı) -->
+<div class="bottom-action">
   <a href="https://madamaylak0.wordpress.com/" target="_blank" class="btn">
     MadamAylak Blogu Aç
   </a>
