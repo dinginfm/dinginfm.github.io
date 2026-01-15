@@ -77,39 +77,34 @@ html,body{height:100%;margin:0}
   --fm-title:#6fc9ff;
 }
 
-/* ✅ Arka plan */
 body{
   font-family:"Segoe UI",Arial,sans-serif;
   background:transparent;
   overflow-x:hidden;
 }
 
-/* ✅ LOGO AŞAĞIDA SABİT (GERÇEK AŞAĞI İNMİŞ HALİ) */
+/* LOGO AŞAĞIDA SABİT */
 .logo-bg{
   position:fixed;
   inset:0;
   z-index:0;
-
-  background:url("logo.png") center bottom no-repeat;
-  background-size:cover;
-
-  transform:translateY(140px); /* ✅ aşağı indi */
+  background:url("/assets/logo.png") center bottom no-repeat;
+  background-size:contain;
+  transform:translateY(220px);
   pointer-events:none;
   opacity:.98;
 }
 
-/* ✅ ÜST BAR */
+/* ÜST BAR */
 .topbar{
   position:fixed;
   top:0; left:0;
   width:100%;
   z-index:9999;
   padding:12px 10px;
-
   background:rgba(0,0,0,.28);
   backdrop-filter:blur(8px);
   -webkit-backdrop-filter:blur(8px);
-
   border-bottom:1px solid rgba(255,255,255,.14);
   color:#fff;
   font-weight:700;
@@ -117,13 +112,13 @@ body{
   text-align:center;
 }
 
-/* ✅ içerik */
+/* içerik */
 main{
   position:relative;
   z-index:2;
   max-width:720px;
   margin:0 auto;
-  padding:85px 20px 120px; /* ✅ footer boşluğu */
+  padding:85px 20px 120px;
 }
 
 .panel{
@@ -159,7 +154,7 @@ small{
   text-shadow:0 2px 12px rgba(0,0,0,.65);
 }
 
-/* ✅ footer sabit */
+/* footer sabit */
 footer{
   position:fixed;
   left:0;
@@ -171,7 +166,6 @@ footer{
   text-align:center;
   text-shadow:0 2px 12px rgba(0,0,0,.65);
   z-index:9;
-
   background:rgba(0,0,0,.08);
   backdrop-filter:blur(6px);
   -webkit-backdrop-filter:blur(6px);
