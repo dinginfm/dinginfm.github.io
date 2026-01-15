@@ -1,9 +1,9 @@
 <?php
-// 1. VERİTABANI BAĞLANTISI VE TABLO OLUŞTURMA
-$host = 'localhost';
+// 1) VERİTABANI BAĞLANTISI VE TABLO OLUŞTURMA
+$host  = 'localhost';
 $dbname = 'dinginfm';
-$user = 'dinginfm_user';
-$pass = 'STRONG_PASSWORD'; // Kendi şifrenle değiştir
+$user  = 'dinginfm_user';
+$pass  = 'STRONG_PASSWORD'; // Kendi şifrenle değiştir
 
 try {
     $db = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8mb4", $user, $pass, [
@@ -23,83 +23,192 @@ try {
     die("Bağlantı hatası: " . $e->getMessage());
 }
 
-// 2. MESAJ GÖNDERME İŞLEMİ
+// 2) MESAJ GÖNDERME
 $msg_status = "";
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['send_msg'])) {
-    $name = htmlspecialchars($_POST['name']);
-    $email = htmlspecialchars($_POST['email']);
-    $content = htmlspecialchars($_POST['message']);
+    $name    = trim((string)($_POST['name'] ?? ""));
+    $email   = trim((string)($_POST['email'] ?? ""));
+    $content = trim((string)($_POST['message'] ?? ""));
 
-    if (!empty($name) && !empty($content)) {
+    // Temel temizlik
+    $name_clean = htmlspecialchars($name, ENT_QUOTES, 'UTF-8');
+    $email_clean = htmlspecialchars($email, ENT_QUOTES, 'UTF-8');
+    $content_clean = htmlspecialchars($content, ENT_QUOTES, 'UTF-8');
+
+    if ($name_clean !== "" && $content_clean !== "") {
         $stmt = $db->prepare("INSERT INTO messages (sender_name, sender_email, message) VALUES (?, ?, ?)");
-        $stmt->execute([$name, $email, $content]);
+        $stmt->execute([$name_clean, $email_clean, $content_clean]);
         $msg_status = "success";
     }
 }
 
-// 3. MESAJLARI ÇEKME (Admin için)
-$all_messages = $db->query("SELECT * FROM messages ORDER BY created_at DESC")->fetchAll(PDO::FETCH_ASSOC);
+// 3) ADMIN MESAJLARI (HERKESE AÇIK OLMASIN)
+// Admin görmek için: connect.php?admin=1
+$show_admin = (isset($_GET['admin']) && $_GET['admin'] === '1');
+
+$all_messages = [];
+if ($show_admin) {
+    $all_messages = $db->query("SELECT * FROM messages ORDER BY created_at DESC")->fetchAll(PDO::FETCH_ASSOC);
+}
 ?>
 
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Dingin FM | İletişim & Mesajlar</title>
-    <style>
-        *{box-sizing:border-box}
-        :root{--fm-title:#6fc9ff}
-        html,body{margin:0;height:100%; background:#0a1118; color:#fff; font-family:'Segoe UI',sans-serif;}
-        
-        /* LOGO ARKA PLAN */
-        .logo-bg{
-            position:fixed; inset:0; z-index:0;
-            background:url("logo.png") center bottom no-repeat;
-            background-size:cover; opacity:.4; pointer-events:none;
-        }
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Dingin FM | İletişim & Mesajlar</title>
 
-        header{
-            position:fixed; top:0; left:0; width:100%; z-index:99;
-            padding:12px; background:rgba(0,0,0,.5); backdrop-filter:blur(10px);
-            border-bottom:1px solid rgba(255,255,255,.1); text-align:center;
-        }
+<style>
+*{box-sizing:border-box}
+:root{--fm-title:#6fc9ff}
 
-        nav a{color:#fff; text-decoration:none; margin:0 10px; font-weight:700; font-size:14px;}
-        nav a.active{color:var(--fm-title); border-bottom:2px solid var(--fm-title);}
+html,body{
+    margin:0;
+    height:100%;
+    background:#0a1118;
+    color:#fff;
+    font-family:'Segoe UI',sans-serif;
+}
 
-        main{position:relative; z-index:2; max-width:600px; margin:0 auto; padding:100px 20px 50px;}
+/* ✅ LOGO ARKA PLAN: KESMESİN diye contain + bottom */
+.logo-bg{
+    position:fixed;
+    inset:0;
+    z-index:0;
+    background:
+        url("logo.png") center bottom no-repeat;
+    background-size:contain;     /* cover DEĞİL */
+    opacity:.85;
+    pointer-events:none;
+}
 
-        .panel{
-            background:rgba(0,0,0,0.6); border:1px solid rgba(255,255,255,0.1);
-            border-radius:20px; padding:25px; backdrop-filter:blur(15px);
-        }
+/* ✅ Okunabilirlik için karartma katmanı */
+.overlay{
+    position:fixed;
+    inset:0;
+    z-index:1;
+    background:
+        radial-gradient(circle at center, rgba(0,0,0,.10) 0%, rgba(0,0,0,.55) 80%),
+        linear-gradient(to bottom, rgba(0,0,0,.55) 0%, rgba(0,0,0,.25) 45%, rgba(0,0,0,.55) 100%);
+}
 
-        .contact-info{margin-bottom:20px; font-size:18px; font-weight:bold; color:var(--fm-title);}
+/* Header */
+header{
+    position:fixed;
+    top:0; left:0;
+    width:100%;
+    z-index:99;
+    padding:12px;
+    background:rgba(0,0,0,.5);
+    backdrop-filter:blur(10px);
+    -webkit-backdrop-filter:blur(10px);
+    border-bottom:1px solid rgba(255,255,255,.1);
+    text-align:center;
+}
 
-        form input, form textarea {
-            width:100%; padding:12px; margin-bottom:10px; border-radius:10px;
-            border:1px solid rgba(255,255,255,0.2); background:rgba(255,255,255,0.05); color:#fff;
-        }
+nav a{
+    color:#fff;
+    text-decoration:none;
+    margin:0 10px;
+    font-weight:700;
+    font-size:14px;
+    opacity:.85;
+}
+nav a:hover{opacity:1}
+nav a.active{
+    color:var(--fm-title);
+    border-bottom:2px solid var(--fm-title);
+    padding-bottom:4px;
+}
 
-        .btn{
-            width:100%; padding:12px; border-radius:10px; border:none;
-            background:var(--fm-title); color:#000; font-weight:bold; cursor:pointer;
-        }
+/* Main */
+main{
+    position:relative;
+    z-index:2;
+    max-width:650px;
+    margin:0 auto;
+    padding:90px 20px 90px; /* footer için altta boşluk */
+}
 
-        /* ADMIN MESAJ LİSTESİ */
-        .admin-section{margin-top:40px; text-align:left;}
-        .msg-box{
-            background:rgba(255,255,255,0.05); padding:15px; border-radius:10px;
-            margin-bottom:10px; border-left:4px solid var(--fm-title);
-        }
-        .msg-box strong{color:var(--fm-title); display:block;}
-        .msg-box small{opacity:0.6;}
-    </style>
+.panel{
+    background:rgba(0,0,0,.55);
+    border:1px solid rgba(255,255,255,.12);
+    border-radius:22px;
+    padding:26px;
+    backdrop-filter:blur(16px);
+    -webkit-backdrop-filter:blur(16px);
+    box-shadow:0 25px 55px rgba(0,0,0,.45);
+}
+
+.contact-info{
+    margin-bottom:18px;
+    font-size:18px;
+    font-weight:800;
+    color:var(--fm-title);
+}
+
+form input, form textarea{
+    width:100%;
+    padding:12px;
+    margin-bottom:10px;
+    border-radius:12px;
+    border:1px solid rgba(255,255,255,.18);
+    background:rgba(255,255,255,.06);
+    color:#fff;
+    outline:none;
+}
+form input:focus, form textarea:focus{
+    border-color:rgba(111,201,255,.45);
+}
+
+.btn{
+    width:100%;
+    padding:12px;
+    border-radius:12px;
+    border:none;
+    background:var(--fm-title);
+    color:#000;
+    font-weight:900;
+    cursor:pointer;
+    letter-spacing:.6px;
+}
+
+/* Admin list */
+.admin-section{margin-top:36px; text-align:left;}
+.msg-box{
+    background:rgba(255,255,255,.06);
+    padding:14px;
+    border-radius:12px;
+    margin-bottom:10px;
+    border-left:4px solid var(--fm-title);
+}
+.msg-box strong{color:var(--fm-title); display:block; margin-bottom:6px;}
+.msg-box small{opacity:.65}
+
+/* Footer */
+footer{
+    position:fixed;
+    left:0;
+    bottom:0;
+    width:100%;
+    z-index:99;
+    padding:12px 10px;
+    text-align:center;
+    font-size:12px;
+    background:rgba(0,0,0,.40);
+    backdrop-filter:blur(8px);
+    -webkit-backdrop-filter:blur(8px);
+    border-top:1px solid rgba(255,255,255,.10);
+    color:rgba(255,255,255,.70);
+}
+</style>
 </head>
+
 <body>
 
 <div class="logo-bg"></div>
+<div class="overlay"></div>
 
 <header>
     <nav>
@@ -111,9 +220,9 @@ $all_messages = $db->query("SELECT * FROM messages ORDER BY created_at DESC")->f
 <main>
     <div class="panel">
         <div class="contact-info">📩 İletişim & İstek Hattı</div>
-        
-        <?php if($msg_status == "success"): ?>
-            <p style="color:#4caf50;">✅ Mesajınız başarıyla gönderildi!</p>
+
+        <?php if($msg_status === "success"): ?>
+            <p style="color:#4caf50; font-weight:700;">✅ Mesajınız başarıyla gönderildi!</p>
         <?php endif; ?>
 
         <form method="POST">
@@ -123,18 +232,38 @@ $all_messages = $db->query("SELECT * FROM messages ORDER BY created_at DESC")->f
             <button type="submit" name="send_msg" class="btn">GÖNDER</button>
         </form>
 
-        <div class="admin-section">
-            <h3 style="border-bottom:1px solid #333; padding-bottom:10px;">📥 Gelen Son Mesajlar</h3>
-            <?php foreach($all_messages as $m): ?>
-                <div class="msg-box">
-                    <strong><?= htmlspecialchars($m['sender_name']) ?> <small>(<?= $m['sender_email'] ?>)</small></strong>
-                    <p><?= nl2br(htmlspecialchars($m['message'])) ?></p>
-                    <small><?= $m['created_at'] ?></small>
-                </div>
-            <?php endforeach; ?>
-        </div>
+        <?php if($show_admin): ?>
+            <div class="admin-section">
+                <h3 style="border-bottom:1px solid rgba(255,255,255,.12); padding-bottom:10px; margin-top:26px;">
+                    📥 Gelen Son Mesajlar
+                </h3>
+
+                <?php if(empty($all_messages)): ?>
+                    <p style="opacity:.75;">Henüz mesaj yok.</p>
+                <?php else: ?>
+                    <?php foreach($all_messages as $m): ?>
+                        <div class="msg-box">
+                            <strong>
+                                <?= htmlspecialchars($m['sender_name'] ?? '', ENT_QUOTES, 'UTF-8') ?>
+                                <small>
+                                    (<?= htmlspecialchars($m['sender_email'] ?? '', ENT_QUOTES, 'UTF-8') ?>)
+                                </small>
+                            </strong>
+                            <p><?= nl2br(htmlspecialchars($m['message'] ?? '', ENT_QUOTES, 'UTF-8')) ?></p>
+                            <small><?= htmlspecialchars($m['created_at'] ?? '', ENT_QUOTES, 'UTF-8') ?></small>
+                        </div>
+                    <?php endforeach; ?>
+                <?php endif; ?>
+
+            </div>
+        <?php endif; ?>
+
     </div>
 </main>
+
+<footer>
+    © 2025 Dingin FM — Sessizliğin Sesi Burada. Tüm hakları saklıdır.
+</footer>
 
 </body>
 </html>
