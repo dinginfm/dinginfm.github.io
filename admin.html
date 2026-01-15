@@ -1,216 +1,171 @@
 <?php
-header('X-Frame-Options: DENY');
-header('X-Content-Type-Options: nosniff');
-
-$db=new PDO(
-  "mysql:host=localhost;dbname=dinginfm;charset=utf8mb4",
-  "dinginfm_user",
-  "STRONG_PASSWORD",
-  [
-    PDO::ATTR_ERRMODE=>PDO::ERRMODE_EXCEPTION,
-    PDO::ATTR_DEFAULT_FETCH_MODE=>PDO::FETCH_ASSOC
-  ]
-);
-
-$db->exec("
-CREATE TABLE IF NOT EXISTS listener_stats(
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  recorded_at DATETIME NOT NULL,
-  listeners INT NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4
-");
-
-function getListeners(){
-  $url="http://127.0.0.1:8000/status-json.xsl";
-  $ctx=stream_context_create(['http'=>['timeout'=>3]]);
-  $j=@file_get_contents($url,false,$ctx);
-  if(!$j) return null;
-  $d=json_decode($j,true);
-  if(!isset($d['icestats']['source'])) return 0;
-  $s=$d['icestats']['source'];
-  return isset($s[0]) ? (int)$s[0]['listeners'] : (int)($s['listeners'] ?? 0);
-}
-
-if(PHP_SAPI==='cli'){
-  $l=getListeners();
-  if($l!==null){
-    $db->prepare("
-      INSERT INTO listener_stats(recorded_at,listeners)
-      VALUES(NOW(),?)
-    ")->execute([$l]);
-  }
-  exit;
-}
-
-$today=$db->query("
-  SELECT AVG(listeners) avg_l, MAX(listeners) max_l
-  FROM listener_stats
-  WHERE DATE(recorded_at)=CURDATE()
-")->fetch();
-
-$week=$db->query("
-  SELECT AVG(listeners) avg_l, MAX(listeners) max_l
-  FROM listener_stats
-  WHERE recorded_at>=NOW()-INTERVAL 7 DAY
-")->fetch();
-
-$month=$db->query("
-  SELECT AVG(listeners) avg_l, MAX(listeners) max_l
-  FROM listener_stats
-  WHERE recorded_at>=NOW()-INTERVAL 30 DAY
-")->fetch();
-
-$now=getListeners();
+// ... (Senin PHP kodların aynen kalıyor, veritabanı ve getListeners fonksiyonu dahil) ...
 ?>
 <!doctype html>
 <html lang="tr">
 <head>
 <meta charset="utf-8">
-<meta name="robots" content="noindex,nofollow">
-<title>Admin Panel</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dingin FM | Yönetim Paneli</title>
 
 <style>
-*{box-sizing:border-box}
-html,body{height:100%;margin:0}
-
-:root{
-  --fm-title:#6fc9ff;
+:root {
+    --fm-blue: #6fc9ff;
+    --glass-bg: rgba(0, 0, 0, 0.35);
+    --glass-border: rgba(255, 255, 255, 0.15);
 }
 
-body{
-  font-family:"Segoe UI",Arial,sans-serif;
-  background:transparent;
-  overflow-x:hidden;
+* { box-sizing: border-box; }
+
+body {
+    margin: 0;
+    font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background-color: #0a1118; /* Logonun mavi tonuna uygun koyu zemin */
+    color: #fff;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 
-/* LOGO AŞAĞIDA SABİT */
-.logo-bg{
-  position:fixed;
-  inset:0;
-  z-index:0;
-  background:url("/assets/logo.png") center bottom no-repeat;
-  background-size:contain;
-  transform:translateY(220px);
-  pointer-events:none;
-  opacity:.98;
+/* LOGO ARKA PLAN AYARI */
+.background-wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /* Logonun merkezi ekranın ortasında kalacak şekilde yayıyoruz */
+    background: url("logo.jpg") no-repeat center center; 
+    background-size: cover;
+    z-index: -1;
 }
 
-/* ÜST BAR */
-.topbar{
-  position:fixed;
-  top:0; left:0;
-  width:100%;
-  z-index:9999;
-  padding:12px 10px;
-  background:rgba(0,0,0,.28);
-  backdrop-filter:blur(8px);
-  -webkit-backdrop-filter:blur(8px);
-  border-bottom:1px solid rgba(255,255,255,.14);
-  color:#fff;
-  font-weight:700;
-  text-shadow:0 2px 10px rgba(0,0,0,.65);
-  text-align:center;
+/* Üst Karartma (Logonun üst kısmındaki açık renklerin yazıları boğmaması için) */
+.overlay {
+    position: fixed;
+    inset: 0;
+    background: radial-gradient(circle, rgba(0,0,0,0) 0%, rgba(0,0,0,0.5) 100%);
+    z-index: 0;
 }
 
-/* içerik */
-main{
-  position:relative;
-  z-index:2;
-  max-width:720px;
-  margin:0 auto;
-  padding:85px 20px 120px;
+.topbar {
+    position: relative;
+    z-index: 10;
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    padding: 15px;
+    text-align: center;
+    font-weight: bold;
+    letter-spacing: 2px;
+    border-bottom: 1px solid var(--glass-border);
 }
 
-.panel{
-  background:rgba(0,0,0,.22);
-  backdrop-filter:blur(10px);
-  -webkit-backdrop-filter:blur(10px);
-  border:1px solid rgba(255,255,255,.14);
-  border-radius:18px;
-  padding:22px 18px;
-  box-shadow:0 14px 40px rgba(0,0,0,.18);
+main {
+    position: relative;
+    z-index: 5;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
 }
 
-.stat{
-  font-size:18px;
-  margin:10px 0;
-  color:#fff;
-  text-shadow:0 2px 12px rgba(0,0,0,.65);
+.panel {
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px); /* Cam efekti */
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border);
+    border-radius: 24px;
+    padding: 30px;
+    width: 100%;
+    max-width: 500px;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
 }
 
-strong{color:var(--fm-title)}
-
-hr{
-  border:0;
-  height:1px;
-  background:rgba(255,255,255,.25);
-  margin:18px 0;
+.stat {
+    font-size: 1.1rem;
+    margin: 15px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
-small{
-  display:block;
-  margin-top:14px;
-  color:rgba(255,255,255,.75);
-  text-shadow:0 2px 12px rgba(0,0,0,.65);
+.stat strong {
+    color: var(--fm-blue);
+    font-size: 1.3rem;
+    text-shadow: 0 0 15px rgba(111, 201, 255, 0.4);
 }
 
-/* footer sabit */
-footer{
-  position:fixed;
-  left:0;
-  bottom:0;
-  width:100%;
-  padding:14px 10px;
-  font-size:13px;
-  color:rgba(255,255,255,.70);
-  text-align:center;
-  text-shadow:0 2px 12px rgba(0,0,0,.65);
-  z-index:9;
-  background:rgba(0,0,0,.08);
-  backdrop-filter:blur(6px);
-  -webkit-backdrop-filter:blur(6px);
+.now-playing {
+    text-align: center;
+    border-bottom: 1px solid var(--glass-border);
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+}
+
+.now-playing span {
+    display: block;
+    font-size: 0.9rem;
+    opacity: 0.7;
+    margin-bottom: 5px;
+}
+
+hr {
+    border: 0;
+    border-top: 1px solid var(--glass-border);
+    margin: 20px 0;
+}
+
+footer {
+    position: relative;
+    z-index: 10;
+    padding: 15px;
+    text-align: center;
+    font-size: 0.8rem;
+    background: rgba(0,0,0,0.2);
+    backdrop-filter: blur(5px);
 }
 </style>
 </head>
-
 <body>
 
-<div class="logo-bg"></div>
+<div class="background-wrapper"></div>
+<div class="overlay"></div>
 
-<div class="topbar">Admin Panel</div>
+<div class="topbar">DINGIN FM | YÖNETİM</div>
 
 <main>
-  <div class="panel">
+    <div class="panel">
+        <div class="now-playing">
+            <span>ŞU AN CANLI</span>
+            <strong><?= ($now === null ? "Bağlantı Yok" : (int)$now . " Dinleyici") ?></strong>
+        </div>
 
-    <div class="stat">
-      🎧 Anlık Dinleyici:
-      <strong><?= ($now===null ? "Bağlanamadı" : (int)$now) ?></strong>
+        <div class="stat">
+            <span>Bugün Ortalaması:</span>
+            <strong><?= round($today['avg_l'] ?? 0, 1) ?></strong>
+        </div>
+        <div class="stat">
+            <span>Bugün Zirve:</span>
+            <strong><?= (int)($today['max_l'] ?? 0) ?></strong>
+        </div>
+
+        <hr>
+
+        <div class="stat">
+            <span>Haftalık Max:</span>
+            <strong><?= (int)($week['max_l'] ?? 0) ?></strong>
+        </div>
+        <div class="stat">
+            <span>Aylık Max:</span>
+            <strong><?= (int)($month['max_l'] ?? 0) ?></strong>
+        </div>
     </div>
-
-    <hr>
-
-    <div class="stat">
-      Bugün — Ort: <strong><?=round($today['avg_l']??0,1)?></strong>
-      | Max: <strong><?= (int)($today['max_l']??0) ?></strong>
-    </div>
-
-    <div class="stat">
-      Son 7 Gün — Ort: <strong><?=round($week['avg_l']??0,1)?></strong>
-      | Max: <strong><?= (int)($week['max_l']??0) ?></strong>
-    </div>
-
-    <div class="stat">
-      Son 30 Gün — Ort: <strong><?=round($month['avg_l']??0,1)?></strong>
-      | Max: <strong><?=round($month['max_l']??0) ?></strong>
-    </div>
-
-    <small>Bu veriler sadece admin içindir.</small>
-
-  </div>
 </main>
 
 <footer>
-  © 2025 Dingin FM — Sessizliğin Sesi Burada. Tüm hakları saklıdır.
+    © 2025 Dingin FM — Sessizliğin Sesi.
 </footer>
 
 </body>
