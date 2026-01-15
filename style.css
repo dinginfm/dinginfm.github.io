@@ -1,3 +1,4 @@
+```css
 /* ================== TEMEL ================== */
 html,body{
   height:100%;
@@ -12,11 +13,14 @@ body{
   background:#eef4fb;
 }
 
-/* === SABİT LOGO KATMANI === */
+/* ✅ LOGO AŞAĞIDA + TAM EKRAN DENGE (KAPANMA YOK) */
 body::before{
   content:"";
   position:fixed;
   inset:0;
+  z-index:0;
+  pointer-events:none;
+
   background:
     radial-gradient(
       circle at center,
@@ -25,10 +29,10 @@ body::before{
       rgba(227,240,255,0.96) 65%,
       rgba(214,233,255,0.98) 100%
     ),
-    url("assets/logo.png") center center no-repeat;
-  background-size:contain;
-  z-index:0;
-  pointer-events:none;
+    url("assets/logo.png") center bottom no-repeat; /* ✅ alt */
+
+  background-size:cover, cover; /* ✅ gradient + logo tam ekran */
+  transform:translateY(140px);  /* ✅ logo aşağı indi */
 }
 
 /* ================== ÖN KATMAN ================== */
@@ -37,16 +41,26 @@ header, main, footer{
   z-index:1;
 }
 
-/* ================== HEADER ================== */
+/* ================== HEADER (SABİT) ================== */
 header{
-  padding:25px 10px 10px;
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  z-index:9999;
+
+  padding:14px 10px;
+  background:rgba(255,255,255,.42);
+  backdrop-filter:blur(10px);
+  -webkit-backdrop-filter:blur(10px);
+  border-bottom:1px solid rgba(79,185,255,.18);
 }
 
 /* LOGO YAZISI */
 .logo-text{
   margin:0;
   font-family:'Orbitron',sans-serif;
-  font-size:32px;
+  font-size:28px;
   font-weight:600;
   letter-spacing:3px;
   color:#4fb9ff;
@@ -57,33 +71,56 @@ header{
 
 /* SLOGAN */
 .site-subtitle{
-  margin:6px 0 14px;
-  font-size:14px;
+  margin:6px 0 10px;
+  font-size:13px;
   font-weight:400;
   color:#6fc9ff;
 }
 
 /* NAV */
+nav{
+  display:flex;
+  justify-content:center;
+  flex-wrap:wrap;
+  gap:14px;
+}
+
 nav a{
-  margin:0 12px;
-  font-size:15px;
-  font-weight:500;
+  font-size:14px;
+  font-weight:600;
   text-decoration:none;
   color:#4fb9ff;
+  padding:6px 10px;
+  border-radius:12px;
+  transition:.2s;
 }
-nav a.active,
+
+nav a.active{
+  background:rgba(79,185,255,.14);
+  outline:1px solid rgba(79,185,255,.22);
+  text-decoration:none;
+}
+
 nav a:hover{
-  text-decoration:underline;
+  background:rgba(79,185,255,.10);
+  text-decoration:none;
 }
 
 /* ================== MAIN ================== */
 main{
-  margin-top:160px;
+  position:relative;
+  z-index:2;
+  min-height:100vh;
+
+  /* ✅ header fixed olduğu için içerik aşağı inse */
+  padding-top:170px;
+  padding-bottom:110px;
+  margin:0;
 }
 
 main h1{
   font-size:30px;
-  font-weight:500;
+  font-weight:600;
   color:#4fb9ff;
   text-shadow:0 0 12px rgba(79,185,255,0.5);
 }
@@ -95,35 +132,63 @@ main p{
   margin-top:10px;
 }
 
+/* ✅ içerik paneli (okunurluk garanti) */
+.panel{
+  width:min(780px,92vw);
+  margin:0 auto;
+  padding:22px 18px;
+  border-radius:18px;
+  background:rgba(255,255,255,.45);
+  border:1px solid rgba(79,185,255,.18);
+  backdrop-filter:blur(10px);
+  -webkit-backdrop-filter:blur(10px);
+  box-shadow:0 14px 40px rgba(0,0,0,.08);
+}
+
 /* BUTON */
 .button{
   display:inline-block;
-  margin-top:28px;
+  margin-top:22px;
   padding:12px 30px;
-  border-radius:30px;
+  border-radius:999px;
   border:2px solid #4fb9ff;
   color:#4fb9ff;
+  background:rgba(255,255,255,.40);
   text-decoration:none;
-  font-weight:500;
-  transition:0.3s;
+  font-weight:700;
+  transition:0.25s;
 }
+
 .button:hover{
   background:#4fb9ff;
   color:#ffffff;
 }
 
-/* ================== FOOTER ================== */
+/* ================== FOOTER (SABİT) ================== */
 footer{
-  margin-top:140px;
-  padding:20px 10px;
+  position:fixed;
+  left:0;
+  bottom:0;
+  width:100%;
+  z-index:10;
+
+  padding:14px 10px;
   font-size:13px;
   color:#6fc9ff;
+
+  background:rgba(255,255,255,.35);
+  backdrop-filter:blur(10px);
+  -webkit-backdrop-filter:blur(10px);
+  border-top:1px solid rgba(79,185,255,.14);
 }
 
 /* ================== MOBİL ================== */
 @media(max-width:600px){
-  .logo-text{font-size:26px;}
+  .logo-text{font-size:24px;}
   main h1{font-size:24px;}
-  nav a{margin:0 8px;}
-  main{margin-top:120px;}
+  main{padding-top:185px;}
+  nav{gap:10px;}
+  nav a{font-size:13px;padding:6px 8px;}
+  body::before{transform:translateY(170px);} /* ✅ mobilde daha aşağı */
 }
+```
