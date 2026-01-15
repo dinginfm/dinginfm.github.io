@@ -3,15 +3,11 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Dingin FM</title>
+<title></title>
 
 <style>
 *{box-sizing:border-box}
-
-:root{
-  --fm-title:#6fc9ff;
-}
-
+:root{--fm-title:#6fc9ff}
 html,body{margin:0;height:100%}
 
 body{
@@ -21,16 +17,14 @@ body{
   background:transparent;
 }
 
-/* ✅ LOGO AŞAĞIDA SABİT (KAPANMA YOK) */
+/* LOGO AŞAĞIDA SABİT */
 .logo-bg{
   position:fixed;
-  left:0;
-  right:0;
-  bottom:-60px;         /* 👈 LOGO AŞAĞI İNDİ */
-  height:95vh;          /* 👈 ekranı doldurur ama aşağıdan başlar */
+  inset:0;
   z-index:0;
   background:url("logo.png") center bottom no-repeat;
   background-size:cover;
+  transform:translateY(140px);
   opacity:.98;
   pointer-events:none;
 }
@@ -38,7 +32,7 @@ body{
 /* ÜST KATMAN */
 header,main,footer{position:relative;z-index:2}
 
-/* ✅ MENÜ ŞERİT */
+/* MENÜ */
 header{
   position:fixed;
   top:0; left:0;
@@ -76,36 +70,21 @@ nav a.active{
   outline:1px solid rgba(255,255,255,.18);
 }
 
-/* ✅ ANA ALAN (MENÜ BOŞLUK) */
+/* ANA ALAN */
 main{
   min-height:100vh;
   padding-top:78px;
-  padding-bottom:120px; /* footer + buton boşluğu */
+  padding-bottom:120px;
   position:relative;
   z-index:3;
 }
 
-/* ✅ SAYFA PANELİ (istersen kullan) */
-.panel{
-  max-width:720px;
-  margin:0 auto;
-  padding:22px 18px;
-  border-radius:18px;
-  background:rgba(0,0,0,.22);
-  border:1px solid rgba(255,255,255,.14);
-  box-shadow:0 14px 40px rgba(0,0,0,.18);
-  backdrop-filter:blur(10px);
-  -webkit-backdrop-filter:blur(10px);
-  color:#fff;
-  text-shadow:0 2px 10px rgba(0,0,0,.65);
-}
-
-/* ✅ ALT BUTON ALANI (LOGOYA BULAŞMAZ) */
-.bottom-action{
+/* BUTON ORTADA */
+.blog-btn{
   position:fixed;
   left:50%;
-  bottom:74px;              /* footer üstü */
-  transform:translateX(-50%);
+  top:50%;
+  transform:translate(-50%,-50%);
   z-index:6;
 }
 
@@ -129,7 +108,7 @@ a.btn:hover{
   color:#05324a;
 }
 
-/* ✅ FOOTER */
+/* FOOTER */
 footer{
   position:fixed;
   left:0;
@@ -145,55 +124,5 @@ footer{
   -webkit-backdrop-filter:blur(6px);
 }
 
-/* MOBİL */
 @media(max-width:600px){
-  nav{gap:12px}
-  nav a{font-size:14px;padding:6px 8px}
-  .bottom-action{bottom:78px;}
-  .logo-bg{bottom:-75px;}
-}
-</style>
-</head>
-
-<body>
-
-<div class="logo-bg"></div>
-
-<header>
-  <nav>
-    <a href="index.html">Ana Sayfa</a>
-    <a href="live.html">Canlı Yayın</a>
-    <a href="dj.html">DJ Aylak</a>
-    <a href="podcast.html">Podcast</a>
-    <a href="blog.html" class="active">Blog</a>
-    <a href="tarihce.html">Tarihçe</a>
-    <a href="connect.html">İletişim</a>
-  </nav>
-</header>
-
-<main>
-
-  <!-- ✅ SAYFA İÇERİĞİ BURAYA -->
-  <!-- İstersen panel ile yazıları okunur yap -->
-  <!--
-  <div class="panel">
-    <h1>Blog</h1>
-    <p>Buraya içerik gelecek.</p>
-  </div>
-  -->
-
-</main>
-
-<!-- ✅ ALT BUTON (isteğe bağlı) -->
-<div class="bottom-action">
-  <a href="https://madamaylak0.wordpress.com/" target="_blank" class="btn">
-    MadamAylak Blogu Aç
-  </a>
-</div>
-
-<footer>
-  © 2025 Dingin FM — Sessizliğin Sesi Burada. Tüm hakları saklıdır.
-</footer>
-
-</body>
-</html>
+  nav{
