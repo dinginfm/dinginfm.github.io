@@ -9,140 +9,159 @@
         /* GENEL AYARLAR */
         *{box-sizing:border-box}
         :root{
-            --fm-title: #6fc9ff;
-            --fm-soft: #9fdcff;
-            --white-glass: rgba(255, 255, 255, 0.12);
-            --dark-glass: rgba(0, 0, 0, 0.3);
+            --fm-title:#6fc9ff;
+            --fm-soft:#9fdcff;
+            --dark-glass:rgba(0,0,0,0.35);
+            --glass-border:rgba(255,255,255,0.12);
         }
 
-        html, body {
-            margin: 0;
-            height: 100%;
-            width: 100%;
-            overflow-x: hidden;
-            background-color: #0a1118; /* Logo yüklenene kadar uyumlu koyu renk */
+        html,body{
+            margin:0;
+            height:100%;
+            width:100%;
+            overflow-x:hidden;
+            background:#0a1118;
+            color:#fff;
+            font-family:'Segoe UI',sans-serif;
         }
 
-        /* ✅ FULL EKRAN SABİT LOGO - Kesinlikle Kapanmaz */
-        body::before {
-            content: "";
-            position: fixed;
-            inset: 0;
-            z-index: 0;
-            background: url("logo.png") center center no-repeat;
-            background-size: cover;
-            opacity: 0.9;
+        /* ✅ LOGO ARKA PLAN (KESİLMEZ) */
+        body::before{
+            content:"";
+            position:fixed;
+            inset:0;
+            z-index:0;
+            background:url("logo.png") center bottom no-repeat;
+            background-size:contain;  /* ✅ cover değil */
+            opacity:0.95;
         }
 
-        /* ÜST KATMAN (Yazıların önde kalmasını sağlar) */
-        header, main, footer { position: relative; z-index: 2; }
+        /* ✅ OKUNABİLİRLİK KARARTMA */
+        body::after{
+            content:"";
+            position:fixed;
+            inset:0;
+            z-index:1;
+            background:
+                radial-gradient(circle at center, rgba(0,0,0,0.10) 0%, rgba(0,0,0,0.55) 80%),
+                linear-gradient(to bottom, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.25) 45%, rgba(0,0,0,0.55) 100%);
+        }
+
+        /* ÜST KATMAN */
+        header, main, footer{
+            position:relative;
+            z-index:2;
+        }
 
         /* HEADER & NAV */
-        header {
-            padding: 20px 10px;
-            background: rgba(0, 0, 0, 0.4);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            position: fixed;
-            top: 0; width: 100%;
+        header{
+            padding:18px 10px;
+            background:rgba(0,0,0,0.45);
+            backdrop-filter:blur(12px);
+            -webkit-backdrop-filter:blur(12px);
+            border-bottom:1px solid rgba(255,255,255,0.1);
+            position:fixed;
+            top:0; left:0;
+            width:100%;
         }
 
-        nav {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            flex-wrap: wrap;
+        nav{
+            display:flex;
+            justify-content:center;
+            gap:15px;
+            flex-wrap:wrap;
         }
 
-        nav a {
-            font-size: 14px;
-            text-decoration: none;
-            color: #fff;
-            font-weight: 700;
-            padding: 8px 12px;
-            border-radius: 20px;
-            transition: 0.3s;
-            text-shadow: 0 2px 8px rgba(0,0,0,0.5);
+        nav a{
+            font-size:14px;
+            text-decoration:none;
+            color:rgba(255,255,255,0.85);
+            font-weight:700;
+            padding:8px 12px;
+            border-radius:20px;
+            transition:0.25s;
         }
 
-        nav a:hover, nav a.active {
-            background: var(--fm-title);
-            color: #05324a;
-            text-shadow: none;
+        nav a:hover,
+        nav a.active{
+            background:rgba(111,201,255,0.22);
+            border:1px solid rgba(111,201,255,0.35);
+            color:#fff;
         }
 
-        /* ANA İÇERİK ALANI */
-        main {
-            max-width: 800px;
-            margin: 120px auto 100px; /* Header ve footer payı */
-            padding: 20px;
+        /* ANA İÇERİK */
+        main{
+            max-width:800px;
+            margin:120px auto 100px;
+            padding:20px;
         }
 
-        /* ✅ ŞEFFAF PANEL (LOGO GÖRÜNÜR) */
-        section {
-            background: var(--dark-glass);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            padding: 40px;
-            border-radius: 30px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
-            text-align: center;
+        section{
+            background:var(--dark-glass);
+            backdrop-filter:blur(18px);
+            -webkit-backdrop-filter:blur(18px);
+            padding:40px;
+            border-radius:30px;
+            border:1px solid var(--glass-border);
+            box-shadow:0 20px 40px rgba(0,0,0,0.45);
+            text-align:center;
         }
 
-        section h1 {
-            font-size: 42px;
-            margin: 0;
-            color: var(--fm-title);
-            text-shadow: 0 2px 15px rgba(111, 201, 255, 0.4);
-            letter-spacing: -1px;
+        section h1{
+            font-size:42px;
+            margin:0;
+            color:var(--fm-title);
+            text-shadow:0 2px 15px rgba(111,201,255,0.45);
+            letter-spacing:-1px;
         }
 
-        section h2 {
-            font-size: 18px;
-            font-weight: 400;
-            margin: 10px 0 30px;
-            color: var(--fm-soft);
-            letter-spacing: 2px;
-            text-transform: uppercase;
+        section h2{
+            font-size:18px;
+            font-weight:500;
+            margin:10px 0 30px;
+            color:var(--fm-soft);
+            letter-spacing:2px;
+            text-transform:uppercase;
+            opacity:0.95;
         }
 
-        /* PARAGRAFLAR */
-        section p {
-            font-size: 18px;
-            line-height: 1.8;
-            margin-bottom: 20px;
-            color: #f0f0f0;
-            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        section p{
+            font-size:18px;
+            line-height:1.8;
+            margin-bottom:20px;
+            color:#f0f0f0;
+            opacity:0.95;
         }
 
-        section em {
-            display: block;
-            margin-top: 30px;
-            font-size: 22px;
-            color: var(--fm-title);
-            font-style: italic;
+        section em{
+            display:block;
+            margin-top:30px;
+            font-size:22px;
+            color:var(--fm-title);
+            font-style:italic;
         }
 
         /* FOOTER */
-        footer {
-            position: fixed;
-            bottom: 0; width: 100%;
-            padding: 15px;
-            font-size: 13px;
-            color: rgba(255,255,255,0.6);
-            text-align: center;
-            background: rgba(0,0,0,0.3);
-            backdrop-filter: blur(5px);
+        footer{
+            position:fixed;
+            bottom:0; left:0;
+            width:100%;
+            padding:15px;
+            font-size:13px;
+            color:rgba(255,255,255,0.65);
+            text-align:center;
+            background:rgba(0,0,0,0.35);
+            backdrop-filter:blur(6px);
+            -webkit-backdrop-filter:blur(6px);
+            border-top:1px solid rgba(255,255,255,0.08);
         }
 
-        /* MOBİL UYUMLULUK */
+        /* MOBİL */
         @media(max-width:600px){
-            main { margin-top: 140px; padding: 15px; }
-            section { padding: 30px 20px; }
-            section h1 { font-size: 32px; }
-            nav a { font-size: 12px; padding: 6px 10px; }
+            main{margin-top:140px; padding:15px}
+            section{padding:30px 20px}
+            section h1{font-size:32px}
+            nav a{font-size:12px; padding:6px 10px}
         }
     </style>
 </head>
@@ -157,7 +176,7 @@
         <a href="podcast.html">Podcast</a>
         <a href="blog.html">Blog</a>
         <a href="tarihce.html">Tarihçe</a>
-        <a href="connect.html">İletişim</a>
+        <a href="connect.php">İletişim</a>
     </nav>
 </header>
 
@@ -168,7 +187,7 @@
 
         <p>DJ Aylak, sessizliğin içinden geçen bir ses… Şehrin gürültüsünden uzaklaşmak isteyenler için notaları birer sığınak haline getiriyor.</p>
         <p>Dingin FM’de her yayın, bir hikâyenin yankısıdır. DJ Aylak, sadece müzik çalmaz; sizinle birlikte sessizliği dinler.</p>
-        
+
         <em>“Hazırsak, Dingin FM başlıyor.”</em>
     </section>
 </main>
