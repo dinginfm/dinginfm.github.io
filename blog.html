@@ -8,126 +8,134 @@
 <style>
 *{box-sizing:border-box}
 :root{--fm-title:#6fc9ff}
-html,body{margin:0;height:100%; width:100%;}
 
-body {
-    font-family:'Segoe UI',sans-serif;
-    text-align:center;
-    background-color: #000; /* Logo yüklenene kadar siyah zemin */
-    color: #fff;
-    overflow: hidden; /* Sayfa kaymasını engeller, tam ekran görünüm sağlar */
+html,body{margin:0;height:100%;width:100%}
+
+body{
+  font-family:'Segoe UI',sans-serif;
+  text-align:center;
+  background:#000;
+  color:#fff;
+  overflow:hidden;
 }
 
-/* LOGO ARKA PLAN - TAM EKRAN VE SABİT */
-.logo-bg {
-    position: fixed;
-    inset: 0;
-    z-index: 0;
-    /* Görseli merkeze alıyoruz ve her şeyi kaplamasını sağlıyoruz */
-    background: url("logo.jpg") no-repeat center center;
-    background-size: cover;
-    opacity: 0.9; /* Logoyu biraz daha belirgin yaptık */
-    pointer-events: none;
+/* Logo arka plan */
+.logo-bg{
+  position:fixed;
+  inset:0;
+  z-index:0;
+  background:url("logo.png") no-repeat center center;
+  background-size:cover;
+  opacity:.9;
+  pointer-events:none;
 }
 
-/* OKUNABİLİRLİK İÇİN KARARTMA KATMANI */
-.overlay {
-    position: fixed;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.3); /* Logonun üzerine hafif bir gölge atar */
-    z-index: 1;
+/* Karartma */
+.overlay{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.30);
+  z-index:1;
 }
 
-/* MENÜ - ÜST BAR */
-header {
-    position: fixed;
-    top: 0; left: 0;
-    width: 100%;
-    z-index: 10;
-    padding: 15px 10px;
-    background: rgba(0, 0, 0, 0.4);
-    backdrop-filter: blur(12px); /* Arkadaki logoyu yumuşakça bulanıklaştırır */
-    -webkit-backdrop-filter: blur(12px);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+/* ÜST BAR */
+header{
+  position:fixed;
+  top:0; left:0;
+  width:100%;
+  z-index:10;
+  padding:15px 10px;
+  background:rgba(0,0,0,.4);
+  backdrop-filter:blur(12px);
+  -webkit-backdrop-filter:blur(12px);
+  border-bottom:1px solid rgba(255,255,255,.1);
 }
 
-nav {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 15px;
-    flex-wrap: wrap;
+nav{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:15px;
+  flex-wrap:wrap;
 }
 
-nav a {
-    font-size: 14px;
-    text-decoration: none;
-    color: rgba(255, 255, 255, 0.8);
-    font-weight: 600;
-    padding: 8px 15px;
-    border-radius: 20px;
-    transition: 0.3s;
+nav a{
+  font-size:14px;
+  text-decoration:none;
+  color:rgba(255,255,255,.8);
+  font-weight:600;
+  padding:8px 15px;
+  border-radius:20px;
+  transition:.3s;
 }
 
-nav a:hover, nav a.active {
-    color: #fff;
-    background: rgba(255, 255, 255, 0.15);
-    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+nav a:hover,
+nav a.active{
+  color:#fff;
+  background:rgba(255,255,255,.15);
+  box-shadow:0 4px 15px rgba(0,0,0,.2);
 }
 
-/* MERKEZDEKİ BUTON */
-.content-area {
-    position: relative;
-    z-index: 5;
-    height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+/* ✅ FOOTER */
+footer{
+  position:fixed;
+  left:0;
+  bottom:0;
+  width:100%;
+  padding:15px;
+  font-size:12px;
+  background:rgba(0,0,0,.30);
+  backdrop-filter:blur(5px);
+  -webkit-backdrop-filter:blur(5px);
+  z-index:10;
+  color:rgba(255,255,255,.65);
 }
 
-a.btn {
-    display: inline-block;
-    padding: 18px 40px;
-    border-radius: 50px;
-    border: 2px solid var(--fm-title);
-    color: #fff;
-    text-decoration: none;
-    font-weight: 800;
-    font-size: 1.1rem;
-    background: rgba(0, 0, 0, 0.5); /* Cam efekti */
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-    transition: 0.4s;
-    text-transform: uppercase;
-    letter-spacing: 1px;
+/* ✅ BUTON TAM ORTA (HEADER+FOOTER HESAPLI) */
+.content-area{
+  position:relative;
+  z-index:5;
+
+  /* header 60px + footer 55px gibi düşün */
+  height:calc(100vh - 120px);
+  margin-top:60px;
+  margin-bottom:60px;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
 }
 
-a.btn:hover {
-    background: var(--fm-title);
-    color: #000;
-    transform: scale(1.05);
-    box-shadow: 0 0 20px var(--fm-title);
+a.btn{
+  display:inline-block;
+  padding:18px 40px;
+  border-radius:50px;
+  border:2px solid var(--fm-title);
+  color:#fff;
+  text-decoration:none;
+  font-weight:800;
+  font-size:1.1rem;
+  background:rgba(0,0,0,.50);
+  backdrop-filter:blur(8px);
+  -webkit-backdrop-filter:blur(8px);
+  box-shadow:0 10px 30px rgba(0,0,0,.5);
+  transition:.4s;
+  text-transform:uppercase;
+  letter-spacing:1px;
 }
 
-/* FOOTER */
-footer {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    padding: 15px;
-    font-size: 12px;
-    background: rgba(0, 0, 0, 0.3);
-    backdrop-filter: blur(5px);
-    z-index: 10;
-    color: rgba(255, 255, 255, 0.6);
+a.btn:hover{
+  background:var(--fm-title);
+  color:#000;
+  transform:scale(1.05);
+  box-shadow:0 0 20px var(--fm-title);
 }
 
-/* MOBİL AYARLAR */
+/* Mobil */
 @media(max-width:600px){
-    nav a { font-size: 12px; padding: 5px 10px; }
-    a.btn { width: 80%; font-size: 0.9rem; }
+  nav a{font-size:12px;padding:5px 10px}
+  a.btn{width:80%;font-size:.9rem}
 }
 </style>
 </head>
@@ -150,13 +158,13 @@ footer {
 </header>
 
 <main class="content-area">
-    <a href="https://madamaylak0.wordpress.com/" target="_blank" class="btn">
-        MadamAylak Blogu Aç
-    </a>
+  <a href="https://madamaylak0.wordpress.com/" target="_blank" class="btn">
+    MadamAylak Blogu Aç
+  </a>
 </main>
 
 <footer>
-  © 2025 Dingin FM — Sessizliğin Sesi Burada.
+  © 2025 Dingin FM — Sessizliğin Sesi Burada. Tüm hakları saklıdır.
 </footer>
 
 </body>
