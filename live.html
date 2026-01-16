@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Dingin FM — Canlı Yayın</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700&display=swap" rel="stylesheet">
@@ -22,10 +22,12 @@ html,body{
   color:#fff;
 }
 
-/* ✅ LOGO PNG TAM SAYFA */
+/* ✅ LOGO KESİLMESİN: contain */
 body{
-  background:url("logo.png") center center no-repeat fixed;
-  background-size:cover;
+  background:
+    url("logo.png") center bottom no-repeat fixed;
+  background-size:contain;     /* ✅ cover değil */
+  background-color:#0a1118;    /* ✅ boşluk kalırsa siyah dursun */
   overflow-x:hidden;
 }
 
@@ -36,8 +38,8 @@ body::after{
   inset:0;
   z-index:0;
   background:
-    radial-gradient(circle at center, rgba(0,0,0,.06) 0%, rgba(0,0,0,.55) 85%),
-    linear-gradient(to bottom, rgba(0,0,0,.55) 0%, rgba(0,0,0,.18) 40%, rgba(0,0,0,.55) 100%);
+    radial-gradient(circle at center, rgba(0,0,0,.08) 0%, rgba(0,0,0,.62) 85%),
+    linear-gradient(to bottom, rgba(0,0,0,.55) 0%, rgba(0,0,0,.20) 40%, rgba(0,0,0,.62) 100%);
   pointer-events:none;
 }
 
@@ -58,6 +60,7 @@ header{
   -webkit-backdrop-filter:blur(12px);
   border-bottom:1px solid rgba(255,255,255,.10);
   text-align:center;
+  z-index:999;
 }
 
 .logo-text{
@@ -101,21 +104,21 @@ nav a.active{
   color:#fff;
 }
 
-/* MAIN */
+/* ✅ MAIN: kutu yukarıda dursun */
 main{
   min-height:100vh;
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  align-items:center;
   padding:170px 18px 110px;
+  display:flex;
+  justify-content:center;
+  align-items:flex-start;
   text-align:center;
 }
 
+/* ✅ Panel KÜÇÜK + LOGOYU KAPATMAZ */
 .live-box{
-  width:min(520px, 92%);
-  margin:0 auto;
-  padding:22px 22px;
+  width:min(420px, 92%);
+  margin-top:8px;
+  padding:18px 18px;
   border-radius:26px;
   background:rgba(0,0,0,.45);
   border:1px solid rgba(255,255,255,.12);
@@ -125,7 +128,7 @@ main{
 }
 
 .live-title{
-  font-size:22px;
+  font-size:20px;
   margin:0 0 10px;
   color:var(--fm-title);
   font-weight:900;
@@ -142,7 +145,7 @@ main{
   font-size:12px;
   font-weight:900;
   letter-spacing:.4px;
-  margin-bottom:14px;
+  margin-bottom:12px;
 }
 
 .dot{
@@ -156,18 +159,15 @@ main{
 .status-off .dot{background:#ff4d4d}
 
 .live-desc{
-  font-size:14px;
+  font-size:13px;
   color:rgba(255,255,255,.88);
-  line-height:1.65;
-  margin:0 0 16px;
-}
-
-.audio-wrap{
-  margin-top:10px;
+  line-height:1.6;
+  margin:0 0 12px;
 }
 
 audio{
   width:100%;
+  border-radius:14px;
 }
 
 /* FOOTER */
@@ -184,6 +184,7 @@ footer{
   backdrop-filter:blur(8px);
   -webkit-backdrop-filter:blur(8px);
   border-top:1px solid rgba(255,255,255,.10);
+  z-index:999;
 }
 
 /* MOBILE */
@@ -219,53 +220,44 @@ footer{
 
     <div id="statusPill" class="status-pill status-off">
       <span class="dot"></span>
-      <span id="statusText">Bağlantı kontrol ediliyor...</span>
+      <span id="statusText">Kontrol ediliyor...</span>
     </div>
 
-    <p id="liveDesc" class="live-desc">
-      Dingin FM yayını kontrol ediliyor.
-    </p>
+    <p id="liveDesc" class="live-desc">Yayın kontrol ediliyor.</p>
 
-    <div class="audio-wrap">
-      <audio id="player" controls preload="none"></audio>
-    </div>
+    <audio id="player" controls preload="none"></audio>
   </div>
 </main>
 
 <footer>
-  © 2025 Dingin FM — Sessizliğin Sesi Burada.
+  © 2025 Dingin FM — Sessizliğin Sesi Burada. Tüm hakları saklıdır.
 </footer>
 
 <script>
-/* ✅ BURAYA KENDİ STREAM ADRESİNİ YAZ */
-const STREAM_URL = "https://SENIN-DOMAININ:8000/stream"; 
-// Örnek: "https://dinginfm.com.tr:8000/stream"
-// Örnek: "http://IPADRESIN:8000/stream"
+/* ✅ STREAM URL'Yİ BURAYA YAZ */
+const STREAM_URL = "https://SENIN-DOMAININ:8000/stream";
 
 const player = document.getElementById("player");
 const statusPill = document.getElementById("statusPill");
 const statusText = document.getElementById("statusText");
 const liveDesc = document.getElementById("liveDesc");
 
-/* ✅ Yayın açıldı mı kontrolü */
 function setStatus(isLive){
   if(isLive){
     statusPill.classList.remove("status-off");
     statusPill.classList.add("status-on");
-    statusText.innerText = "DJ Aylak şu an yayında — Burada ✅";
-    liveDesc.innerText = "Yayındayız. Sessizliğin içinden geçen ses şimdi burada.";
+    statusText.innerText = "DJ Aylak şu an yayında ✅";
+    liveDesc.innerText = "Sessizliğin içinden geçen ses şimdi burada.";
   }else{
     statusPill.classList.remove("status-on");
     statusPill.classList.add("status-off");
     statusText.innerText = "Şu an canlı yayın yok";
-    liveDesc.innerText = "Yayın başladığında burada görünecek. Beklemede kal 💙";
+    liveDesc.innerText = "Yayın başladığında burada gözükecek.";
   }
 }
 
-/* ✅ stream çalışıyor mu? */
 async function checkStream(){
   try{
-    // cache kapatıyoruz
     const res = await fetch(STREAM_URL, { method:"HEAD", cache:"no-store" });
     if(res.ok){
       player.src = STREAM_URL;
@@ -278,7 +270,6 @@ async function checkStream(){
   }
 }
 
-/* ilk kontrol + 30 sn'de bir tekrar */
 checkStream();
 setInterval(checkStream, 30000);
 </script>
