@@ -1,4 +1,16 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Dingin FM — Sessizliğin Sesi Burada</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700&display=swap" rel="stylesheet">
+
+<style>
 /* ================== TEMEL ================== */
+*{box-sizing:border-box}
+
 html,body{
   height:100%;
   margin:0;
@@ -17,7 +29,7 @@ body::before{
   content:"";
   position:fixed;
   inset:0;
-  z-index:0;
+  z-index:-1;          /* ✅ BUTONLAR ÇALIŞSIN DİYE */
   pointer-events:none;
 
   background:
@@ -30,7 +42,7 @@ body::before{
     ),
     url("assets/logo.png") center bottom no-repeat;
 
-  background-size:cover, cover;   /* ✅ TAM SAYFA */
+  background-size:cover, cover;
   background-position:center center, center bottom;
   opacity:1;
 }
@@ -189,3 +201,38 @@ footer{
   nav{gap:10px;}
   nav a{font-size:13px;padding:6px 8px;}
 }
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1 class="logo-text">DINGIN FM</h1>
+  <div class="site-subtitle">Sessizliğin Sesi Burada</div>
+
+  <nav>
+    <a href="index.html" class="active">Ana Sayfa</a>
+    <a href="live.html">Canlı Yayın</a>
+    <a href="dj.html">DJ Aylak</a>
+    <a href="podcast.html">Podcast</a>
+    <a href="blog.html">Blog</a>
+    <a href="tarihce.html">Tarihçe</a>
+    <a href="yayinsaatleri.html">Yayın Saatleri</a>
+    <a href="connect.php">İletişim</a>
+  </nav>
+</header>
+
+<main>
+  <div class="panel">
+    <h1>Dingin FM’e Hoş Geldiniz</h1>
+    <p>Sessizliğin sesi burada.</p>
+    <a class="button" href="live.html">Canlı Yayına Git</a>
+  </div>
+</main>
+
+<footer>
+  © 2025 Dingin FM — Sessizliğin Sesi Burada. Tüm hakları saklıdır.
+</footer>
+
+</body>
+</html>
