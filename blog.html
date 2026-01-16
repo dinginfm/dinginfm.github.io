@@ -91,20 +91,19 @@ footer{
   color:rgba(255,255,255,.65);
 }
 
-/* ✅ BUTON TAM ORTA (HEADER+FOOTER HESAPLI) */
+/* ✅ BUTON ARTIK YUKARIDA */
 .content-area{
   position:relative;
   z-index:5;
 
-  /* header 60px + footer 55px gibi düşün */
   height:calc(100vh - 120px);
   margin-top:60px;
   margin-bottom:60px;
 
   display:flex;
-  align-items:center;
+  align-items:flex-start;     /* ✅ yukarı */
   justify-content:center;
-  padding:20px;
+  padding:40px 20px 20px;     /* ✅ header altından aşağı */
 }
 
 a.btn{
@@ -136,6 +135,7 @@ a.btn:hover{
 @media(max-width:600px){
   nav a{font-size:12px;padding:5px 10px}
   a.btn{width:80%;font-size:.9rem}
+  .content-area{padding-top:30px}
 }
 </style>
 </head>
@@ -153,7 +153,7 @@ a.btn:hover{
     <a href="podcast.html">Podcast</a>
     <a href="blog.html" class="active">Blog</a>
     <a href="tarihce.html">Tarihçe</a>
-    <a href="connect.html">İletişim</a>
+    <a href="connect.php">İletişim</a>
   </nav>
 </header>
 
