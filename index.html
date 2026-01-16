@@ -13,36 +13,32 @@
 :root{
   --fm-title:#6fc9ff;
   --fm-soft:#9fdcff;
-  --fm-text:#4a6f8a;
 }
 
 html,body{
   height:100%;
   margin:0;
-}
-
-/* LOGO ARKADA, KAPANMAZ */
-body{
   font-family:'Segoe UI',sans-serif;
-  text-align:center;
-  color:var(--fm-text);
-  background:#eef4fb;
+  color:#fff;
 }
 
-body::before{
+/* ✅ LOGO PNG TAM SAYFA (COVER) */
+body{
+  background:url("logo.png") center center no-repeat fixed;
+  background-size:cover;
+  overflow-x:hidden;
+}
+
+/* ✅ OKUNABİLİRLİK KARARTMA */
+body::after{
   content:"";
   position:fixed;
   inset:0;
-  background:
-    radial-gradient(
-      circle at center,
-      rgba(255,255,255,.92) 0%,
-      rgba(230,240,250,.96) 45%,
-      rgba(210,225,240,.98) 100%
-    ),
-    url("logo.png") center center no-repeat;
-  background-size:contain;
   z-index:0;
+  background:
+    radial-gradient(circle at center, rgba(0,0,0,.06) 0%, rgba(0,0,0,.55) 85%),
+    linear-gradient(to bottom, rgba(0,0,0,.55) 0%, rgba(0,0,0,.18) 40%, rgba(0,0,0,.55) 100%);
+  pointer-events:none;
 }
 
 /* ÜST KATMAN */
@@ -53,87 +49,135 @@ header,main,footer{
 
 /* HEADER */
 header{
-  padding:36px 10px 18px;
+  position:fixed;
+  top:0; left:0;
+  width:100%;
+  padding:14px 10px;
+  background:rgba(0,0,0,.40);
+  backdrop-filter:blur(12px);
+  -webkit-backdrop-filter:blur(12px);
+  border-bottom:1px solid rgba(255,255,255,.10);
+  text-align:center;
 }
 
 .logo-text{
   font-family:'Orbitron',sans-serif;
-  font-size:34px;
-  font-weight:600;
+  font-size:26px;
+  font-weight:700;
   letter-spacing:3px;
-  margin-bottom:6px;
+  margin:0;
   color:var(--fm-title);
+  text-shadow:0 2px 16px rgba(111,201,255,.35);
 }
 
 .site-subtitle{
-  font-size:14px;
-  color:var(--fm-soft);
-  margin-bottom:18px;
+  font-size:12px;
+  color:rgba(255,255,255,.80);
+  margin-top:4px;
+  margin-bottom:12px;
 }
 
 /* NAV */
-nav a{
-  margin:0 12px;
-  font-size:15px;
-  text-decoration:none;
-  color:var(--fm-title);
+nav{
+  display:flex;
+  justify-content:center;
+  gap:10px;
+  flex-wrap:wrap;
 }
-nav a.active,
-nav a:hover{
-  text-decoration:underline;
+
+nav a{
+  font-size:13px;
+  text-decoration:none;
+  color:rgba(255,255,255,.85);
+  font-weight:800;
+  padding:7px 12px;
+  border-radius:999px;
+  transition:.25s;
+}
+
+nav a:hover,
+nav a.active{
+  background:rgba(111,201,255,.22);
+  border:1px solid rgba(111,201,255,.35);
+  color:#fff;
 }
 
 /* MAIN */
 main{
-  min-height:50vh;
+  min-height:100vh;
   display:flex;
   flex-direction:column;
   justify-content:center;
   align-items:center;
-  padding:20px;
+  padding:170px 18px 110px;
+  text-align:center;
+}
+
+/* ✅ ORTA KUTU KÜÇÜK (görseli kapatmaz) */
+.hero-box{
+  width:min(520px, 92%);
+  margin:0 auto;
+  padding:22px 22px;
+  border-radius:26px;
+  background:rgba(0,0,0,.45);
+  border:1px solid rgba(255,255,255,.12);
+  backdrop-filter:blur(16px);
+  -webkit-backdrop-filter:blur(16px);
+  box-shadow:0 20px 40px rgba(0,0,0,.35);
 }
 
 main h1{
-  font-size:30px;
-  margin:0;
+  font-size:22px;
+  margin:0 0 10px;
   color:var(--fm-title);
 }
 
 main p{
-  font-size:16px;
-  color:var(--fm-soft);
-  margin:12px 0 26px;
-  line-height:1.6;
+  font-size:14px;
+  color:rgba(255,255,255,.88);
+  margin:0 0 16px;
+  line-height:1.65;
 }
 
 /* BUTTON */
 .button{
   display:inline-block;
-  padding:12px 32px;
-  border-radius:30px;
-  border:2px solid var(--fm-title);
-  color:var(--fm-title);
+  padding:11px 22px;
+  border-radius:999px;
+  border:1px solid rgba(111,201,255,.55);
+  background:rgba(111,201,255,.20);
+  color:#fff;
   text-decoration:none;
-  font-weight:500;
-  transition:.3s;
+  font-weight:900;
+  letter-spacing:.6px;
+  transition:.25s;
+  font-size:13px;
 }
 .button:hover{
-  background:var(--fm-title);
-  color:#fff;
+  background:rgba(111,201,255,.35);
 }
 
 /* FOOTER */
 footer{
-  padding:20px 10px;
-  font-size:13px;
-  color:var(--fm-soft);
+  position:fixed;
+  left:0;
+  bottom:0;
+  width:100%;
+  padding:12px 10px;
+  font-size:12px;
+  color:rgba(255,255,255,.70);
+  text-align:center;
+  background:rgba(0,0,0,.35);
+  backdrop-filter:blur(8px);
+  -webkit-backdrop-filter:blur(8px);
+  border-top:1px solid rgba(255,255,255,.10);
 }
 
 /* MOBILE */
 @media(max-width:600px){
-  .logo-text{font-size:26px}
-  main h1{font-size:24px}
-  nav a{margin:0 8px}
+  .logo-text{font-size:22px}
+  nav a{font-size:12px; padding:6px 10px}
+  main{padding-top:190px}
 }
 </style>
 </head>
@@ -152,17 +196,16 @@ footer{
     <a href="blog.html">Blog</a>
     <a href="tarihce.html">Tarihçe</a>
     <a href="yayinsaatleri.html">Yayın Saatleri</a>
-    <a href="connect.html">İletişim</a>
+    <a href="connect.php">İletişim</a>
   </nav>
 </header>
 
 <main>
-  <h1>Dingin FM’e Hoş Geldiniz</h1>
-  <p>
-    Sessizliğin sesi burada.
-  </p>
-
-  <a href="live.html" class="button">Canlı Yayına Git</a>
+  <div class="hero-box">
+    <h1>Dingin FM’e Hoş Geldiniz</h1>
+    <p>Sessizliğin sesi burada.</p>
+    <a href="live.html" class="button">Canlı Yayına Git</a>
+  </div>
 </main>
 
 <footer>
