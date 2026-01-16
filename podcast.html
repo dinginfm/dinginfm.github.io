@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Dingin FM — Podcast</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700&display=swap" rel="stylesheet">
@@ -22,17 +22,15 @@ html,body{
   color:#fff;
 }
 
-/* ✅ TAM EKRAN + LOGO KESİLMESİN */
+/* ✅ LOGO FULL EKRAN + SİYAH BOĞMA YOK */
 body{
-  background:
-    linear-gradient(180deg, rgba(10,17,24,1) 0%, rgba(10,17,24,1) 100%),
-    url("logo.png") center bottom no-repeat fixed;
-  background-size:cover, contain;   /* ✅ 1. katman full ekran / 2. logo contain */
+  background: url("logo.png") center center no-repeat fixed;
+  background-size: cover;         /* ✅ logo tüm ekranı kaplar */
   background-color:#0a1118;
   overflow-x:hidden;
 }
 
-/* ✅ OKUNABİLİRLİK KARARTMA */
+/* ✅ sadece çok hafif okunurluk */
 body::after{
   content:"";
   position:fixed;
@@ -40,11 +38,10 @@ body::after{
   z-index:0;
   pointer-events:none;
   background:
-    radial-gradient(circle at center, rgba(0,0,0,.08) 0%, rgba(0,0,0,.60) 85%),
-    linear-gradient(to bottom, rgba(0,0,0,.50) 0%, rgba(0,0,0,.18) 45%, rgba(0,0,0,.55) 100%);
+    radial-gradient(circle at center, rgba(0,0,0,.08) 0%, rgba(0,0,0,.35) 85%),
+    linear-gradient(to bottom, rgba(0,0,0,.18) 0%, rgba(0,0,0,.08) 45%, rgba(0,0,0,.22) 100%);
 }
 
-/* ÖN KATMAN */
 header, main, footer{
   position:relative;
   z-index:1;
@@ -56,7 +53,7 @@ header{
   top:0; left:0;
   width:100%;
   padding:14px 10px;
-  background:rgba(0,0,0,.40);
+  background:rgba(0,0,0,.28);
   backdrop-filter:blur(12px);
   -webkit-backdrop-filter:blur(12px);
   border-bottom:1px solid rgba(255,255,255,.10);
@@ -76,7 +73,7 @@ header{
 
 .site-subtitle{
   font-size:12px;
-  color:rgba(255,255,255,.80);
+  color:rgba(255,255,255,.85);
   margin-top:4px;
   margin-bottom:12px;
 }
@@ -92,7 +89,7 @@ nav{
 nav a{
   font-size:13px;
   text-decoration:none;
-  color:rgba(255,255,255,.85);
+  color:rgba(255,255,255,.88);
   font-weight:800;
   padding:7px 12px;
   border-radius:999px;
@@ -106,7 +103,7 @@ nav a.active{
   color:#fff;
 }
 
-/* ✅ MAIN: yukarıda dursun, logoyu kapamasın */
+/* MAIN */
 main{
   min-height:100vh;
   padding:170px 18px 110px;
@@ -115,10 +112,10 @@ main{
   align-items:flex-start;
 }
 
-/* ✅ Panel küçük ve net */
+/* ✅ Panel */
 .section{
   width:min(460px, 92%);
-  background:rgba(0,0,0,.50);
+  background:rgba(0,0,0,.38);
   border:1px solid rgba(255,255,255,.12);
   backdrop-filter:blur(16px);
   -webkit-backdrop-filter:blur(16px);
@@ -139,7 +136,7 @@ main{
   margin:0;
   font-size:13px;
   line-height:1.6;
-  color:rgba(255,255,255,.88);
+  color:rgba(255,255,255,.92);
 }
 
 .badge{
@@ -168,9 +165,9 @@ footer{
   width:100%;
   padding:12px 10px;
   font-size:12px;
-  color:rgba(255,255,255,.70);
+  color:rgba(255,255,255,.75);
   text-align:center;
-  background:rgba(0,0,0,.35);
+  background:rgba(0,0,0,.26);
   backdrop-filter:blur(8px);
   -webkit-backdrop-filter:blur(8px);
   border-top:1px solid rgba(255,255,255,.10);
