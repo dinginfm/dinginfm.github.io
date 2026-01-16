@@ -22,12 +22,12 @@ html,body{
   color:#fff;
 }
 
-/* ✅ TAM EKRAN (yarım mavi/yarım siyah olmaz) */
+/* ✅ TAM EKRAN */
 body{
   background:
     linear-gradient(180deg, rgba(10,17,24,1) 0%, rgba(10,17,24,1) 100%),
     url("logo.png") center bottom no-repeat fixed;
-  background-size:cover, contain;          /* ✅ 1. katman full / 2. logo contain */
+  background-size:cover, contain;
   background-color:#0a1118;
   overflow-x:hidden;
 }
@@ -115,7 +115,7 @@ main{
   text-align:center;
 }
 
-/* ✅ kutu yukarıda, logoyu kapatmaz */
+/* ✅ kutu yukarıda */
 .live-box{
   width:min(460px, 92%);
   margin-top:8px;
@@ -157,8 +157,10 @@ main{
   background:#777;
 }
 
+/* ✅ 3 mod: ON / OFF / UNKNOWN */
 .status-on .dot{background:#3cff82}
 .status-off .dot{background:#ff4d4d}
+.status-unknown .dot{background:#ffd166}
 
 .live-desc{
   font-size:13px;
@@ -167,7 +169,7 @@ main{
   margin:0 0 14px;
 }
 
-/* ✅ TEK TUŞ (play bar yok) */
+/* ✅ TEK TUŞ */
 .big-btn{
   width:100%;
   border:none;
@@ -248,7 +250,7 @@ footer{
   <div class="live-box">
     <div class="live-title">🎙️ Canlı Yayın</div>
 
-    <div id="statusPill" class="status-pill status-off">
+    <div id="statusPill" class="status-pill status-unknown">
       <span class="dot"></span>
       <span id="statusText">Kontrol ediliyor...</span>
     </div>
@@ -263,7 +265,7 @@ footer{
       Tek tuşla başlat.
     </div>
 
-    <audio id="player" preload="none"></audio>
+    <audio id="player" preload="none" crossorigin="anonymous"></audio>
   </div>
 </main>
 
@@ -272,8 +274,11 @@ footer{
 </footer>
 
 <script>
-/* ✅ BURAYA STREAM ADRESİN */
+/* ✅ STREAM */
 const STREAM_URL = "http://45.143.99.51:8000/stream";
+
+/* ✅ Icecast status JSON (yayın var mı? en doğru kontrol) */
+const ICECAST_STATUS_JSON = "http://45.143.99.51:8000/status-json.xsl";
 
 const player = document.getElementById("player");
 const statusPill = document.getElementById("statusPill");
@@ -284,17 +289,23 @@ const noteText = document.getElementById("noteText");
 
 let isPlaying = false;
 
-function setStatus(isLive){
-  if(isLive){
-    statusPill.classList.remove("status-off");
-    statusPill.classList.add("status-on");
+function setStatusMode(mode){
+  statusPill.classList.remove("status-on","status-off","status-unknown");
+  statusPill.classList.add(mode);
+
+  if(mode === "status-on"){
     statusText.innerText = "DJ Aylak şu an yayında ✅";
     liveDesc.innerText = "Sessizliğin içinden geçen ses şimdi burada.";
-  }else{
-    statusPill.classList.remove("status-on");
-    statusPill.classList.add("status-off");
+  }
+
+  if(mode === "status-off"){
     statusText.innerText = "Şu an canlı yayın yok";
     liveDesc.innerText = "Yayın başladığında burada gözükecek.";
+  }
+
+  if(mode === "status-unknown"){
+    statusText.innerText = "Yayın durumu bilinmiyor";
+    liveDesc.innerText = "Bağlantı kısıtlı olabilir. Play tuşu yine çalışır.";
   }
 }
 
@@ -310,12 +321,14 @@ function updateButton(){
   }
 }
 
+/* ✅ Buton tık */
 toggleBtn.addEventListener("click", async () => {
   try{
     if(!isPlaying){
       player.src = STREAM_URL;
       await player.play();
       isPlaying = true;
+      setStatusMode("status-on"); // Çalabiliyorsa zaten yayın var demektir
     }else{
       player.pause();
       isPlaying = false;
@@ -328,13 +341,29 @@ toggleBtn.addEventListener("click", async () => {
   }
 });
 
-/* ✅ kontrol */
+/* ✅ Yayın kontrol (Icecast JSON) */
 async function checkStream(){
   try{
-    const res = await fetch(STREAM_URL, { method:"HEAD", cache:"no-store" });
-    setStatus(res.ok);
+    const res = await fetch(ICECAST_STATUS_JSON, { cache:"no-store" });
+    if(!res.ok) throw new Error("status json not ok");
+
+    const data = await res.json();
+
+    // Icecast bazen source'ı object bazen array döndürür
+    const source = data?.icestats?.source;
+
+    const hasSource =
+      Array.isArray(source) ? source.length > 0 :
+      (source && typeof source === "object");
+
+    if(hasSource){
+      setStatusMode("status-on");
+    }else{
+      setStatusMode("status-off");
+    }
   }catch(e){
-    setStatus(false);
+    // CORS / erişim yoksa bilinmiyor de, kullanıcı yine PLAY basar.
+    setStatusMode("status-unknown");
   }
 }
 
