@@ -22,17 +22,15 @@ html,body{
   color:#fff;
 }
 
-/* ✅ TAM EKRAN */
+/* ✅ LOGO FULL EKRAN + SİYAH BOĞMA YOK */
 body{
-  background:
-    linear-gradient(180deg, rgba(10,17,24,1) 0%, rgba(10,17,24,1) 100%),
-    url("logo.png") center bottom no-repeat fixed;
-  background-size:cover, contain;
+  background: url("logo.png") center center no-repeat fixed;
+  background-size: cover;     /* ✅ full ekran */
   background-color:#0a1118;
   overflow-x:hidden;
 }
 
-/* ✅ okunabilirlik */
+/* ✅ sadece hafif okunurluk (logo görünür kalsın) */
 body::after{
   content:"";
   position:fixed;
@@ -40,8 +38,8 @@ body::after{
   z-index:0;
   pointer-events:none;
   background:
-    radial-gradient(circle at center, rgba(0,0,0,.10) 0%, rgba(0,0,0,.58) 85%),
-    linear-gradient(to bottom, rgba(0,0,0,.45) 0%, rgba(0,0,0,.18) 45%, rgba(0,0,0,.52) 100%);
+    radial-gradient(circle at center, rgba(0,0,0,.08) 0%, rgba(0,0,0,.38) 85%),
+    linear-gradient(to bottom, rgba(0,0,0,.20) 0%, rgba(0,0,0,.08) 45%, rgba(0,0,0,.25) 100%);
 }
 
 header,main,footer{
@@ -55,7 +53,7 @@ header{
   top:0; left:0;
   width:100%;
   padding:14px 10px;
-  background:rgba(0,0,0,.42);
+  background:rgba(0,0,0,.28);
   backdrop-filter:blur(12px);
   -webkit-backdrop-filter:blur(12px);
   border-bottom:1px solid rgba(255,255,255,.10);
@@ -75,7 +73,7 @@ header{
 
 .site-subtitle{
   font-size:12px;
-  color:rgba(255,255,255,.80);
+  color:rgba(255,255,255,.85);
   margin-top:4px;
   margin-bottom:12px;
 }
@@ -91,7 +89,7 @@ nav{
 nav a{
   font-size:13px;
   text-decoration:none;
-  color:rgba(255,255,255,.85);
+  color:rgba(255,255,255,.88);
   font-weight:800;
   padding:7px 12px;
   border-radius:999px;
@@ -121,7 +119,7 @@ main{
   margin-top:8px;
   padding:20px;
   border-radius:26px;
-  background:rgba(0,0,0,.52);
+  background:rgba(0,0,0,.38);
   border:1px solid rgba(255,255,255,.12);
   backdrop-filter:blur(16px);
   -webkit-backdrop-filter:blur(16px);
@@ -157,14 +155,13 @@ main{
   background:#777;
 }
 
-/* ✅ 3 mod: ON / OFF / UNKNOWN */
 .status-on .dot{background:#3cff82}
 .status-off .dot{background:#ff4d4d}
 .status-unknown .dot{background:#ffd166}
 
 .live-desc{
   font-size:13px;
-  color:rgba(255,255,255,.88);
+  color:rgba(255,255,255,.90);
   line-height:1.6;
   margin:0 0 14px;
 }
@@ -195,7 +192,7 @@ main{
 .small-note{
   margin-top:10px;
   font-size:12px;
-  opacity:.80;
+  opacity:.85;
   line-height:1.4;
 }
 
@@ -210,9 +207,9 @@ footer{
   width:100%;
   padding:12px 10px;
   font-size:12px;
-  color:rgba(255,255,255,.70);
+  color:rgba(255,255,255,.75);
   text-align:center;
-  background:rgba(0,0,0,.38);
+  background:rgba(0,0,0,.26);
   backdrop-filter:blur(8px);
   -webkit-backdrop-filter:blur(8px);
   border-top:1px solid rgba(255,255,255,.10);
@@ -274,10 +271,7 @@ footer{
 </footer>
 
 <script>
-/* ✅ STREAM */
 const STREAM_URL = "http://45.143.99.51:8000/stream";
-
-/* ✅ Icecast status JSON (yayın var mı? en doğru kontrol) */
 const ICECAST_STATUS_JSON = "http://45.143.99.51:8000/status-json.xsl";
 
 const player = document.getElementById("player");
@@ -321,14 +315,13 @@ function updateButton(){
   }
 }
 
-/* ✅ Buton tık */
 toggleBtn.addEventListener("click", async () => {
   try{
     if(!isPlaying){
       player.src = STREAM_URL;
       await player.play();
       isPlaying = true;
-      setStatusMode("status-on"); // Çalabiliyorsa zaten yayın var demektir
+      setStatusMode("status-on");
     }else{
       player.pause();
       isPlaying = false;
@@ -341,15 +334,12 @@ toggleBtn.addEventListener("click", async () => {
   }
 });
 
-/* ✅ Yayın kontrol (Icecast JSON) */
 async function checkStream(){
   try{
     const res = await fetch(ICECAST_STATUS_JSON, { cache:"no-store" });
     if(!res.ok) throw new Error("status json not ok");
 
     const data = await res.json();
-
-    // Icecast bazen source'ı object bazen array döndürür
     const source = data?.icestats?.source;
 
     const hasSource =
@@ -362,7 +352,6 @@ async function checkStream(){
       setStatusMode("status-off");
     }
   }catch(e){
-    // CORS / erişim yoksa bilinmiyor de, kullanıcı yine PLAY basar.
     setStatusMode("status-unknown");
   }
 }
