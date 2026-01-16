@@ -51,13 +51,12 @@ if ($show_admin) {
     $all_messages = $db->query("SELECT * FROM messages ORDER BY created_at DESC")->fetchAll(PDO::FETCH_ASSOC);
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="tr">
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Dingin FM | İletişim & Mesajlar</title>
+<title>Dingin FM | İletişim</title>
 
 <style>
 *{box-sizing:border-box}
@@ -66,31 +65,25 @@ if ($show_admin) {
 html,body{
     margin:0;
     height:100%;
-    background:#0a1118;
-    color:#fff;
     font-family:'Segoe UI',sans-serif;
+    color:#fff;
 }
 
-/* ✅ LOGO ARKA PLAN: KESMESİN diye contain + bottom */
-.logo-bg{
-    position:fixed;
-    inset:0;
-    z-index:0;
-    background:
-        url("logo.png") center bottom no-repeat;
-    background-size:contain;     /* cover DEĞİL */
-    opacity:.85;
-    pointer-events:none;
+/* ✅ LOGO PNG TAM SAYFA */
+body{
+    background: url("logo.png") center center no-repeat fixed;
+    background-size: cover;
+    overflow-x:hidden;
 }
 
-/* ✅ Okunabilirlik için karartma katmanı */
+/* ✅ Okunabilirlik için hafif karartma */
 .overlay{
     position:fixed;
     inset:0;
     z-index:1;
     background:
-        radial-gradient(circle at center, rgba(0,0,0,.10) 0%, rgba(0,0,0,.55) 80%),
-        linear-gradient(to bottom, rgba(0,0,0,.55) 0%, rgba(0,0,0,.25) 45%, rgba(0,0,0,.55) 100%);
+        radial-gradient(circle at center, rgba(0,0,0,.06) 0%, rgba(0,0,0,.55) 85%),
+        linear-gradient(to bottom, rgba(0,0,0,.50) 0%, rgba(0,0,0,.15) 40%, rgba(0,0,0,.55) 100%);
 }
 
 /* Header */
@@ -100,10 +93,10 @@ header{
     width:100%;
     z-index:99;
     padding:12px;
-    background:rgba(0,0,0,.5);
+    background:rgba(0,0,0,.40);
     backdrop-filter:blur(10px);
     -webkit-backdrop-filter:blur(10px);
-    border-bottom:1px solid rgba(255,255,255,.1);
+    border-bottom:1px solid rgba(255,255,255,.10);
     text-align:center;
 }
 
@@ -111,7 +104,7 @@ nav a{
     color:#fff;
     text-decoration:none;
     margin:0 10px;
-    font-weight:700;
+    font-weight:800;
     font-size:14px;
     opacity:.85;
 }
@@ -126,56 +119,82 @@ nav a.active{
 main{
     position:relative;
     z-index:2;
-    max-width:650px;
+    width:100%;
     margin:0 auto;
-    padding:90px 20px 90px; /* footer için altta boşluk */
+    padding:90px 18px 90px;
 }
 
+/* ✅ Panel küçüldü (logo daha çok gözüksün) */
 .panel{
-    background:rgba(0,0,0,.55);
+    width:min(420px, 92%);
+    margin:0 auto;
+    background:rgba(0,0,0,.48);
     border:1px solid rgba(255,255,255,.12);
     border-radius:22px;
-    padding:26px;
-    backdrop-filter:blur(16px);
-    -webkit-backdrop-filter:blur(16px);
-    box-shadow:0 25px 55px rgba(0,0,0,.45);
+    padding:18px;
+    backdrop-filter:blur(14px);
+    -webkit-backdrop-filter:blur(14px);
+    box-shadow:0 25px 55px rgba(0,0,0,.35);
 }
 
 .contact-info{
-    margin-bottom:18px;
-    font-size:18px;
-    font-weight:800;
+    margin-bottom:8px;
+    font-size:17px;
+    font-weight:900;
     color:var(--fm-title);
+    text-align:center;
+}
+
+/* ✅ mail + instagram */
+.contact-mini{
+    margin: 0 0 14px 0;
+    padding: 10px 12px;
+    border-radius: 14px;
+    background: rgba(255,255,255,.06);
+    border: 1px solid rgba(255,255,255,.12);
+    font-size: 13px;
+    line-height: 1.6;
+    color: rgba(255,255,255,.85);
+    text-align:left;
+}
+.contact-mini b{
+    color:#fff;
 }
 
 form input, form textarea{
     width:100%;
-    padding:12px;
+    padding:11px 12px;
     margin-bottom:10px;
     border-radius:12px;
     border:1px solid rgba(255,255,255,.18);
     background:rgba(255,255,255,.06);
     color:#fff;
     outline:none;
+    font-size:14px;
 }
+form textarea{resize:none}
 form input:focus, form textarea:focus{
-    border-color:rgba(111,201,255,.45);
+    border-color:rgba(111,201,255,.55);
 }
 
+/* ✅ BUTON ARTIK LOGOYU KAPAMAYACAK (dar + ortada) */
 .btn{
-    width:100%;
-    padding:12px;
-    border-radius:12px;
+    display:block;
+    width:220px;
+    max-width:100%;
+    margin:10px auto 0;
+    padding:11px 16px;
+    border-radius:999px;
     border:none;
     background:var(--fm-title);
     color:#000;
     font-weight:900;
     cursor:pointer;
     letter-spacing:.6px;
+    font-size:13px;
 }
 
-/* Admin list */
-.admin-section{margin-top:36px; text-align:left;}
+.admin-section{margin-top:26px; text-align:left;}
 .msg-box{
     background:rgba(255,255,255,.06);
     padding:14px;
@@ -196,7 +215,7 @@ footer{
     padding:12px 10px;
     text-align:center;
     font-size:12px;
-    background:rgba(0,0,0,.40);
+    background:rgba(0,0,0,.35);
     backdrop-filter:blur(8px);
     -webkit-backdrop-filter:blur(8px);
     border-top:1px solid rgba(255,255,255,.10);
@@ -207,7 +226,6 @@ footer{
 
 <body>
 
-<div class="logo-bg"></div>
 <div class="overlay"></div>
 
 <header>
@@ -221,8 +239,13 @@ footer{
     <div class="panel">
         <div class="contact-info">📩 İletişim & İstek Hattı</div>
 
+        <div class="contact-mini">
+            <div><b>Mail:</b> dinginfm@gmail.com</div>
+            <div><b>Instagram:</b> dinginfm</div>
+        </div>
+
         <?php if($msg_status === "success"): ?>
-            <p style="color:#4caf50; font-weight:700;">✅ Mesajınız başarıyla gönderildi!</p>
+            <p style="color:#4caf50; font-weight:800; text-align:center;">✅ Mesajınız başarıyla gönderildi!</p>
         <?php endif; ?>
 
         <form method="POST">
@@ -234,7 +257,7 @@ footer{
 
         <?php if($show_admin): ?>
             <div class="admin-section">
-                <h3 style="border-bottom:1px solid rgba(255,255,255,.12); padding-bottom:10px; margin-top:26px;">
+                <h3 style="border-bottom:1px solid rgba(255,255,255,.12); padding-bottom:10px; margin-top:20px;">
                     📥 Gelen Son Mesajlar
                 </h3>
 
@@ -254,7 +277,6 @@ footer{
                         </div>
                     <?php endforeach; ?>
                 <?php endif; ?>
-
             </div>
         <?php endif; ?>
 
