@@ -22,15 +22,17 @@ html,body{
   color:#fff;
 }
 
-/* ✅ LOGO KESİLMESİN (ALTTA + CONTAIN) */
+/* ✅ TAM EKRAN (yarım mavi/yarım siyah olmaz) */
 body{
-  background:url("logo.png") center bottom no-repeat fixed;
-  background-size:contain;
+  background:
+    linear-gradient(180deg, rgba(10,17,24,1) 0%, rgba(10,17,24,1) 100%),
+    url("logo.png") center bottom no-repeat fixed;
+  background-size:cover, contain;          /* ✅ 1. katman full / 2. logo contain */
   background-color:#0a1118;
   overflow-x:hidden;
 }
 
-/* ✅ KARARTMA */
+/* ✅ okunabilirlik */
 body::after{
   content:"";
   position:fixed;
@@ -38,8 +40,8 @@ body::after{
   z-index:0;
   pointer-events:none;
   background:
-    radial-gradient(circle at center, rgba(0,0,0,.10) 0%, rgba(0,0,0,.65) 85%),
-    linear-gradient(to bottom, rgba(0,0,0,.60) 0%, rgba(0,0,0,.25) 40%, rgba(0,0,0,.65) 100%);
+    radial-gradient(circle at center, rgba(0,0,0,.10) 0%, rgba(0,0,0,.58) 85%),
+    linear-gradient(to bottom, rgba(0,0,0,.45) 0%, rgba(0,0,0,.18) 45%, rgba(0,0,0,.52) 100%);
 }
 
 header,main,footer{
@@ -113,17 +115,17 @@ main{
   text-align:center;
 }
 
-/* ✅ KUTU KÜÇÜK + YUKARIDA */
+/* ✅ kutu yukarıda, logoyu kapatmaz */
 .live-box{
-  width:min(420px, 92%);
+  width:min(460px, 92%);
   margin-top:8px;
-  padding:18px;
+  padding:20px;
   border-radius:26px;
-  background:rgba(0,0,0,.50);
+  background:rgba(0,0,0,.52);
   border:1px solid rgba(255,255,255,.12);
   backdrop-filter:blur(16px);
   -webkit-backdrop-filter:blur(16px);
-  box-shadow:0 20px 40px rgba(0,0,0,.45);
+  box-shadow:0 20px 45px rgba(0,0,0,.55);
 }
 
 .live-title{
@@ -165,7 +167,7 @@ main{
   margin:0 0 14px;
 }
 
-/* ✅ TEK TUŞ: BAŞLAT / DURDUR */
+/* ✅ TEK TUŞ (play bar yok) */
 .big-btn{
   width:100%;
   border:none;
@@ -175,17 +177,15 @@ main{
   font-weight:900;
   letter-spacing:.6px;
   font-size:13px;
-  color:#000;
+  color:#001018;
   background:var(--fm-title);
   transition:.18s;
 }
 
-.big-btn:hover{
-  transform:translateY(-1px);
-}
+.big-btn:hover{ transform:translateY(-1px); }
 
 .big-btn.off{
-  background:rgba(255,255,255,.12);
+  background:rgba(255,255,255,.10);
   color:#fff;
   border:1px solid rgba(255,255,255,.18);
 }
@@ -193,14 +193,12 @@ main{
 .small-note{
   margin-top:10px;
   font-size:12px;
-  opacity:.75;
+  opacity:.80;
   line-height:1.4;
 }
 
-/* ✅ audio gizli */
-audio{
-  display:none;
-}
+/* ✅ audio tamamen gizli */
+audio{ display:none; }
 
 /* FOOTER */
 footer{
@@ -262,7 +260,7 @@ footer{
     </button>
 
     <div class="small-note" id="noteText">
-      Yayın açıldığında tek tuşla dinlersin.
+      Tek tuşla başlat.
     </div>
 
     <audio id="player" preload="none"></audio>
@@ -274,8 +272,8 @@ footer{
 </footer>
 
 <script>
-/* ✅ STREAM URL'Yİ BURAYA YAZ */
-const STREAM_URL = "http://45.143.99.51:8000/stream"; // örnek: http://IP:8000/stream
+/* ✅ BURAYA STREAM ADRESİN */
+const STREAM_URL = "http://45.143.99.51:8000/stream";
 
 const player = document.getElementById("player");
 const statusPill = document.getElementById("statusPill");
@@ -300,7 +298,6 @@ function setStatus(isLive){
   }
 }
 
-/* ✅ tek tuş kontrol */
 function updateButton(){
   if(isPlaying){
     toggleBtn.classList.remove("off");
@@ -331,7 +328,7 @@ toggleBtn.addEventListener("click", async () => {
   }
 });
 
-/* ✅ yayın var mı kontrol */
+/* ✅ kontrol */
 async function checkStream(){
   try{
     const res = await fetch(STREAM_URL, { method:"HEAD", cache:"no-store" });
