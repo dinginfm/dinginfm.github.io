@@ -3,11 +3,16 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Dingin FM — Canlı Yayın</title>
+<title>Dingin FM — Sessizliğin Sesi Burada</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700&display=swap" rel="stylesheet">
 
 <style>
 *{box-sizing:border-box}
-:root{--fm-title:#6fc9ff;--fm-soft:#9fdcff}
+:root{
+  --fm-title:#6fc9ff;
+  --fm-soft:#9fdcff;
+}
 
 html,body{
   margin:0;
@@ -16,23 +21,24 @@ html,body{
   color:#fff;
 }
 
-/* ✅ LOGO TAM SAYFA */
+/* ✅ ANA SAYFA LOGO: KAPANMASIN diye contain */
 body{
-  background:url("logo.png") center center no-repeat fixed;
-  background-size:cover;
+  background:url("logo.png") center bottom no-repeat fixed;
+  background-size:contain;     /* ✅ cover değil */
+  background-color:#0a1118;    /* ✅ boşluk kalırsa uyumlu dursun */
   overflow-x:hidden;
 }
 
-/* ✅ KARARTMA */
+/* ✅ okunabilirlik karartma */
 body::after{
   content:"";
   position:fixed;
   inset:0;
   z-index:0;
-  background:
-    radial-gradient(circle at center, rgba(0,0,0,.06) 0%, rgba(0,0,0,.55) 85%),
-    linear-gradient(to bottom, rgba(0,0,0,.55) 0%, rgba(0,0,0,.18) 40%, rgba(0,0,0,.55) 100%);
   pointer-events:none;
+  background:
+    radial-gradient(circle at center, rgba(0,0,0,.08) 0%, rgba(0,0,0,.60) 85%),
+    linear-gradient(to bottom, rgba(0,0,0,.55) 0%, rgba(0,0,0,.20) 40%, rgba(0,0,0,.60) 100%);
 }
 
 header,main,footer{position:relative;z-index:1}
@@ -42,7 +48,7 @@ header{
   position:fixed;
   top:0; left:0;
   width:100%;
-  padding:14px 10px;
+  padding:14px 10px 12px;
   background:rgba(0,0,0,.40);
   backdrop-filter:blur(12px);
   -webkit-backdrop-filter:blur(12px);
@@ -51,6 +57,24 @@ header{
   z-index:999;
 }
 
+.logo-text{
+  font-family:'Orbitron',sans-serif;
+  font-size:24px;
+  font-weight:700;
+  letter-spacing:3px;
+  margin:0;
+  color:var(--fm-title);
+  text-shadow:0 2px 16px rgba(111,201,255,.35);
+}
+
+.site-subtitle{
+  font-size:12px;
+  color:rgba(255,255,255,.80);
+  margin-top:4px;
+  margin-bottom:12px;
+}
+
+/* NAV */
 nav{
   display:flex;
   justify-content:center;
@@ -67,6 +91,7 @@ nav a{
   border-radius:999px;
   transition:.25s;
 }
+
 nav a:hover,
 nav a.active{
   background:rgba(111,201,255,.22);
@@ -74,20 +99,20 @@ nav a.active{
   color:#fff;
 }
 
-/* ✅ MAIN: paneli YUKARI ALDIK (kulaklık kapanmasın) */
+/* MAIN */
 main{
   min-height:100vh;
   padding:170px 18px 110px;
   display:flex;
   justify-content:center;
-  align-items:flex-start;   /* ✅ merkez değil, yukarı */
+  align-items:flex-start;  /* ✅ yukarı */
   text-align:center;
 }
 
-/* ✅ Panel küçüldü */
-.live-box{
-  width:min(420px,92%);
-  margin-top:10px;          /* ✅ biraz aşağı ama kulaklığa değil */
+/* ✅ Panel küçük (demo gibi değil) */
+.hero-box{
+  width:min(460px,92%);
+  margin-top:10px;
   padding:18px;
   border-radius:26px;
   background:rgba(0,0,0,.45);
@@ -97,46 +122,37 @@ main{
   box-shadow:0 20px 40px rgba(0,0,0,.35);
 }
 
-.live-title{
+.hero-box h1{
   margin:0 0 10px;
-  color:var(--fm-title);
   font-size:20px;
+  color:var(--fm-title);
   font-weight:900;
 }
 
-.status-pill{
-  display:inline-flex;
-  align-items:center;
-  gap:8px;
-  padding:8px 12px;
-  border-radius:999px;
-  border:1px solid rgba(255,255,255,.14);
-  background:rgba(255,255,255,.06);
-  font-size:12px;
-  font-weight:900;
-  letter-spacing:.4px;
-  margin-bottom:12px;
-}
-
-.dot{
-  width:10px;
-  height:10px;
-  border-radius:50%;
-  background:#777;
-}
-.status-on .dot{background:#3cff82}
-.status-off .dot{background:#ff4d4d}
-
-.live-desc{
+.hero-box p{
+  margin:0 0 14px;
   font-size:13px;
-  color:rgba(255,255,255,.88);
   line-height:1.6;
-  margin:0 0 12px;
+  color:rgba(255,255,255,.88);
 }
 
-audio{
-  width:100%;
-  border-radius:14px;
+/* ✅ BUTON */
+.button{
+  display:inline-block;
+  padding:11px 18px;
+  border-radius:999px;
+  border:1px solid rgba(111,201,255,.55);
+  background:rgba(111,201,255,.20);
+  color:#fff;
+  text-decoration:none;
+  font-weight:900;
+  letter-spacing:.5px;
+  transition:.25s;
+  font-size:13px;
+}
+
+.button:hover{
+  background:rgba(111,201,255,.35);
 }
 
 /* FOOTER */
@@ -158,6 +174,7 @@ footer{
 
 /* MOBİL */
 @media(max-width:600px){
+  .logo-text{font-size:22px}
   nav a{font-size:12px;padding:6px 10px}
   main{padding-top:190px}
 }
@@ -167,9 +184,12 @@ footer{
 <body>
 
 <header>
+  <div class="logo-text">DINGIN&nbsp;FM</div>
+  <div class="site-subtitle">Sessizliğin Sesi Burada</div>
+
   <nav>
-    <a href="index.html">Ana Sayfa</a>
-    <a href="live.html" class="active">Canlı Yayın</a>
+    <a href="index.html" class="active">Ana Sayfa</a>
+    <a href="live.html">Canlı Yayın</a>
     <a href="dj.html">DJ Aylak</a>
     <a href="podcast.html">Podcast</a>
     <a href="blog.html">Blog</a>
@@ -180,66 +200,5 @@ footer{
 </header>
 
 <main>
-  <div class="live-box">
-    <div class="live-title">🎙️ Canlı Yayın</div>
-
-    <div id="statusPill" class="status-pill status-off">
-      <span class="dot"></span>
-      <span id="statusText">Bağlantı kontrol ediliyor...</span>
-    </div>
-
-    <p id="liveDesc" class="live-desc">
-      Yayın kontrol ediliyor.
-    </p>
-
-    <audio id="player" controls preload="none"></audio>
-  </div>
-</main>
-
-<footer>
-  © 2025 Dingin FM — Sessizliğin Sesi Burada. Tüm hakları saklıdır.
-</footer>
-
-<script>
-/* ✅ STREAM URL'Yİ BURAYA YAZ */
-const STREAM_URL = "https://SENIN-DOMAININ:8000/stream";
-
-const player = document.getElementById("player");
-const statusPill = document.getElementById("statusPill");
-const statusText = document.getElementById("statusText");
-const liveDesc = document.getElementById("liveDesc");
-
-function setStatus(isLive){
-  if(isLive){
-    statusPill.classList.remove("status-off");
-    statusPill.classList.add("status-on");
-    statusText.innerText = "DJ Aylak şu an yayında — Burada ✅";
-    liveDesc.innerText = "Yayındayız. Sessizliğin içinden geçen ses şimdi burada.";
-  }else{
-    statusPill.classList.remove("status-on");
-    statusPill.classList.add("status-off");
-    statusText.innerText = "Şu an canlı yayın yok";
-    liveDesc.innerText = "Yayın başladığında burada görünecek 💙";
-  }
-}
-
-async function checkStream(){
-  try{
-    const res = await fetch(STREAM_URL, { method:"HEAD", cache:"no-store" });
-    if(res.ok){
-      player.src = STREAM_URL;
-      setStatus(true);
-    }else{
-      setStatus(false);
-    }
-  }catch(e){
-    setStatus(false);
-  }
-}
-
-checkStream();
-setInterval(checkStream, 30000);
-</script>
-
-</body>
-</html>
+  <div class="hero-box">
+    <h1>Dingin FM’e Hoş Geldin
