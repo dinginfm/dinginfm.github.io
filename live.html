@@ -9,28 +9,19 @@
 
 <style>
 *{box-sizing:border-box}
-
 :root{
   --fm-title:#6fc9ff;
   --fm-soft:#9fdcff;
 }
+html,body{height:100%;margin:0;font-family:'Segoe UI',sans-serif;color:#fff;}
 
-html,body{
-  height:100%;
-  margin:0;
-  font-family:'Segoe UI',sans-serif;
-  color:#fff;
-}
-
-/* ✅ LOGO FULL EKRAN + SİYAH BOĞMA YOK */
 body{
-  background: url("logo.png") center center no-repeat fixed;
-  background-size: cover;
+  background:url("logo.png") center center no-repeat fixed;
+  background-size:cover;
   background-color:#0a1118;
   overflow-x:hidden;
 }
 
-/* ✅ sadece hafif okunurluk */
 body::after{
   content:"";
   position:fixed;
@@ -42,15 +33,11 @@ body::after{
     linear-gradient(to bottom, rgba(0,0,0,.20) 0%, rgba(0,0,0,.08) 45%, rgba(0,0,0,.25) 100%);
 }
 
-header,main,footer{
-  position:relative;
-  z-index:1;
-}
+header,main,footer{position:relative;z-index:1;}
 
-/* HEADER */
 header{
   position:fixed;
-  top:0; left:0;
+  top:0;left:0;
   width:100%;
   padding:14px 10px;
   background:rgba(0,0,0,.28);
@@ -78,7 +65,6 @@ header{
   margin-bottom:12px;
 }
 
-/* NAV */
 nav{
   display:flex;
   justify-content:center;
@@ -95,15 +81,12 @@ nav a{
   border-radius:999px;
   transition:.25s;
 }
-
-nav a:hover,
-nav a.active{
+nav a:hover, nav a.active{
   background:rgba(111,201,255,.22);
   border:1px solid rgba(111,201,255,.35);
   color:#fff;
 }
 
-/* MAIN */
 main{
   min-height:100vh;
   padding:170px 18px 110px;
@@ -113,7 +96,6 @@ main{
   text-align:center;
 }
 
-/* ✅ kutu yukarıda */
 .live-box{
   width:min(460px, 92%);
   margin-top:8px;
@@ -133,7 +115,6 @@ main{
   font-weight:900;
 }
 
-/* Durum */
 .status-pill{
   display:inline-flex;
   align-items:center;
@@ -148,13 +129,7 @@ main{
   margin-bottom:12px;
 }
 
-.dot{
-  width:10px;
-  height:10px;
-  border-radius:50%;
-  background:#777;
-}
-
+.dot{width:10px;height:10px;border-radius:50%;background:#777;}
 .status-on .dot{background:#3cff82}
 .status-off .dot{background:#ff4d4d}
 .status-unknown .dot{background:#ffd166}
@@ -166,7 +141,6 @@ main{
   margin:0 0 14px;
 }
 
-/* ✅ TEK TUŞ */
 .big-btn{
   width:100%;
   border:none;
@@ -181,12 +155,16 @@ main{
   transition:.18s;
 }
 
-.big-btn:hover{ transform:translateY(-1px); }
-
+.big-btn:hover{transform:translateY(-1px);}
 .big-btn.off{
   background:rgba(255,255,255,.10);
   color:#fff;
   border:1px solid rgba(255,255,255,.18);
+}
+
+.big-btn.loading{
+  opacity:.75;
+  cursor:wait;
 }
 
 .small-note{
@@ -196,10 +174,8 @@ main{
   line-height:1.4;
 }
 
-/* ✅ audio gizli */
-audio{ display:none; }
+audio{display:none;}
 
-/* FOOTER */
 footer{
   position:fixed;
   left:0;
@@ -216,7 +192,6 @@ footer{
   z-index:9999;
 }
 
-/* MOBILE */
 @media(max-width:600px){
   .logo-text{font-size:22px}
   nav a{font-size:12px; padding:6px 10px}
@@ -258,11 +233,10 @@ footer{
       CANLIYI BAŞLAT
     </button>
 
-    <div class="small-note" id="noteText">
-      Tek tuşla başlat.
-    </div>
+    <div class="small-note" id="noteText">Tek tuşla başlat.</div>
 
-    <audio id="player" preload="none" crossorigin="anonymous"></audio>
+    <!-- Audio element -->
+    <audio id="player" preload="none" playsinline></audio>
   </div>
 </main>
 
@@ -271,13 +245,12 @@ footer{
 </footer>
 
 <script>
-/* ✅ SİZİN AKAN YAYININIZ */
-const STREAM_URL = "http://45.143.99.51:8000/live.mp3";
-const ICECAST_STATUS_JSON = "http://45.143.99.51:8000/status-json.xsl";
-
-/* ✅ burada hangi mount'a bakacağını söylüyoruz */
+/* ✅ VDS Proxy (dinginfm nginx üzerinden) */
+const STREAM_URL = "/live.mp3";
+const ICECAST_STATUS_JSON = "/status-json.xsl";
 const EXPECTED_MOUNT = "/live.mp3";
 
+/* DOM */
 const player = document.getElementById("player");
 const statusPill = document.getElementById("statusPill");
 const statusText = document.getElementById("statusText");
@@ -286,6 +259,7 @@ const toggleBtn = document.getElementById("toggleBtn");
 const noteText = document.getElementById("noteText");
 
 let isPlaying = false;
+let isLoading = false;
 
 function setStatusMode(mode){
   statusPill.classList.remove("status-on","status-off","status-unknown");
@@ -294,50 +268,82 @@ function setStatusMode(mode){
   if(mode === "status-on"){
     statusText.innerText = "DJ Aylak şu an yayında ✅";
     liveDesc.innerText = "Sessizliğin içinden geçen ses şimdi burada.";
-  }
-
-  if(mode === "status-off"){
+  }else if(mode === "status-off"){
     statusText.innerText = "Şu an canlı yayın yok";
     liveDesc.innerText = "Yayın başladığında burada gözükecek.";
-  }
-
-  if(mode === "status-unknown"){
+  }else{
     statusText.innerText = "Yayın durumu bilinmiyor";
-    liveDesc.innerText = "Bağlantı kısıtlı olabilir. Play tuşu yine çalışır.";
+    liveDesc.innerText = "Play tuşu yine çalışır. Tarayıcı engeli olabilir.";
   }
 }
 
 function updateButton(){
+  toggleBtn.classList.toggle("off", !isPlaying);
+  toggleBtn.classList.toggle("loading", isLoading);
+
+  if(isLoading){
+    toggleBtn.innerText = "BAŞLATILIYOR...";
+    return;
+  }
+
   if(isPlaying){
-    toggleBtn.classList.remove("off");
     toggleBtn.innerText = "DURDUR";
     noteText.innerText = "Dinliyorsun ✅";
   }else{
-    toggleBtn.classList.add("off");
     toggleBtn.innerText = "CANLIYI BAŞLAT";
     noteText.innerText = "Tek tuşla başlat.";
   }
 }
 
-toggleBtn.addEventListener("click", async () => {
+/* ✅ Her tıklamada player'ı “temiz” başlatır (donma çözümü) */
+async function startStream(){
+  isLoading = true;
+  updateButton();
+
   try{
-    if(!isPlaying){
-      player.src = STREAM_URL;
-      await player.play();
-      isPlaying = true;
-      setStatusMode("status-on");
-    }else{
-      player.pause();
-      isPlaying = false;
-    }
-    updateButton();
+    // reset
+    player.pause();
+    player.removeAttribute("src");
+    player.load();
+
+    // cache bypass
+    const url = STREAM_URL + "?t=" + Date.now();
+
+    player.src = url;
+    player.load();
+
+    await player.play();
+
+    isPlaying = true;
+    setStatusMode("status-on");
   }catch(e){
     isPlaying = false;
+    setStatusMode("status-unknown");
+    noteText.innerText = "Başlatılamadı. (Mobilde sessiz mod kapalı olmalı)";
+  }finally{
+    isLoading = false;
     updateButton();
-    noteText.innerText = "Şu an başlatılamadı. Tarayıcı engelliyor olabilir.";
+  }
+}
+
+function stopStream(){
+  player.pause();
+  isPlaying = false;
+  updateButton();
+}
+
+/* Button click */
+toggleBtn.addEventListener("click", async () => {
+  if(isLoading) return;
+
+  if(!isPlaying){
+    await startStream();
+  }else{
+    stopStream();
   }
 });
 
+/* status json check */
 function normalizeSources(source){
   if(!source) return [];
   if(Array.isArray(source)) return source;
@@ -348,19 +354,19 @@ function normalizeSources(source){
 async function checkStream(){
   try{
     const res = await fetch(ICECAST_STATUS_JSON, { cache:"no-store" });
-    if(!res.ok) throw new Error("status json not ok");
+    if(!res.ok) throw new Error("status not ok");
 
     const data = await res.json();
-    const source = data?.icestats?.source;
-    const sources = normalizeSources(source);
+    const sources = normalizeSources(data?.icestats?.source);
 
-    const isOnline = sources.some(s => (s?.listenurl && String(s.listenurl).includes(EXPECTED_MOUNT)) || (s?.server_name && s?.stream_start));
+    const isOnline = sources.some(s => {
+      const url = String(s?.listenurl || "");
+      return url.includes(EXPECTED_MOUNT);
+    });
 
-    if(isOnline){
-      setStatusMode("status-on");
-    }else{
-      setStatusMode("status-off");
-    }
+    if(isOnline) setStatusMode("status-on");
+    else setStatusMode("status-off");
+
   }catch(e){
     setStatusMode("status-unknown");
   }
