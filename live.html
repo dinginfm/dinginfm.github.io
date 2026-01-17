@@ -25,12 +25,12 @@ html,body{
 /* ✅ LOGO FULL EKRAN + SİYAH BOĞMA YOK */
 body{
   background: url("logo.png") center center no-repeat fixed;
-  background-size: cover;     /* ✅ full ekran */
+  background-size: cover;
   background-color:#0a1118;
   overflow-x:hidden;
 }
 
-/* ✅ sadece hafif okunurluk (logo görünür kalsın) */
+/* ✅ sadece hafif okunurluk */
 body::after{
   content:"";
   position:fixed;
@@ -196,7 +196,7 @@ main{
   line-height:1.4;
 }
 
-/* ✅ audio tamamen gizli */
+/* ✅ audio gizli */
 audio{ display:none; }
 
 /* FOOTER */
@@ -271,8 +271,12 @@ footer{
 </footer>
 
 <script>
-const STREAM_URL = "http://45.143.99.51:8000/stream";
+/* ✅ SİZİN AKAN YAYININIZ */
+const STREAM_URL = "http://45.143.99.51:8000/live.mp3";
 const ICECAST_STATUS_JSON = "http://45.143.99.51:8000/status-json.xsl";
+
+/* ✅ burada hangi mount'a bakacağını söylüyoruz */
+const EXPECTED_MOUNT = "/live.mp3";
 
 const player = document.getElementById("player");
 const statusPill = document.getElementById("statusPill");
@@ -330,9 +334,16 @@ toggleBtn.addEventListener("click", async () => {
   }catch(e){
     isPlaying = false;
     updateButton();
-    noteText.innerText = "Şu an başlatılamadı. Yayın kapalı olabilir.";
+    noteText.innerText = "Şu an başlatılamadı. Tarayıcı engelliyor olabilir.";
   }
 });
+
+function normalizeSources(source){
+  if(!source) return [];
+  if(Array.isArray(source)) return source;
+  if(typeof source === "object") return [source];
+  return [];
+}
 
 async function checkStream(){
   try{
@@ -341,12 +352,11 @@ async function checkStream(){
 
     const data = await res.json();
     const source = data?.icestats?.source;
+    const sources = normalizeSources(source);
 
-    const hasSource =
-      Array.isArray(source) ? source.length > 0 :
-      (source && typeof source === "object");
+    const isOnline = sources.some(s => (s?.listenurl && String(s.listenurl).includes(EXPECTED_MOUNT)) || (s?.server_name && s?.stream_start));
 
-    if(hasSource){
+    if(isOnline){
       setStatusMode("status-on");
     }else{
       setStatusMode("status-off");
