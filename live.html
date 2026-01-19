@@ -38,7 +38,7 @@ body::after{
   z-index:0;
   pointer-events:none;
   background:
-    radial-gradient(circle at center, rgba(0,0,0,.08) 0%, rgba(0,0,0,.38) 85%),
+    radial-gradient(circle at center, rgba(0,0,0,.05) 0%, rgba(0,0,0,.35) 85%),
     linear-gradient(to bottom, rgba(0,0,0,.20) 0%, rgba(0,0,0,.08) 45%, rgba(0,0,0,.25) 100%);
 }
 
@@ -94,6 +94,7 @@ nav a{
   padding:7px 12px;
   border-radius:999px;
   transition:.25s;
+  border:1px solid transparent;
 }
 
 nav a:hover,
@@ -103,20 +104,20 @@ nav a.active{
   color:#fff;
 }
 
-/* MAIN */
+/* ✅ MAIN: KARTI LOGOYU KAPATMAYACAK ŞEKİLDE AŞAĞI AL */
 main{
   min-height:100vh;
   padding:170px 18px 110px;
   display:flex;
   justify-content:center;
-  align-items:flex-start;
+  align-items:flex-end;     /* ✅ aşağı indirir */
   text-align:center;
 }
 
 /* ✅ kutu */
 .live-box{
   width:min(460px, 92%);
-  margin-top:8px;
+  margin-bottom:20px;       /* ✅ footer’a yapışmasın */
   padding:20px;
   border-radius:26px;
   background:rgba(0,0,0,.38);
@@ -227,7 +228,10 @@ footer{
 @media(max-width:600px){
   .logo-text{font-size:22px}
   nav a{font-size:12px; padding:6px 10px}
-  main{padding-top:190px}
+  main{
+    padding-top:190px;
+    padding-bottom:120px;
+  }
 }
 </style>
 </head>
@@ -349,7 +353,6 @@ function stopStream(){
 }
 
 async function startStream(){
-  // her seferinde tertemiz audio
   stopStream();
 
   audio = new Audio();
@@ -363,8 +366,6 @@ async function startStream(){
   });
 
   audio.addEventListener("pause", () => {
-    // kullanıcı durdurduysa
-    // otomatik off yapıyoruz
     if(isPlaying){
       isPlaying = false;
       updateButton();
@@ -381,7 +382,6 @@ async function startStream(){
   updateButton();
 }
 
-/* ✅ Buton click */
 toggleBtn.addEventListener("click", async () => {
   if(isBusy) return;
   setBusy(true);
@@ -397,13 +397,12 @@ toggleBtn.addEventListener("click", async () => {
     }
   }catch(e){
     stopStream();
-    noteText.innerText = "Şu an başlatılamadı. Chrome bazen izin vermezse sayfayı yenile.";
+    noteText.innerText = "Başlatılamadı. Tarayıcı izin vermezse sayfayı yenile.";
   }
 
   setBusy(false);
 });
 
-/* ✅ Yayın var mı? kontrol */
 async function checkStream(){
   try{
     const res = await fetch(ICECAST_STATUS_JSON, { cache:"no-store" });
@@ -417,7 +416,6 @@ async function checkStream(){
       (source && typeof source === "object");
 
     if(hasSource){
-      // Yayın açık görünüyor
       if(!isPlaying) setStatusMode("status-on");
     }else{
       if(!isPlaying) setStatusMode("status-off");
@@ -427,7 +425,6 @@ async function checkStream(){
   }
 }
 
-/* ✅ başlat */
 updateButton();
 checkStream();
 setInterval(checkStream, 15000);
