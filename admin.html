@@ -1,210 +1,435 @@
 <?php
-// ... (PHP kodların aynen kalıyor)
+/* =========================================================
+   DINGIN FM - GERÇEK ADMIN PANEL (admin.php)
+   ✅ Podcast yükleme
+   ✅ Podcast listesi
+   ✅ Mesaj gelen kutusu
+   ✅ Şifre korumalı
+========================================================= */
+
+session_start();
+
+/* ---------- AYARLAR ---------- */
+$host   = 'localhost';
+$dbname = 'dinginfm';
+$user   = 'dinginfm_user';
+$pass   = 'STRONG_PASSWORD'; // ✅ kendi şifrenle değiştir
+
+define('ADMIN_USER', 'admin');
+define('ADMIN_PASS', 'DINGIN2025!'); // ✅ bunu değiştir
+
+define('UPLOAD_DIR', __DIR__ . '/uploads/podcasts/');
+define('UPLOAD_URL', 'uploads/podcasts/'); // admin.php ile aynı dizindeyse böyle kalır
+
+/* ---------- DB BAĞLANTI ---------- */
+try {
+    $db = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8mb4", $user, $pass, [
+        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
+    ]);
+} catch (PDOException $e) {
+    die("DB bağlantı hatası: " . $e->getMessage());
+}
+
+/* ---------- TABLOLAR ---------- */
+$db->exec("CREATE TABLE IF NOT EXISTS podcasts (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  title VARCHAR(255) NOT NULL,
+  filename VARCHAR(255) NOT NULL,
+  filesize_kb INT DEFAULT 0,
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;");
+
+/* messages tablosu senin connect.php içinde zaten var.
+   Yoksa burada da oluşturalım ki panel patlamasın: */
+$db->exec("CREATE TABLE IF NOT EXISTS messages (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  sender_name VARCHAR(255),
+  sender_email VARCHAR(255),
+  message TEXT,
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;");
+
+/* ---------- LOGIN ---------- */
+$login_error = "";
+if (isset($_POST['login'])) {
+    $u = trim((string)($_POST['username'] ?? ''));
+    $p = trim((string)($_POST['password'] ?? ''));
+
+    if ($u === ADMIN_USER && hash_equals(ADMIN_PASS, $p)) {
+        $_SESSION['admin_ok'] = true;
+        header("Location: admin.php");
+        exit;
+    } else {
+        $login_error = "Hatalı kullanıcı adı veya şifre.";
+    }
+}
+
+/* ---------- LOGOUT ---------- */
+if (isset($_GET['logout']) && $_GET['logout'] === '1') {
+    $_SESSION = [];
+    session_destroy();
+    header("Location: admin.php");
+    exit;
+}
+
+/* ---------- AUTH CHECK ---------- */
+$is_admin = !empty($_SESSION['admin_ok']);
+
+/* ---------- PODCAST UPLOAD ---------- */
+$upload_ok = "";
+$upload_err = "";
+
+if ($is_admin && isset($_POST['upload_podcast'])) {
+    $title = trim((string)($_POST['title'] ?? ''));
+    $title = htmlspecialchars($title, ENT_QUOTES, 'UTF-8');
+
+    if ($title === "") {
+        $upload_err = "Podcast başlığı zorunlu.";
+    } elseif (!isset($_FILES['mp3']) || $_FILES['mp3']['error'] !== UPLOAD_ERR_OK) {
+        $upload_err = "Dosya yüklenemedi.";
+    } else {
+        $fileTmp  = $_FILES['mp3']['tmp_name'];
+        $fileName = $_FILES['mp3']['name'];
+        $fileSize = (int)($_FILES['mp3']['size'] ?? 0);
+
+        $ext = strtolower(pathinfo($fileName, PATHINFO_EXTENSION));
+        if ($ext !== 'mp3') {
+            $upload_err = "Sadece MP3 yüklenebilir.";
+        } elseif ($fileSize > 80 * 1024 * 1024) { // 80MB
+            $upload_err = "Dosya çok büyük. (Max 80MB)";
+        } else {
+            if (!is_dir(UPLOAD_DIR)) {
+                @mkdir(UPLOAD_DIR, 0755, true);
+            }
+
+            $safeBase = preg_replace('/[^a-zA-Z0-9_-]/', '-', pathinfo($fileName, PATHINFO_FILENAME));
+            $finalName = date("Ymd_His") . "_" . $safeBase . ".mp3";
+            $destPath = UPLOAD_DIR . $finalName;
+
+            if (!move_uploaded_file($fileTmp, $destPath)) {
+                $upload_err = "Dosya taşınamadı. uploads/podcasts izinlerini kontrol et.";
+            } else {
+                $stmt = $db->prepare("INSERT INTO podcasts (title, filename, filesize_kb) VALUES (?, ?, ?)");
+                $stmt->execute([$title, $finalName, (int)round($fileSize / 1024)]);
+
+                $upload_ok = "Podcast yüklendi ✅";
+            }
+        }
+    }
+}
+
+/* ---------- PODCAST DELETE ---------- */
+if ($is_admin && isset($_GET['del_podcast'])) {
+    $pid = (int)$_GET['del_podcast'];
+    $stmt = $db->prepare("SELECT * FROM podcasts WHERE id=?");
+    $stmt->execute([$pid]);
+    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    if ($row) {
+        $filePath = UPLOAD_DIR . $row['filename'];
+        if (is_file($filePath)) @unlink($filePath);
+
+        $db->prepare("DELETE FROM podcasts WHERE id=?")->execute([$pid]);
+    }
+    header("Location: admin.php");
+    exit;
+}
+
+/* ---------- MESSAGE DELETE ---------- */
+if ($is_admin && isset($_GET['del_msg'])) {
+    $mid = (int)$_GET['del_msg'];
+    $db->prepare("DELETE FROM messages WHERE id=?")->execute([$mid]);
+    header("Location: admin.php");
+    exit;
+}
+
+/* ---------- DATA LOAD ---------- */
+$podcasts = [];
+$messages = [];
+
+if ($is_admin) {
+    $podcasts = $db->query("SELECT * FROM podcasts ORDER BY created_at DESC")->fetchAll(PDO::FETCH_ASSOC);
+    $messages = $db->query("SELECT * FROM messages ORDER BY created_at DESC LIMIT 50")->fetchAll(PDO::FETCH_ASSOC);
+}
 ?>
-<!doctype html>
+<!DOCTYPE html>
 <html lang="tr">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Dingin FM | Yönetim Paneli</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0" />
+<title>Dingin FM | Yönetim</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700&display=swap" rel="stylesheet">
 
 <style>
-:root{
-    --fm-blue:#6fc9ff;
-    --glass-bg:rgba(0,0,0,.32);
-    --glass-border:rgba(255,255,255,.14);
-}
-
 *{box-sizing:border-box}
-
-html,body{
-    margin:0;
-    height:100%;
-}
+:root{--fm:#6fc9ff}
+html,body{height:100%;margin:0;font-family:'Segoe UI',sans-serif;color:#fff}
 
 body{
-    font-family:"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
-    color:#fff;
-    background:#0a1118;
-    overflow-x:hidden;
+  background:url("logo.png") center center no-repeat fixed;
+  background-size:cover;
+  background-color:#0a1118;
+  overflow-x:hidden;
 }
-
-/* ✅ LOGO ARKA PLAN: TAM SAYFA (KAPANMA YOK) */
-.background-wrapper{
-    position:fixed;
-    inset:0;
-    z-index:-2;
-
-    background:
-        radial-gradient(circle at center, rgba(0,0,0,.10) 0%, rgba(0,0,0,.55) 85%),
-        linear-gradient(to top, rgba(10,17,24,.75) 0%, rgba(10,17,24,.28) 55%, rgba(10,17,24,.18) 100%),
-        url("logo.png") no-repeat center center;
-
-    background-size: cover;
+body::after{
+  content:"";
+  position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:
+    radial-gradient(circle at center, rgba(0,0,0,.06) 0%, rgba(0,0,0,.46) 85%),
+    linear-gradient(to bottom, rgba(0,0,0,.25) 0%, rgba(0,0,0,.08) 45%, rgba(0,0,0,.25) 100%);
 }
+header,main,footer{position:relative;z-index:1}
 
-/* ✅ ekstra hafif yumuşatma */
-.overlay{
-    position:fixed;
-    inset:0;
-    background:rgba(0,0,0,.18);
-    z-index:-1;
+header{
+  position:fixed;top:0;left:0;width:100%;
+  padding:10px 10px 12px;
+  background:rgba(0,0,0,.18);
+  backdrop-filter:blur(14px);
+  -webkit-backdrop-filter:blur(14px);
+  border-bottom:1px solid rgba(255,255,255,.10);
+  text-align:center;
+  z-index:9999;
 }
-
-/* ÜST BAR */
-.topbar{
-    position:fixed;
-    top:0;
-    left:0;
-    width:100%;
-    z-index:9999;
-
-    background:rgba(0,0,0,.42);
-    backdrop-filter:blur(14px);
-    -webkit-backdrop-filter:blur(14px);
-    padding:14px 10px;
-    text-align:center;
-    font-weight:800;
-    letter-spacing:2px;
-    border-bottom:1px solid var(--glass-border);
+.brand{
+  font-family:'Orbitron',sans-serif;
+  font-size:18px;
+  font-weight:800;
+  letter-spacing:3px;
+  color:var(--fm);
+  text-shadow:0 2px 18px rgba(111,201,255,.42);
+  margin:0;
 }
+.sub{font-size:11px;opacity:.85;margin:3px 0 8px}
+nav{display:flex;justify-content:center;gap:8px;flex-wrap:wrap}
+nav a{
+  font-size:12px;text-decoration:none;color:rgba(255,255,255,.86);
+  font-weight:800;padding:7px 12px;border-radius:999px;
+  border:1px solid rgba(255,255,255,.10);background:rgba(255,255,255,.04);
+  transition:.18s;
+}
+nav a:hover{transform:translateY(-1px);background:rgba(111,201,255,.16);border-color:rgba(111,201,255,.28)}
+nav a.active{background:rgba(111,201,255,.22);border-color:rgba(111,201,255,.42);box-shadow:0 0 0 3px rgba(111,201,255,.10)}
 
-/* ANA ALAN */
 main{
-    position:relative;
-    z-index:5;
-    min-height:100vh;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    padding:90px 18px 70px; /* ✅ topbar ve footer payı */
+  min-height:100vh;
+  padding:140px 18px 110px;
+  display:flex;
+  justify-content:center;
+  align-items:flex-start;
 }
-
-/* ✅ PANEL KÜÇÜLDÜ (görseli kapatmaz) */
-.panel{
-    width:min(420px, 92%);
-    background:var(--glass-bg);
-    backdrop-filter:blur(18px);
-    -webkit-backdrop-filter:blur(18px);
-    border:1px solid var(--glass-border);
-    border-radius:24px;
-    padding:18px;
-    box-shadow:0 25px 55px rgba(0,0,0,.40);
+.wrap{
+  width:min(980px, 96%);
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  gap:14px;
 }
-
-/* CANLI */
-.now-playing{
-    text-align:center;
-    border-bottom:1px solid var(--glass-border);
-    padding-bottom:14px;
-    margin-bottom:14px;
+.card{
+  border-radius:24px;
+  background:rgba(0,0,0,.40);
+  border:1px solid rgba(255,255,255,.12);
+  backdrop-filter:blur(16px);
+  -webkit-backdrop-filter:blur(16px);
+  box-shadow:0 18px 38px rgba(0,0,0,.55);
+  padding:16px;
 }
-
-.now-playing span{
-    display:block;
-    font-size:12px;
-    opacity:.75;
-    margin-bottom:6px;
-    letter-spacing:1px;
+.h{
+  margin:0 0 10px;
+  font-size:14px;
+  font-weight:900;
+  color:var(--fm);
 }
-
-.now-playing strong{
-    font-size:22px;
-    color:var(--fm-blue);
-    text-shadow:0 0 18px rgba(111,201,255,.45);
-    font-weight:900;
+label{display:block;font-size:12px;opacity:.85;margin:0 0 6px}
+input,button{
+  width:100%;
+  padding:11px 12px;
+  border-radius:14px;
+  border:1px solid rgba(255,255,255,.18);
+  background:rgba(255,255,255,.06);
+  color:#fff;
+  outline:none;
 }
-
-/* İSTATİSTİK */
-.stat{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    margin:10px 0;
-    font-size:14px;
-    opacity:.95;
+input:focus{border-color:rgba(111,201,255,.55)}
+.btn{
+  border:none;
+  cursor:pointer;
+  font-weight:900;
+  letter-spacing:1px;
+  color:#001018;
+  background:linear-gradient(135deg, #6fc9ff 0%, #b7e9ff 100%);
+  box-shadow:0 16px 34px rgba(111,201,255,.28);
+  transition:.18s;
 }
+.btn:hover{transform:translateY(-2px);box-shadow:0 20px 44px rgba(111,201255,.32)}
+.ok{color:#3cff82;font-weight:900;margin-top:8px}
+.err{color:#ff8a8a;font-weight:900;margin-top:8px}
 
-.stat strong{
-    color:var(--fm-blue);
-    font-size:16px;
-    font-weight:900;
-    text-shadow:0 0 14px rgba(111,201,255,.30);
+.item{
+  padding:12px;
+  border-radius:16px;
+  background:rgba(255,255,255,.06);
+  border:1px solid rgba(255,255,255,.12);
+  margin-bottom:10px;
 }
-
-hr{
-    border:0;
-    border-top:1px solid var(--glass-border);
-    margin:14px 0;
+.item b{color:#fff}
+.meta{opacity:.75;font-size:12px;margin-top:6px}
+.actions a{
+  display:inline-block;
+  margin-top:8px;
+  font-size:12px;
+  text-decoration:none;
+  padding:6px 10px;
+  border-radius:999px;
+  border:1px solid rgba(255,255,255,.18);
+  color:#fff;
+  opacity:.9;
 }
+.actions a:hover{opacity:1;border-color:rgba(111,201,255,.35);background:rgba(111,201,255,.14)}
 
-/* FOOTER */
+audio{width:100%;margin-top:8px}
+
 footer{
-    position:fixed;
-    left:0;
-    bottom:0;
-    width:100%;
-    z-index:9999;
-
-    padding:12px 10px;
-    text-align:center;
-    font-size:12px;
-    background:rgba(0,0,0,.34);
-    backdrop-filter:blur(8px);
-    -webkit-backdrop-filter:blur(8px);
-    border-top:1px solid rgba(255,255,255,.08);
-    color:rgba(255,255,255,.70);
+  position:fixed;left:0;bottom:0;width:100%;
+  padding:12px 10px;
+  font-size:12px;
+  color:rgba(255,255,255,.75);
+  text-align:center;
+  background:rgba(0,0,0,.22);
+  backdrop-filter:blur(10px);
+  -webkit-backdrop-filter:blur(10px);
+  border-top:1px solid rgba(255,255,255,.10);
+  z-index:9999;
 }
 
-/* MOBİL */
-@media(max-width:600px){
-    main{padding:100px 14px 80px}
-    .panel{padding:16px}
-    .now-playing strong{font-size:20px}
+@media(max-width:860px){
+  .wrap{grid-template-columns:1fr}
 }
 </style>
 </head>
-
 <body>
 
-<div class="background-wrapper"></div>
-<div class="overlay"></div>
-
-<div class="topbar">DINGIN FM | YÖNETİM</div>
+<header>
+  <div class="brand">DINGIN FM | YÖNETİM</div>
+  <div class="sub">Gerçek Admin Paneli</div>
+  <nav>
+    <a href="index.html">Ana Sayfa</a>
+    <a href="live.html">Canlı Yayın</a>
+    <a href="connect.php">İletişim</a>
+    <a href="admin.php" class="active">Admin</a>
+    <?php if($is_admin): ?>
+      <a href="admin.php?logout=1">Çıkış</a>
+    <?php endif; ?>
+  </nav>
+</header>
 
 <main>
-    <div class="panel">
-        <div class="now-playing">
-            <span>ŞU AN CANLI</span>
-            <strong><?= ($now === null ? "Bağlantı Yok" : (int)$now . " Dinleyici") ?></strong>
-        </div>
 
-        <div class="stat">
-            <span>Bugün Ortalaması:</span>
-            <strong><?= round($today['avg_l'] ?? 0,1) ?></strong>
-        </div>
+<?php if(!$is_admin): ?>
+  <div class="card" style="width:min(440px,92%);margin:0 auto;">
+    <h2 class="h">🔒 Admin Giriş</h2>
 
-        <div class="stat">
-            <span>Bugün Zirve:</span>
-            <strong><?= (int)($today['max_l'] ?? 0) ?></strong>
-        </div>
+    <?php if($login_error !== ""): ?>
+      <div class="err"><?= htmlspecialchars($login_error, ENT_QUOTES, 'UTF-8') ?></div>
+    <?php endif; ?>
 
-        <hr>
+    <form method="POST" autocomplete="off">
+      <label>Kullanıcı adı</label>
+      <input type="text" name="username" placeholder="admin" required>
 
-        <div class="stat">
-            <span>Haftalık Max:</span>
-            <strong><?= (int)($week['max_l'] ?? 0) ?></strong>
-        </div>
+      <label style="margin-top:10px;">Şifre</label>
+      <input type="password" name="password" placeholder="••••••••" required>
 
-        <div class="stat">
-            <span>Aylık Max:</span>
-            <strong><?= (int)($month['max_l'] ?? 0) ?></strong>
-        </div>
+      <button type="submit" name="login" class="btn" style="margin-top:10px;">GİRİŞ</button>
+    </form>
+  </div>
+
+<?php else: ?>
+
+  <div class="wrap">
+
+    <!-- PODCAST UPLOAD -->
+    <div class="card">
+      <h2 class="h">🎧 Podcast Yükle</h2>
+
+      <?php if($upload_ok !== ""): ?>
+        <div class="ok"><?= htmlspecialchars($upload_ok, ENT_QUOTES, 'UTF-8') ?></div>
+      <?php endif; ?>
+      <?php if($upload_err !== ""): ?>
+        <div class="err"><?= htmlspecialchars($upload_err, ENT_QUOTES, 'UTF-8') ?></div>
+      <?php endif; ?>
+
+      <form method="POST" enctype="multipart/form-data" autocomplete="off">
+        <label>Podcast Başlığı</label>
+        <input type="text" name="title" placeholder="Örn: Gece Yayını #1" required>
+
+        <label style="margin-top:10px;">MP3 Dosyası</label>
+        <input type="file" name="mp3" accept=".mp3,audio/mpeg" required>
+
+        <button type="submit" name="upload_podcast" class="btn" style="margin-top:10px;">YÜKLE</button>
+      </form>
     </div>
+
+    <!-- PODCAST LIST -->
+    <div class="card">
+      <h2 class="h">📚 Yüklenen Podcastler</h2>
+
+      <?php if(empty($podcasts)): ?>
+        <div class="item">Henüz podcast yok.</div>
+      <?php else: ?>
+        <?php foreach($podcasts as $p): ?>
+          <div class="item">
+            <b><?= htmlspecialchars($p['title'], ENT_QUOTES, 'UTF-8') ?></b>
+            <div class="meta">
+              <?= htmlspecialchars($p['created_at'], ENT_QUOTES, 'UTF-8') ?>
+              • <?= (int)$p['filesize_kb'] ?> KB
+            </div>
+
+            <audio controls src="<?= htmlspecialchars(UPLOAD_URL . $p['filename'], ENT_QUOTES, 'UTF-8') ?>"></audio>
+
+            <div class="actions">
+              <a href="<?= htmlspecialchars(UPLOAD_URL . $p['filename'], ENT_QUOTES, 'UTF-8') ?>" target="_blank">Dosyayı Aç</a>
+              <a href="admin.php?del_podcast=<?= (int)$p['id'] ?>" onclick="return confirm('Podcast silinsin mi?')">Sil</a>
+            </div>
+          </div>
+        <?php endforeach; ?>
+      <?php endif; ?>
+    </div>
+
+    <!-- MESSAGES -->
+    <div class="card" style="grid-column:1 / -1;">
+      <h2 class="h">📩 Gelen Mesajlar (İletişim Kutusu)</h2>
+
+      <?php if(empty($messages)): ?>
+        <div class="item">Henüz mesaj yok.</div>
+      <?php else: ?>
+        <?php foreach($messages as $m): ?>
+          <div class="item">
+            <b><?= htmlspecialchars($m['sender_name'] ?? '', ENT_QUOTES, 'UTF-8') ?></b>
+            <div class="meta">
+              <?= htmlspecialchars($m['sender_email'] ?? '', ENT_QUOTES, 'UTF-8') ?>
+              • <?= htmlspecialchars($m['created_at'] ?? '', ENT_QUOTES, 'UTF-8') ?>
+            </div>
+
+            <div style="margin-top:8px;line-height:1.55;">
+              <?= nl2br(htmlspecialchars($m['message'] ?? '', ENT_QUOTES, 'UTF-8')) ?>
+            </div>
+
+            <div class="actions">
+              <a href="admin.php?del_msg=<?= (int)$m['id'] ?>" onclick="return confirm('Mesaj silinsin mi?')">Sil</a>
+            </div>
+          </div>
+        <?php endforeach; ?>
+      <?php endif; ?>
+    </div>
+
+  </div>
+
+<?php endif; ?>
+
 </main>
 
 <footer>
-    © 2025 Dingin FM — Sessizliğin Sesi. Tüm hakları saklıdır.
+  © 2025 Dingin FM — Yönetim Paneli
 </footer>
 
 </body>
