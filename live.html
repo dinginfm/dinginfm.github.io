@@ -10,9 +10,7 @@
 <style>
 *{box-sizing:border-box}
 
-:root{
-  --fm-title:#6fc9ff;
-}
+:root{ --fm-title:#6fc9ff; }
 
 html,body{
   height:100%;
@@ -21,38 +19,27 @@ html,body{
   color:#fff;
 }
 
-/* ✅ Logo asla kapanmayacak: logo EN ÜSTTE watermark */
+/* ✅ ARKAPLAN LOGO (kapanmaz) */
 body{
-  background:#0a1118;
-  overflow-x:hidden;
-  position:relative;
-}
-
-/* logo watermark katmanı */
-body::before{
-  content:"";
-  position:fixed;
-  inset:0;
-  z-index:99999;               /* HER ŞEYİN ÜSTÜNDE */
-  pointer-events:none;
   background:url("logo.png") center center no-repeat fixed;
   background-size:cover;
-  opacity:1;                   /* logo tam görünür */
+  background-color:#0a1118;
+  overflow-x:hidden;
 }
 
-/* hafif karartma (istersen 0 yaparsın) */
+/* ✅ okuma için ÇOK hafif overlay */
 body::after{
   content:"";
   position:fixed;
   inset:0;
-  z-index:1;
+  z-index:0;
   pointer-events:none;
-  background:rgba(0,0,0,.12);  /* çok hafif */
+  background:rgba(0,0,0,.10);
 }
 
 header,main,footer{
   position:relative;
-  z-index:2;                   /* overlay üstünde */
+  z-index:1;
 }
 
 /* ✅ HEADER */
@@ -184,17 +171,16 @@ main{
   margin:0 0 14px;
 }
 
-/* ✅ BUTON: SENİN İSTEDİĞİN GİBİ "HAP" (oval) + NET */
+/* ✅ BUTON: hap şeklinde */
 .big-btn{
   width:100%;
   border:none;
   cursor:pointer;
-  border-radius:999px;          /* ✅ hap */
+  border-radius:999px;
   padding:14px 14px;
   font-weight:900;
   letter-spacing:1.6px;
   font-size:13px;
-
   color:#001018;
   background:linear-gradient(135deg, #6fc9ff 0%, #e9fbff 100%);
   box-shadow:
@@ -210,11 +196,8 @@ main{
     0 0 0 2px rgba(111,201,255,.22);
 }
 
-.big-btn:active{
-  transform:translateY(0px);
-}
+.big-btn:active{ transform:translateY(0px); }
 
-/* ✅ Kapalıyken de hap şeklini koru */
 .big-btn.off{
   color:#ffffff;
   background:rgba(255,255,255,.10);
@@ -235,6 +218,7 @@ main{
   line-height:1.4;
 }
 
+/* ✅ FOOTER */
 footer{
   position:fixed;
   left:0;
@@ -289,9 +273,7 @@ footer{
 
     <p id="liveDesc" class="live-desc">Yayın kontrol ediliyor.</p>
 
-    <button id="toggleBtn" class="big-btn off" type="button">
-      CANLIYI BAŞLAT
-    </button>
+    <button id="toggleBtn" class="big-btn off" type="button">CANLIYI BAŞLAT</button>
 
     <div class="small-note" id="noteText">Tek tuşla başlat.</div>
   </div>
@@ -302,6 +284,7 @@ footer{
 </footer>
 
 <script>
+/* ✅ STREAM URL'lerini buraya yaz */
 const STREAM_URL = "https://dinginfm.com/live.mp3";
 const ICECAST_STATUS_JSON = "https://dinginfm.com/status-json.xsl";
 
@@ -438,7 +421,7 @@ async function checkStream(){
       if(!isPlaying) setStatusMode("status-off");
     }
   }catch(e){
-    if(!isPlaying) setStatusMode("status-unknown");
+    if(!isPlaying) setStatusMode("status-off");
   }
 }
 
