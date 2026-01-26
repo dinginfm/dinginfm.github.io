@@ -19,39 +19,29 @@ html,body{
   color:#fff;
 }
 
-/* ✅ ARKAPLAN LOGO (kapanmaz) */
+/* ✅ LOGO ARKAPLAN: ASLA KAPANMAZ */
 body{
   background:url("logo.png") center center no-repeat fixed;
   background-size:cover;
   background-color:#0a1118;
   overflow-x:hidden;
+  position:relative;
 }
 
-/* ✅ okuma için ÇOK hafif overlay */
-body::after{
-  content:"";
-  position:fixed;
-  inset:0;
-  z-index:0;
-  pointer-events:none;
-  background:rgba(0,0,0,.10);
-}
-
-header,main,footer{
+/* ✅ TÜM KUTULARI ŞEFFAF YAPIP LOGOYU KAPATMASIN DİYE */
+header, main, footer{
   position:relative;
   z-index:1;
 }
 
-/* ✅ HEADER */
+/* ✅ HEADER (şeffaf) */
 header{
   position:fixed;
   top:0; left:0;
   width:100%;
   padding:10px 10px 12px;
-  background:rgba(0,0,0,.18);
-  backdrop-filter:blur(12px);
-  -webkit-backdrop-filter:blur(12px);
-  border-bottom:1px solid rgba(255,255,255,.10);
+  background:transparent;                 /* ✅ kapatma yok */
+  border-bottom:0;                        /* ✅ çizgi yok */
   text-align:center;
   z-index:9999;
 }
@@ -73,7 +63,7 @@ header{
   margin-bottom:8px;
 }
 
-/* NAV */
+/* NAV (şeffaf) */
 nav{
   display:flex;
   justify-content:center;
@@ -84,27 +74,27 @@ nav{
 nav a{
   font-size:12.5px;
   text-decoration:none;
-  color:rgba(255,255,255,.86);
+  color:rgba(255,255,255,.92);
   font-weight:800;
   padding:7px 12px;
   border-radius:999px;
   transition:.18s ease;
-  border:1px solid rgba(255,255,255,.10);
-  background:rgba(255,255,255,.04);
+  border:1px solid rgba(255,255,255,.14);
+  background:rgba(255,255,255,.02);       /* ✅ çok hafif */
 }
 
 nav a:hover{
-  background:rgba(111,201,255,.16);
-  border:1px solid rgba(111,201,255,.28);
+  background:rgba(111,201,255,.10);
+  border:1px solid rgba(111,201,255,.24);
   color:#fff;
   transform:translateY(-1px);
 }
 
 nav a.active{
-  background:rgba(111,201,255,.22);
-  border:1px solid rgba(111,201,255,.42);
+  background:rgba(111,201,255,.14);
+  border:1px solid rgba(111,201,255,.30);
   color:#fff;
-  box-shadow:0 0 0 3px rgba(111,201,255,.10);
+  box-shadow:0 0 0 3px rgba(111,201,255,.06);
 }
 
 /* ✅ MAIN */
@@ -117,16 +107,16 @@ main{
   text-align:center;
 }
 
-/* ✅ PANEL */
+/* ✅ PANEL: TAM ŞEFFAF (LOGOYU KAPATMAZ) */
 .live-box{
   width:min(420px, 92%);
   padding:18px 18px 16px;
   border-radius:22px;
-  background:rgba(0,0,0,.22);
-  border:1px solid rgba(255,255,255,.14);
-  backdrop-filter:blur(10px);
-  -webkit-backdrop-filter:blur(10px);
-  box-shadow:0 16px 34px rgba(0,0,0,.55);
+  background:transparent;                 /* ✅ KAPATMA YOK */
+  border:1px solid rgba(255,255,255,.22);
+  backdrop-filter:none;                   /* ✅ blur yok */
+  -webkit-backdrop-filter:none;
+  box-shadow:none;                        /* ✅ gölge yok */
   transform:translateY(-18px);
 }
 
@@ -135,17 +125,18 @@ main{
   margin:0 0 10px;
   color:var(--fm-title);
   font-weight:900;
+  text-shadow:0 10px 40px rgba(0,0,0,.35);
 }
 
-/* Durum pill */
+/* Durum pill (şeffaf) */
 .status-pill{
   display:inline-flex;
   align-items:center;
   gap:8px;
   padding:8px 12px;
   border-radius:999px;
-  border:1px solid rgba(255,255,255,.16);
-  background:rgba(255,255,255,.06);
+  border:1px solid rgba(255,255,255,.18);
+  background:rgba(255,255,255,.02);       /* ✅ çok hafif */
   font-size:12px;
   font-weight:900;
   letter-spacing:.4px;
@@ -166,44 +157,36 @@ main{
 
 .live-desc{
   font-size:13px;
-  color:rgba(255,255,255,.92);
+  color:rgba(255,255,255,.95);
   line-height:1.6;
   margin:0 0 14px;
+  text-shadow:0 10px 40px rgba(0,0,0,.35);
 }
 
-/* ✅ BUTON: hap şeklinde */
+/* ✅ BUTON: şeffaf + çizgili (LOGOYU KAPATMAZ) */
 .big-btn{
   width:100%;
-  border:none;
-  cursor:pointer;
   border-radius:999px;
   padding:14px 14px;
   font-weight:900;
   letter-spacing:1.6px;
   font-size:13px;
-  color:#001018;
-  background:linear-gradient(135deg, #6fc9ff 0%, #e9fbff 100%);
-  box-shadow:
-    0 18px 46px rgba(111,201,255,.28),
-    0 0 0 2px rgba(111,201,255,.18);
+
+  cursor:pointer;
+  color:#ffffff;
+  background:rgba(255,255,255,.03);      /* ✅ çok hafif */
+  border:1px solid rgba(255,255,255,.28);
+  box-shadow:none;                        /* ✅ gölge yok */
   transition:.16s ease;
 }
 
 .big-btn:hover{
   transform:translateY(-2px);
-  box-shadow:
-    0 24px 60px rgba(111,201,255,.32),
-    0 0 0 2px rgba(111,201,255,.22);
+  background:rgba(111,201,255,.10);
+  border:1px solid rgba(111,201,255,.28);
 }
 
 .big-btn:active{ transform:translateY(0px); }
-
-.big-btn.off{
-  color:#ffffff;
-  background:rgba(255,255,255,.10);
-  border:1px solid rgba(255,255,255,.22);
-  box-shadow:0 14px 30px rgba(0,0,0,.40);
-}
 
 .big-btn.busy{
   opacity:.60;
@@ -214,11 +197,12 @@ main{
 .small-note{
   margin-top:10px;
   font-size:12px;
-  opacity:.86;
+  opacity:.90;
   line-height:1.4;
+  text-shadow:0 10px 40px rgba(0,0,0,.35);
 }
 
-/* ✅ FOOTER */
+/* ✅ FOOTER (şeffaf) */
 footer{
   position:fixed;
   left:0;
@@ -226,13 +210,12 @@ footer{
   width:100%;
   padding:12px 10px;
   font-size:12px;
-  color:rgba(255,255,255,.75);
+  color:rgba(255,255,255,.80);
   text-align:center;
-  background:rgba(0,0,0,.22);
-  backdrop-filter:blur(10px);
-  -webkit-backdrop-filter:blur(10px);
-  border-top:1px solid rgba(255,255,255,.10);
+  background:transparent;                 /* ✅ kapatma yok */
+  border-top:0;
   z-index:9999;
+  text-shadow:0 10px 40px rgba(0,0,0,.35);
 }
 
 @media(max-width:600px){
@@ -273,7 +256,7 @@ footer{
 
     <p id="liveDesc" class="live-desc">Yayın kontrol ediliyor.</p>
 
-    <button id="toggleBtn" class="big-btn off" type="button">CANLIYI BAŞLAT</button>
+    <button id="toggleBtn" class="big-btn" type="button">CANLIYI BAŞLAT</button>
 
     <div class="small-note" id="noteText">Tek tuşla başlat.</div>
   </div>
@@ -284,7 +267,6 @@ footer{
 </footer>
 
 <script>
-/* ✅ STREAM URL'lerini buraya yaz */
 const STREAM_URL = "https://dinginfm.com/live.mp3";
 const ICECAST_STATUS_JSON = "https://dinginfm.com/status-json.xsl";
 
@@ -327,11 +309,9 @@ function setBusy(b){
 
 function updateButton(){
   if(isPlaying){
-    toggleBtn.classList.remove("off");
     toggleBtn.innerText = "DURDUR";
     noteText.innerText = "Dinliyorsun ✅";
   }else{
-    toggleBtn.classList.add("off");
     toggleBtn.innerText = "CANLIYI BAŞLAT";
     noteText.innerText = "Tek tuşla başlat.";
   }
