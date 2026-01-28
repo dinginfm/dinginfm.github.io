@@ -1,245 +1,220 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Dingin FM — Canlı Yayın</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dingin FM | Canlı Yayın</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *{box-sizing:border-box}
+    :root{
+      --fm-title:#6fc9ff;
+      --glass: rgba(0,0,0,.42);
+      --glass2: rgba(255,255,255,.08);
+    }
+    html,body{
+      margin:0;height:100%;
+      font-family:Segoe UI,system-ui,sans-serif;
+      color:#fff
+    }
+    body{
+      background:#0a1118 url("logo.png") center center no-repeat fixed;
+      background-size:cover;
+      overflow:hidden;
+    }
 
-<style>
-*{box-sizing:border-box}
+    .overlay{
+      position:fixed; inset:0; z-index:0;
+      background:
+        radial-gradient(circle at center, rgba(0,0,0,.06) 0%, rgba(0,0,0,.55) 85%),
+        linear-gradient(to bottom, rgba(0,0,0,.45) 0%, rgba(0,0,0,.10) 40%, rgba(0,0,0,.55) 100%);
+    }
 
-:root{
-  --fm-title:#6fc9ff;
-  --fm-soft:#9fdcff;
-}
+    header{
+      position:fixed; top:0; left:0; width:100%;
+      z-index:10;
+      padding:12px 14px;
+      background:rgba(0,0,0,.35);
+      border-bottom:1px solid rgba(255,255,255,.10);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      text-align:center;
+    }
+    header a{
+      color:#fff;
+      text-decoration:none;
+      font-weight:800;
+      opacity:.85;
+      margin:0 8px;
+      font-size:13px;
+    }
+    header a.active{color:var(--fm-title);opacity:1}
+    header a:hover{opacity:1}
 
-html,body{
-  min-height:100%;
-  margin:0;
-  font-family:'Segoe UI',sans-serif;
-  color:#fff;
-}
+    main{
+      position:relative; z-index:2;
+      height:100%;
+      display:flex;
+      align-items:flex-start;
+      justify-content:center;
+      padding:120px 18px 30px;
+    }
 
-/* Logo arka plan */
-body{
-  background:url("logo.png") center center no-repeat fixed;
-  background-size:cover;
-  background-color:#0a1118;
-  overflow-x:hidden;
-}
+    /* 🔧 PANEL: DİKDÖRTGEN + YUKARIDA */
+    .panel{
+      width:min(520px, 96%);
+      background:var(--glass);
+      border:1px solid rgba(255,255,255,.12);
+      border-radius:22px;
+      padding:20px 22px;
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      box-shadow:0 25px 55px rgba(0,0,0,.35);
+      text-align:center;
+      transform:translateY(-40px);
+    }
 
-/* okunurluk overlay */
-body::after{
-  content:"";
-  position:fixed;
-  inset:0;
-  z-index:0;
-  pointer-events:none;
-  background:
-    radial-gradient(circle at center, rgba(0,0,0,.03) 0%, rgba(0,0,0,.30) 85%),
-    linear-gradient(to bottom, rgba(0,0,0,.16) 0%, rgba(0,0,0,.05) 45%, rgba(0,0,0,.18) 100%);
-}
+    .title{
+      font-size:18px;
+      font-weight:900;
+      color:var(--fm-title);
+      margin:6px 0 8px;
+    }
+    .desc{
+      font-size:13px;
+      opacity:.85;
+      line-height:1.5;
+      margin:0 0 14px;
+    }
 
-header,main,footer{
-  position:relative;
-  z-index:1;
-}
+    .status{
+      background:var(--glass2);
+      border:1px solid rgba(255,255,255,.12);
+      border-radius:14px;
+      padding:10px 12px;
+      font-size:13px;
+      opacity:.95;
+      margin-bottom:14px;
+      text-align:left;
+    }
 
-/* HEADER */
-header{
-  position:fixed;
-  top:0; left:0;
-  width:100%;
-  padding:10px 10px 12px;
-  background:rgba(0,0,0,.18);
-  backdrop-filter:blur(12px);
-  border-bottom:1px solid rgba(255,255,255,.10);
-  text-align:center;
-  z-index:9999;
-}
+    .btn{
+      display:block;
+      width:100%;
+      padding:13px 14px;
+      border:none;
+      border-radius:14px;
+      background:var(--fm-title);
+      color:#000;
+      font-weight:900;
+      letter-spacing:.8px;
+      cursor:pointer;
+      font-size:14px;
+    }
+    .btn:disabled{opacity:.6;cursor:not-allowed}
 
-.logo-text{
-  font-family:'Orbitron',sans-serif;
-  font-size:22px;
-  font-weight:700;
-  letter-spacing:3px;
-  margin:0;
-  color:var(--fm-title);
-  text-shadow:0 2px 18px rgba(111,201,255,.42);
-}
+    .btn2{
+      margin-top:10px;
+      background:rgba(255,255,255,.14);
+      border:1px solid rgba(255,255,255,.18);
+      color:#fff;
+    }
 
-.site-subtitle{
-  font-size:11px;
-  color:rgba(255,255,255,.82);
-  margin:3px 0 8px;
-}
+    .mini{
+      margin-top:12px;
+      font-size:12px;
+      opacity:.8;
+      line-height:1.5;
+    }
 
-/* NAV */
-nav{
-  display:flex;
-  justify-content:center;
-  gap:8px;
-  flex-wrap:wrap;
-}
-
-nav a{
-  font-size:12.5px;
-  text-decoration:none;
-  color:rgba(255,255,255,.86);
-  font-weight:800;
-  padding:7px 12px;
-  border-radius:999px;
-  border:1px solid rgba(255,255,255,.10);
-  background:rgba(255,255,255,.04);
-}
-
-nav a.active{
-  background:rgba(111,201,255,.22);
-  border-color:rgba(111,201,255,.42);
-  box-shadow:0 0 0 3px rgba(111,201,255,.10);
-}
-
-/* MAIN */
-main{
-  min-height:100vh;
-  padding:140px 18px 40px; /* ALT BOŞLUK DÜZELTİLDİ */
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  text-align:center;
-}
-
-/* PANEL */
-.live-box{
-  width:min(420px, 92%);
-  padding:18px;
-  border-radius:22px;
-  background:rgba(0,0,0,.26);
-  border:1px solid rgba(255,255,255,.16);
-  backdrop-filter:blur(10px);
-  box-shadow:0 16px 34px rgba(0,0,0,.55);
-}
-
-.live-title{
-  font-size:19px;
-  margin:0 0 10px;
-  color:var(--fm-title);
-  font-weight:900;
-}
-
-/* STATUS */
-.status-pill{
-  display:inline-flex;
-  align-items:center;
-  gap:8px;
-  padding:8px 12px;
-  border-radius:999px;
-  border:1px solid rgba(255,255,255,.16);
-  background:rgba(255,255,255,.06);
-  font-size:12px;
-  font-weight:900;
-  margin-bottom:12px;
-}
-
-.dot{
-  width:10px;
-  height:10px;
-  border-radius:50%;
-  background:#777;
-}
-
-.status-on .dot{background:#3cff82}
-.status-off .dot{background:#ff4d4d}
-.status-unknown .dot{background:#ffd166}
-
-.live-desc{
-  font-size:13px;
-  color:rgba(255,255,255,.92);
-  line-height:1.6;
-  margin-bottom:14px;
-}
-
-/* BUTTON */
-.big-btn{
-  width:100%;
-  border:none;
-  cursor:pointer;
-  border-radius:16px;
-  padding:14px;
-  font-weight:900;
-  letter-spacing:1.6px;
-  font-size:13px;
-  color:#001018;
-  background:linear-gradient(135deg, #6fc9ff 0%, #e9fbff 100%);
-}
-
-.big-btn.off{
-  color:#fff;
-  background:rgba(255,255,255,.08);
-  border:1px solid rgba(255,255,255,.22);
-}
-
-.small-note{
-  margin-top:10px;
-  font-size:12px;
-  opacity:.86;
-}
-
-audio{display:none}
-
-/* ✅ FOOTER — ARTIK SAYFA ALTINDA */
-footer{
-  width:100%;
-  padding:16px 10px 20px;
-  font-size:12px;
-  color:rgba(255,255,255,.75);
-  text-align:center;
-  background:rgba(0,0,0,.22);
-  backdrop-filter:blur(10px);
-  border-top:1px solid rgba(255,255,255,.10);
-}
-</style>
+    footer{
+      position:fixed; bottom:0; left:0; width:100%;
+      z-index:10;
+      padding:10px;
+      text-align:center;
+      font-size:12px;
+      background:rgba(0,0,0,.30);
+      border-top:1px solid rgba(255,255,255,.10);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      color:rgba(255,255,255,.70);
+    }
+  </style>
 </head>
 
 <body>
+<div class="overlay"></div>
 
 <header>
-  <div class="logo-text">DINGIN&nbsp;FM</div>
-  <div class="site-subtitle">Sessizliğin Sesi Burada</div>
-  <nav>
-    <a href="index.html">Ana Sayfa</a>
-    <a href="live.html" class="active">Canlı Yayın</a>
-    <a href="dj.html">DJ Aylak</a>
-    <a href="podcast.html">Podcast</a>
-    <a href="blog.html">Blog</a>
-    <a href="tarihce.html">Tarihçe</a>
-    <a href="yayinsaatleri.html">Yayın Saatleri</a>
-    <a href="connect.html">İletişim</a>
-  </nav>
+  <a href="/index.html">Ana Sayfa</a>
+  <a href="/live.html" class="active">Canlı Yayın</a>
+  <a href="/dj.html">DJ Aylak</a>
+  <a href="/podcast.html">Podcast</a>
+  <a href="/blog.html">Blog</a>
+  <a href="/tarihce.html">Tarihçe</a>
+  <a href="/yayinsaatleri.html">Yayın Saatleri</a>
+  <a href="/connect.php">İletişim</a>
 </header>
 
 <main>
-  <div class="live-box">
-    <div class="live-title">🎙️ Canlı Yayın</div>
+  <div class="panel">
+    <div class="title">🎧 Dingin FM — Canlı Yayın</div>
+    <p class="desc">
+      Butona bastığında yayın başlar. Tekrar basınca durur.
+      Takılırsa “Yenile / Düzelt” ile toparlar.
+    </p>
 
-    <div class="status-pill status-unknown">
-      <span class="dot"></span>
-      <span>Kontrol ediliyor...</span>
+    <div class="status">
+      Durum: <b id="statusText">Hazır</b><br/>
+      Kaynak: <span>/live.mp3</span>
     </div>
 
-    <p class="live-desc">Yayın kontrol ediliyor.</p>
+    <button class="btn" id="btnPlay">▶ CANLI YAYIN</button>
+    <button class="btn btn2" id="btnReset">⟲ YENİLE / DÜZELT</button>
 
-    <button class="big-btn off">CANLIYI BAŞLAT</button>
+    <div class="mini">
+      ⚠️ iPhone/Safari: Ses için bazen 1 kez ekrana dokunmak gerekir.<br/>
+      ✅ Chrome/Android: Direkt çalar.
+    </div>
 
-    <div class="small-note">Tek tuşla başlat.</div>
+    <audio id="player" preload="none" playsinline></audio>
   </div>
 </main>
 
-<footer>
-  © 2025 Dingin FM — Sessizliğin Sesi Burada. <strong>Tüm hakları saklıdır.</strong>
-</footer>
+<footer>© 2025 Dingin FM — Sessizliğin Sesi Burada.</footer>
+
+<script>
+const STREAM_URL = "/live.mp3";
+const player = document.getElementById("player");
+const btnPlay = document.getElementById("btnPlay");
+const btnReset = document.getElementById("btnReset");
+const statusText = document.getElementById("statusText");
+
+function setUI(playing){
+  btnPlay.textContent = playing ? "⏸ DURDUR" : "▶ CANLI YAYIN";
+  statusText.textContent = playing ? "Çalıyor ✅" : "Durdu ⏹";
+}
+
+async function startStream(){
+  try{
+    statusText.textContent = "Bağlanıyor… ⏳";
+    player.src = STREAM_URL + "?t=" + Date.now();
+    player.load();
+    await player.play();
+    setUI(true);
+  }catch(e){
+    statusText.textContent = "Hata ❌";
+    setUI(false);
+  }
+}
+function stopStream(){
+  try{player.pause();player.currentTime=0}catch(e){}
+  setUI(false);
+}
+
+btnPlay.onclick = () => (!player.paused ? stopStream() : startStream());
+btnReset.onclick = async () => { stopStream(); await startStream(); };
+</script>
 
 </body>
 </html>
