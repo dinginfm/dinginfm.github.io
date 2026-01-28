@@ -3,411 +3,168 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Dingin FM — Canlı Yayın</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700&display=swap" rel="stylesheet">
+<title>Dingin FM | Canlı Yayın</title>
 
 <style>
-*{box-sizing:border-box}
-
-:root{ --fm-title:#6fc9ff; }
-
-html,body{
-  height:100%;
-  margin:0;
-  font-family:'Segoe UI',sans-serif;
-  color:#fff;
+/* ===== GENEL ===== */
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: radial-gradient(circle at top, #0b1f2a, #000);
+  color: #eaf6ff;
+  overflow-x: hidden;
 }
 
-/* ✅ LOGO ARKAPLAN: ASLA KAPANMAZ */
-body{
-  background:url("logo.png") center center no-repeat fixed;
-  background-size:cover;
-  background-color:#0a1118;
-  overflow-x:hidden;
-  position:relative;
+/* ===== LOGO (KAPANMAZ) ===== */
+#logo {
+  position: fixed;
+  top: 12px;
+  left: 12px;
+  width: 180px;
+  height: 180px;
+  background: url("logo.png") no-repeat center center;
+  background-size: contain;
+  z-index: 1;              /* her şeyin üstünde */
+  pointer-events: none;    /* tıklanamaz */
 }
 
-/* ✅ TÜM KUTULARI ŞEFFAF YAPIP LOGOYU KAPATMASIN DİYE */
-header, main, footer{
-  position:relative;
-  z-index:1;
+/* ===== SAYFA İSKELETİ ===== */
+.page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 120px 16px 32px; /* logo payı */
+  box-sizing: border-box;
 }
 
-/* ✅ HEADER (şeffaf) */
-header{
-  position:fixed;
-  top:0; left:0;
-  width:100%;
-  padding:10px 10px 12px;
-  background:transparent;                 /* ✅ kapatma yok */
-  border-bottom:0;                        /* ✅ çizgi yok */
-  text-align:center;
-  z-index:9999;
+/* ===== CAM PANEL ===== */
+.panel {
+  width: 100%;
+  max-width: 420px;
+  padding: 28px 24px 32px;
+  border-radius: 16px;
+  background: rgba(10, 25, 35, 0.55);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 0 30px rgba(0,0,0,0.4);
+  text-align: center;
 }
 
-.logo-text{
-  font-family:'Orbitron',sans-serif;
-  font-size:22px;
-  font-weight:700;
-  letter-spacing:3px;
-  margin:0;
-  color:var(--fm-title);
-  text-shadow:0 2px 18px rgba(111,201,255,.42);
+/* ===== DURUM ===== */
+.status {
+  font-size: 14px;
+  letter-spacing: 0.5px;
+  margin-bottom: 18px;
+}
+.status span {
+  font-weight: 600;
+}
+.status.ready span { color: #8fd3ff; }
+.status.connected span { color: #ffd36a; }
+.status.live span { color: #42ff9e; }
+
+/* ===== BUTON (ANA SAYFA ÖLÇEĞİ) ===== */
+.live-btn {
+  width: 100%;
+  height: 56px;
+  border-radius: 12px;
+  border: none;
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: 0.6px;
+  cursor: pointer;
+  background: linear-gradient(135deg, #1ecbff, #3a7cff);
+  color: #001018;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, opacity 0.15s ease;
+}
+.live-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 20px rgba(30,203,255,0.35);
+}
+.live-btn:active {
+  transform: translateY(0);
+  box-shadow: none;
+}
+.live-btn.disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
 }
 
-.site-subtitle{
-  font-size:11px;
-  color:rgba(255,255,255,.82);
-  margin-top:3px;
-  margin-bottom:8px;
+/* ===== PLAYER ===== */
+audio {
+  width: 100%;
+  margin-top: 18px;
 }
 
-/* NAV (şeffaf) */
-nav{
-  display:flex;
-  justify-content:center;
-  gap:8px;
-  flex-wrap:wrap;
-}
-
-nav a{
-  font-size:12.5px;
-  text-decoration:none;
-  color:rgba(255,255,255,.92);
-  font-weight:800;
-  padding:7px 12px;
-  border-radius:999px;
-  transition:.18s ease;
-  border:1px solid rgba(255,255,255,.14);
-  background:rgba(255,255,255,.02);       /* ✅ çok hafif */
-}
-
-nav a:hover{
-  background:rgba(111,201,255,.10);
-  border:1px solid rgba(111,201,255,.24);
-  color:#fff;
-  transform:translateY(-1px);
-}
-
-nav a.active{
-  background:rgba(111,201,255,.14);
-  border:1px solid rgba(111,201,255,.30);
-  color:#fff;
-  box-shadow:0 0 0 3px rgba(111,201,255,.06);
-}
-
-/* ✅ MAIN */
-main{
-  min-height:100vh;
-  padding:140px 18px 110px;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  text-align:center;
-}
-
-/* ✅ PANEL: TAM ŞEFFAF (LOGOYU KAPATMAZ) */
-.live-box{
-  width:min(420px, 92%);
-  padding:18px 18px 16px;
-  border-radius:22px;
-  background:transparent;                 /* ✅ KAPATMA YOK */
-  border:1px solid rgba(255,255,255,.22);
-  backdrop-filter:none;                   /* ✅ blur yok */
-  -webkit-backdrop-filter:none;
-  box-shadow:none;                        /* ✅ gölge yok */
-  transform:translateY(-18px);
-}
-
-.live-title{
-  font-size:19px;
-  margin:0 0 10px;
-  color:var(--fm-title);
-  font-weight:900;
-  text-shadow:0 10px 40px rgba(0,0,0,.35);
-}
-
-/* Durum pill (şeffaf) */
-.status-pill{
-  display:inline-flex;
-  align-items:center;
-  gap:8px;
-  padding:8px 12px;
-  border-radius:999px;
-  border:1px solid rgba(255,255,255,.18);
-  background:rgba(255,255,255,.02);       /* ✅ çok hafif */
-  font-size:12px;
-  font-weight:900;
-  letter-spacing:.4px;
-  margin-bottom:12px;
-}
-
-.dot{
-  width:10px;
-  height:10px;
-  border-radius:50%;
-  background:#777;
-  box-shadow:0 0 10px rgba(255,255,255,.10);
-}
-
-.status-on .dot{background:#3cff82; box-shadow:0 0 16px rgba(60,255,130,.45);}
-.status-off .dot{background:#ff4d4d; box-shadow:0 0 16px rgba(255,77,77,.35);}
-.status-unknown .dot{background:#ffd166; box-shadow:0 0 16px rgba(255,209,102,.35);}
-
-.live-desc{
-  font-size:13px;
-  color:rgba(255,255,255,.95);
-  line-height:1.6;
-  margin:0 0 14px;
-  text-shadow:0 10px 40px rgba(0,0,0,.35);
-}
-
-/* ✅ BUTON: şeffaf + çizgili (LOGOYU KAPATMAZ) */
-.big-btn{
-  width:100%;
-  border-radius:999px;
-  padding:14px 14px;
-  font-weight:900;
-  letter-spacing:1.6px;
-  font-size:13px;
-
-  cursor:pointer;
-  color:#ffffff;
-  background:rgba(255,255,255,.03);      /* ✅ çok hafif */
-  border:1px solid rgba(255,255,255,.28);
-  box-shadow:none;                        /* ✅ gölge yok */
-  transition:.16s ease;
-}
-
-.big-btn:hover{
-  transform:translateY(-2px);
-  background:rgba(111,201,255,.10);
-  border:1px solid rgba(111,201,255,.28);
-}
-
-.big-btn:active{ transform:translateY(0px); }
-
-.big-btn.busy{
-  opacity:.60;
-  cursor:not-allowed;
-  transform:none !important;
-}
-
-.small-note{
-  margin-top:10px;
-  font-size:12px;
-  opacity:.90;
-  line-height:1.4;
-  text-shadow:0 10px 40px rgba(0,0,0,.35);
-}
-
-/* ✅ FOOTER (şeffaf) */
-footer{
-  position:fixed;
-  left:0;
-  bottom:0;
-  width:100%;
-  padding:12px 10px;
-  font-size:12px;
-  color:rgba(255,255,255,.80);
-  text-align:center;
-  background:transparent;                 /* ✅ kapatma yok */
-  border-top:0;
-  z-index:9999;
-  text-shadow:0 10px 40px rgba(0,0,0,.35);
-}
-
-@media(max-width:600px){
-  .logo-text{font-size:21px}
-  nav a{font-size:12px; padding:6px 10px}
-  main{padding-top:150px; padding-bottom:120px;}
-  .live-box{width:min(400px, 94%); transform:translateY(-10px);}
+/* ===== MOBİL ===== */
+@media (max-width: 480px) {
+  #logo {
+    width: 140px;
+    height: 140px;
+  }
+  .panel {
+    padding: 24px 18px 28px;
+  }
 }
 </style>
 </head>
 
 <body>
 
-<header>
-  <div class="logo-text">DINGIN&nbsp;FM</div>
-  <div class="site-subtitle">Sessizliğin Sesi Burada</div>
+<div id="logo"></div>
 
-  <nav>
-    <a href="index.html">Ana Sayfa</a>
-    <a href="live.html" class="active">Canlı Yayın</a>
-    <a href="dj.html">DJ Aylak</a>
-    <a href="podcast.html">Podcast</a>
-    <a href="blog.html">Blog</a>
-    <a href="tarihce.html">Tarihçe</a>
-    <a href="yayinsaatleri.html">Yayın Saatleri</a>
-    <a href="connect.html">İletişim</a>
-  </nav>
-</header>
+<div class="page">
+  <div class="panel">
 
-<main>
-  <div class="live-box">
-    <div class="live-title">🎙️ Canlı Yayın</div>
-
-    <div id="statusPill" class="status-pill status-unknown">
-      <span class="dot"></span>
-      <span id="statusText">Kontrol ediliyor...</span>
+    <!-- DURUM -->
+    <div id="status" class="status ready">
+      Durum: <span>Hazır</span>
     </div>
 
-    <p id="liveDesc" class="live-desc">Yayın kontrol ediliyor.</p>
+    <!-- BUTON -->
+    <button id="liveBtn" class="live-btn">
+      Canlı Yayını Dinle
+    </button>
 
-    <button id="toggleBtn" class="big-btn" type="button">CANLIYI BAŞLAT</button>
+    <!-- PLAYER -->
+    <audio id="player" preload="none" controls style="display:none">
+      <source src="https://dinginfm.com.tr:8000/stream" type="audio/mpeg">
+      Tarayıcınız audio elementini desteklemiyor.
+    </audio>
 
-    <div class="small-note" id="noteText">Tek tuşla başlat.</div>
   </div>
-</main>
-
-<footer>
-  © 2025 Dingin FM — Sessizliğin Sesi Burada. Tüm hakları saklıdır.
-</footer>
+</div>
 
 <script>
-const STREAM_URL = "https://dinginfm.com/live.mp3";
-const ICECAST_STATUS_JSON = "https://dinginfm.com/status-json.xsl";
+const btn = document.getElementById("liveBtn");
+const player = document.getElementById("player");
+const statusBox = document.getElementById("status");
 
-const statusPill = document.getElementById("statusPill");
-const statusText = document.getElementById("statusText");
-const liveDesc   = document.getElementById("liveDesc");
-const toggleBtn  = document.getElementById("toggleBtn");
-const noteText   = document.getElementById("noteText");
-
-let audio = null;
-let isPlaying = false;
-let isBusy = false;
-
-function setStatusMode(mode){
-  statusPill.classList.remove("status-on","status-off","status-unknown");
-  statusPill.classList.add(mode);
-
-  if(mode === "status-on"){
-    statusText.innerText = "DJ Aylak şu an yayında ✅";
-    liveDesc.innerText = "Sessizliğin içinden geçen ses şimdi burada.";
-  }else if(mode === "status-off"){
-    statusText.innerText = "Şu an canlı yayın yok";
-    liveDesc.innerText = "Yayın başladığında burada gözükecek.";
-  }else{
-    statusText.innerText = "Yayın kontrol edilemiyor";
-    liveDesc.innerText = "Canlıyı başlatmayı deneyebilirsin.";
-  }
+function setStatus(type, text) {
+  statusBox.className = "status " + type;
+  statusBox.querySelector("span").textContent = text;
 }
 
-function setBusy(b){
-  isBusy = b;
-  if(b){
-    toggleBtn.classList.add("busy");
-    toggleBtn.disabled = true;
-  }else{
-    toggleBtn.classList.remove("busy");
-    toggleBtn.disabled = false;
-  }
-}
+btn.addEventListener("click", () => {
+  setStatus("connected", "Bağlı");
+  btn.classList.add("disabled");
+  btn.textContent = "Bağlanıyor...";
+  btn.disabled = true;
 
-function updateButton(){
-  if(isPlaying){
-    toggleBtn.innerText = "DURDUR";
-    noteText.innerText = "Dinliyorsun ✅";
-  }else{
-    toggleBtn.innerText = "CANLIYI BAŞLAT";
-    noteText.innerText = "Tek tuşla başlat.";
-  }
-}
-
-function stopStream(){
-  try{
-    if(audio){
-      audio.pause();
-      audio.src = "";
-      audio.load();
-      audio = null;
-    }
-  }catch(e){}
-  isPlaying = false;
-  updateButton();
-}
-
-async function startStream(){
-  stopStream();
-
-  audio = new Audio();
-  audio.preload = "none";
-  audio.src = STREAM_URL + (STREAM_URL.includes("?") ? "&" : "?") + "t=" + Date.now();
-
-  audio.addEventListener("playing", () => {
-    isPlaying = true;
-    updateButton();
+  player.style.display = "block";
+  player.play().then(() => {
+    setStatus("live", "Yayında");
+    btn.textContent = "Canlı Yayın";
+  }).catch(() => {
+    setStatus("ready", "Hazır");
+    btn.classList.remove("disabled");
+    btn.disabled = false;
+    btn.textContent = "Canlı Yayını Dinle";
   });
-
-  audio.addEventListener("pause", () => {
-    if(isPlaying){
-      isPlaying = false;
-      updateButton();
-    }
-  });
-
-  audio.addEventListener("error", () => {
-    noteText.innerText = "🚫 Yayın açılamadı.";
-    stopStream();
-    setStatusMode("status-off");
-  });
-
-  await audio.play();
-  isPlaying = true;
-  updateButton();
-}
-
-toggleBtn.addEventListener("click", async () => {
-  if(isBusy) return;
-  setBusy(true);
-
-  try{
-    if(!isPlaying){
-      noteText.innerText = "Bağlanıyor...";
-      await startStream();
-      setStatusMode("status-on");
-    }else{
-      stopStream();
-      noteText.innerText = "Durduruldu.";
-      setStatusMode("status-off");
-    }
-  }catch(e){
-    stopStream();
-    noteText.innerText = "Başlatılamadı. Sayfayı yenile.";
-    setStatusMode("status-unknown");
-  }
-
-  setBusy(false);
 });
-
-async function checkStream(){
-  try{
-    const res = await fetch(ICECAST_STATUS_JSON + "?t=" + Date.now(), { cache:"no-store" });
-    if(!res.ok) throw new Error("status-json yok");
-
-    const data = await res.json();
-    const source = data?.icestats?.source;
-
-    const hasSource =
-      Array.isArray(source) ? source.length > 0 :
-      (source && typeof source === "object");
-
-    if(hasSource){
-      if(!isPlaying) setStatusMode("status-on");
-    }else{
-      if(!isPlaying) setStatusMode("status-off");
-    }
-  }catch(e){
-    if(!isPlaying) setStatusMode("status-off");
-  }
-}
-
-updateButton();
-checkStream();
-setInterval(checkStream, 15000);
 </script>
 
 </body>
