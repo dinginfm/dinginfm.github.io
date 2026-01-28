@@ -6,7 +6,6 @@
 <title>Dingin FM | Canlı Yayın</title>
 
 <style>
-/* ===== GENEL ===== */
 html, body {
   margin: 0;
   padding: 0;
@@ -17,7 +16,7 @@ html, body {
   overflow-x: hidden;
 }
 
-/* ===== LOGO (KAPANMAZ) ===== */
+/* LOGO */
 #logo {
   position: fixed;
   top: 12px;
@@ -26,21 +25,52 @@ html, body {
   height: 180px;
   background: url("logo.png") no-repeat center center;
   background-size: contain;
-  z-index: 1;              /* her şeyin üstünde */
-  pointer-events: none;    /* tıklanamaz */
+  z-index: 1;
+  pointer-events: none;
 }
 
-/* ===== SAYFA İSKELETİ ===== */
+/* HEADER */
+header {
+  position: fixed;
+  top: 0;
+  right: 0;
+  padding: 16px;
+  z-index: 2;
+}
+
+/* KARE CANLI BUTON (ANA SAYFA HİSSİ) */
+#liveSquare {
+  width: 56px;
+  height: 56px;
+  border-radius: 12px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: linear-gradient(135deg, #1ecbff, #3a7cff);
+  color: #001018;
+
+  font-size: 18px;
+  font-weight: 700;
+  cursor: pointer;
+  user-select: none;
+}
+
+#liveSquare:hover { filter: brightness(1.05); }
+#liveSquare:active { transform: translateY(1px); }
+
+/* SAYFA */
 .page {
   min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 120px 16px 32px; /* logo payı */
+  padding: 120px 16px 32px;
   box-sizing: border-box;
 }
 
-/* ===== CAM PANEL ===== */
+/* PANEL */
 .panel {
   width: 100%;
   max-width: 420px;
@@ -48,66 +78,24 @@ html, body {
   border-radius: 16px;
   background: rgba(10, 25, 35, 0.55);
   backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
   box-shadow: 0 0 30px rgba(0,0,0,0.4);
   text-align: center;
 }
 
-/* ===== DURUM ===== */
+/* DURUM */
 .status {
   font-size: 14px;
   letter-spacing: 0.5px;
-  margin-bottom: 18px;
 }
-.status span {
-  font-weight: 600;
-}
+.status span { font-weight: 600; }
 .status.ready span { color: #8fd3ff; }
 .status.connected span { color: #ffd36a; }
 .status.live span { color: #42ff9e; }
 
-/* ===== BUTON (ANA SAYFA ÖLÇEĞİ) ===== */
-.live-btn {
-  width: 100%;
-  height: 56px;
-  border-radius: 12px;
-  border: none;
-  font-size: 16px;
-  font-weight: 600;
-  letter-spacing: 0.6px;
-  cursor: pointer;
-  background: linear-gradient(135deg, #1ecbff, #3a7cff);
-  color: #001018;
-  transition: transform 0.15s ease, box-shadow 0.15s ease, opacity 0.15s ease;
-}
-.live-btn:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 8px 20px rgba(30,203,255,0.35);
-}
-.live-btn:active {
-  transform: translateY(0);
-  box-shadow: none;
-}
-.live-btn.disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
-}
-
-/* ===== PLAYER ===== */
+/* PLAYER */
 audio {
   width: 100%;
   margin-top: 18px;
-}
-
-/* ===== MOBİL ===== */
-@media (max-width: 480px) {
-  #logo {
-    width: 140px;
-    height: 140px;
-  }
-  .panel {
-    padding: 24px 18px 28px;
-  }
 }
 </style>
 </head>
@@ -116,30 +104,25 @@ audio {
 
 <div id="logo"></div>
 
+<header>
+  <div id="liveSquare">▶</div>
+</header>
+
 <div class="page">
   <div class="panel">
-
-    <!-- DURUM -->
     <div id="status" class="status ready">
       Durum: <span>Hazır</span>
     </div>
 
-    <!-- BUTON -->
-    <button id="liveBtn" class="live-btn">
-      Canlı Yayını Dinle
-    </button>
-
-    <!-- PLAYER -->
     <audio id="player" preload="none" controls style="display:none">
       <source src="https://dinginfm.com.tr:8000/stream" type="audio/mpeg">
       Tarayıcınız audio elementini desteklemiyor.
     </audio>
-
   </div>
 </div>
 
 <script>
-const btn = document.getElementById("liveBtn");
+const squareBtn = document.getElementById("liveSquare");
 const player = document.getElementById("player");
 const statusBox = document.getElementById("status");
 
@@ -148,21 +131,14 @@ function setStatus(type, text) {
   statusBox.querySelector("span").textContent = text;
 }
 
-btn.addEventListener("click", () => {
+squareBtn.addEventListener("click", () => {
   setStatus("connected", "Bağlı");
-  btn.classList.add("disabled");
-  btn.textContent = "Bağlanıyor...";
-  btn.disabled = true;
-
   player.style.display = "block";
+
   player.play().then(() => {
     setStatus("live", "Yayında");
-    btn.textContent = "Canlı Yayın";
   }).catch(() => {
     setStatus("ready", "Hazır");
-    btn.classList.remove("disabled");
-    btn.disabled = false;
-    btn.textContent = "Canlı Yayını Dinle";
   });
 });
 </script>
