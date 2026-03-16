@@ -4,28 +4,23 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Dingin FM | Son Yayın</title>
-
 <style>
 *{box-sizing:border-box}
-
 :root{
   --fm-title:#6fc9ff;
   --glass:rgba(0,0,0,.42);
   --glass2:rgba(255,255,255,.08);
 }
-
 html,body{
   margin:0;
   height:100%;
   font-family:Segoe UI,system-ui,sans-serif;
   color:#fff;
 }
-
 body{
   background:#0a1118 url("logo.png") center center no-repeat fixed;
   background-size:cover;
 }
-
 .overlay{
   position:fixed;
   inset:0;
@@ -33,7 +28,6 @@ body{
   radial-gradient(circle at center, rgba(0,0,0,.06) 0%, rgba(0,0,0,.55) 85%),
   linear-gradient(to bottom, rgba(0,0,0,.45) 0%, rgba(0,0,0,.10) 40%, rgba(0,0,0,.55) 100%);
 }
-
 header{
   position:fixed;
   top:0;
@@ -44,7 +38,6 @@ header{
   border-bottom:1px solid rgba(255,255,255,.10);
   text-align:center;
 }
-
 header a{
   color:#fff;
   text-decoration:none;
@@ -53,11 +46,7 @@ header a{
   margin:0 8px;
   font-size:13px;
 }
-
-header a:hover{
-  opacity:1;
-}
-
+header a:hover{opacity:1}
 main{
   position:relative;
   z-index:2;
@@ -67,7 +56,6 @@ main{
   justify-content:center;
   padding:120px 18px 30px;
 }
-
 .panel{
   width:min(520px,96%);
   background:var(--glass);
@@ -78,21 +66,18 @@ main{
   text-align:center;
   box-shadow:0 25px 55px rgba(0,0,0,.35);
 }
-
 .title{
   font-size:18px;
   font-weight:900;
   color:var(--fm-title);
   margin:6px 0 8px;
 }
-
 .desc{
   font-size:13px;
   opacity:.85;
   line-height:1.5;
   margin-bottom:14px;
 }
-
 .status{
   background:var(--glass2);
   border:1px solid rgba(255,255,255,.12);
@@ -102,7 +87,6 @@ main{
   margin-bottom:14px;
   text-align:left;
 }
-
 .btn{
   display:block;
   width:100%;
@@ -115,19 +99,16 @@ main{
   cursor:pointer;
   font-size:14px;
 }
-
 .btn2{
   margin-top:10px;
   background:rgba(255,255,255,.14);
   border:1px solid rgba(255,255,255,.18);
   color:#fff;
 }
-
 audio{
   width:100%;
   margin-top:12px;
 }
-
 footer{
   position:fixed;
   bottom:0;
@@ -141,14 +122,13 @@ footer{
 }
 </style>
 </head>
-
 <body>
 
 <div class="overlay"></div>
 
 <header>
 <a href="index.html">Ana Sayfa</a>
-<a href="son-yayin.html">Son Yayını Dinle</a>
+<a href="sonyayin.html">Son Yayını Dinle</a>
 <a href="dj.html">DJ Aylak</a>
 <a href="podcast.html">Podcast</a>
 <a href="blog.html">Blog</a>
@@ -159,7 +139,6 @@ footer{
 
 <main>
 <div class="panel">
-
 <div class="title">🎧 Dingin FM — Son Yayın</div>
 
 <p class="desc">
@@ -169,14 +148,13 @@ Buradan en son yüklenen yayını dinleyebilirsin.
 
 <div class="status">
 Durum: <b id="statusText">Hazır</b><br>
-Kaynak: audio/latest.mp3
+Kaynak: /audio/latest.mp3
 </div>
 
 <button class="btn" id="btnPlay">▶ SON YAYINI DİNLE</button>
 <button class="btn btn2" id="btnReset">⟲ YENİLE</button>
 
 <audio id="player" controls preload="none"></audio>
-
 </div>
 </main>
 
@@ -185,37 +163,37 @@ Kaynak: audio/latest.mp3
 </footer>
 
 <script>
-const STREAM_URL="audio/latest.mp3";
+const STREAM_URL="/audio/latest.mp3";
 const player=document.getElementById("player");
 const btnPlay=document.getElementById("btnPlay");
 const btnReset=document.getElementById("btnReset");
 const statusText=document.getElementById("statusText");
 
 function setUI(playing){
-btnPlay.textContent=playing?"⏸ DURDUR":"▶ SON YAYINI DİNLE";
-statusText.textContent=playing?"Çalıyor":"Durdu";
+  btnPlay.textContent = playing ? "⏸ DURDUR" : "▶ SON YAYINI DİNLE";
+  statusText.textContent = playing ? "Çalıyor" : "Hazır";
 }
 
 async function start(){
-try{
-statusText.textContent="Bağlanıyor...";
-player.src=STREAM_URL+"?t="+Date.now();
-player.load();
-await player.play();
-setUI(true);
-}catch{
-statusText.textContent="Dosya bulunamadı";
-}
+  try{
+    statusText.textContent="Bağlanıyor...";
+    player.src = STREAM_URL + "?t=" + Date.now();
+    player.load();
+    await player.play();
+    setUI(true);
+  }catch{
+    statusText.textContent="Son yayın bulunamadı";
+  }
 }
 
 function stop(){
-player.pause();
-player.currentTime=0;
-setUI(false);
+  player.pause();
+  player.currentTime=0;
+  setUI(false);
 }
 
-btnPlay.onclick=()=>!player.paused?stop():start();
-btnReset.onclick=()=>{stop();start();};
+btnPlay.onclick = () => !player.paused ? stop() : start();
+btnReset.onclick = () => { stop(); start(); };
 
 player.addEventListener("play",()=>setUI(true));
 player.addEventListener("pause",()=>setUI(false));
